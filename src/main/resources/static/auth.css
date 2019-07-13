@@ -98,7 +98,7 @@ body {
 	background-color: #fff;
 	-webkit-box-shadow: 0 7px 25px rgba(0, 0, 0, .08);
 	        box-shadow: 0 7px 25px rgba(0, 0, 0, .08);
-	padding: 60px 25px 25px 25px;
+	padding: 35px 25px 25px 25px;
 	text-align: left;
 	border-radius: 3px;
 }
@@ -135,7 +135,7 @@ body {
 }
 
 .lowin .lowin-box .lowin-group {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 .lowin .lowin-box label {
