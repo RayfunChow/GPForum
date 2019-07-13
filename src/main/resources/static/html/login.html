@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<!--CSS-->
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../auth.css">
+	<!--JS-->
+	<script src="../bootstrap/js/jquery-3.3.1.slim.min.js"></script>
+	<script src="../bootstrap/js/popper.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../auth.js"></script>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+	<div class="container">
+		<aa class="navbar-brand" href="">聚集地论坛</aa>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="index">首页<span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="section">板块</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="profile">个人信息</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<form class="form-inline my-2 my-lg-0"  style="margin: 10px">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				<li class="nav-item">
+					<a class="nav-link" href="message">消息中心</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
+					   aria-haspopup="true" aria-expanded="false">
+						<img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px" alt="">
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
+						   data-target="#changePasswordModal">更改密码</a>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="index" id="login"></a>
+				</li>
+			</ul>
+		</div>
+
+		<!--<a class="btn btn-sm btn-outline-secondary" style="margin-left:5px;" href="../html/signup.html">注册</a>-->
+
+	</div>
+</nav>
+
+	<div class="row" style="background: url(../img/loginbg.jpg) center top; height: 700px; margin-top: 50px">
+		<div class="col-7">
+
+		</div>
+		<div class="lowin col-5">
+			<div class="lowin-brand">
+				<!--<img src="kodinger.jpg" alt="logo">-->
+			</div>
+			<div class="lowin-wrapper">
+				<div class="lowin-box lowin-login">
+					<div class="lowin-box-inner">
+						<form>
+							<p>Sign in to continue</p>
+							<div class="lowin-group">
+								<label>Email <a href="#" class="login-back-link">Sign in?</a></label>
+								<input type="email" autocomplete="email" name="email" class="lowin-input">
+							</div>
+							<div class="lowin-group password-group">
+								<label>Password <a href="#" class="forgot-link">Forgot Password?</a></label>
+								<input type="password" name="password" autocomplete="current-password" class="lowin-input">
+							</div>
+							<button class="lowin-btn login-btn">
+								Sign In
+							</button>
+
+							<div class="text-foot">
+								Don't have an account? <a href="" class="register-link">Register</a>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="lowin-box lowin-register">
+					<div class="lowin-box-inner">
+						<form>
+							<p>Let's create your account</p>
+							<div class="lowin-group">
+								<label>Name</label>
+								<input type="text" name="name" autocomplete="name" class="lowin-input">
+							</div>
+							<div class="lowin-group">
+								<label>Email</label>
+								<input type="email" autocomplete="email" name="email" class="lowin-input">
+							</div>
+							<div class="lowin-group">
+								<label>Password</label>
+								<input type="password" name="password" autocomplete="current-password" class="lowin-input">
+							</div>
+							<button class="lowin-btn">
+								Sign Up
+							</button>
+
+							<div class="text-foot">
+								Already have an account? <a href="" class="login-link">Login</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<footer class="lowin-footer">
+				<!--Design By @itskodinger. More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>-->
+			</footer>
+		</div>
+	</div>
+
+	<script src="../auth.js"></script>
+	<script>
+		Auth.init({
+			login_url: '#login',
+			forgot_url: '#forgot'
+		});
+	</script>
+</body>
+</html>
