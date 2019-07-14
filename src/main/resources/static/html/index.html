@@ -10,7 +10,7 @@
     <script src="../bootstrap/js/popper.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="background: #eff0ea">
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <aa class="navbar-brand" href="">聚集地论坛</aa>
@@ -25,14 +25,14 @@
                     <a class="nav-link" href="index">首页<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="section">板块</a>
+                    <a class="nav-link" href="section">版块</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="profile">个人信息</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="form-inline my-2 my-lg-0"  style="margin: 10px">
+                <form class="form-inline my-2 my-lg-0" style="margin: 10px">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
@@ -42,7 +42,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px" alt="">
+                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px"
+                             alt="">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
@@ -59,14 +60,130 @@
 
     </div>
 </nav>
-<div class="tagcloud" style="margin-top: 50px">
-    <a href="#" class="btn btn-mini" style="background-color: #007DDB">游戏</a>
-    <a href="#" class="btn btn-mini" style="background-color: #009688">音乐</a>
-    <a href="#" class="btn btn-mini" style="background-color: #bd2130">电影</a>
-    <a href="#" class="btn btn-mini" style="background-color: #e6e30e">读书</a>
-    <a href="#" class="btn btn-mini" style="background-color: #41ceff">手机</a>
-    <a href="#" class="btn btn-mini" style="background-color: #c07dc5">电脑</a>
-    <a href="#" class="btn btn-mini" style="background-color: #dc7007">动漫</a>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+    <!-- 指示符 -->
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+    <!-- 轮播图片 -->
+    <div class="carousel-inner" style="width: 1600px;height:450px" >
+        <div class="carousel-item active">
+            <img src="../img/long.jpg"  >
+        </div>
+        <div class="carousel-item">
+            <img src="../img/longc.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="../img/longb.jpg">
+        </div>
+    </div>
+    <!-- 左右切换按钮 -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+
+
+<div class="row " style="margin-top: 10px">
+    <div class="col-1"></div>
+    <div class="col-7" style="padding: 20px">
+        <h4>热门文章</h4>
+        <hr>
+        <div>
+            <div class="card" style="padding: 10px 20px 10px 20px">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="" style="height: 100%;width: 100%">
+                    </div>
+                    <div class="col-sm-10">
+                        <a href="#" style="color: #0b2e13"> <h3>《狮子王》的三个泪点，我都看哭了！</h3></a>
+                        <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                            由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                        <div class="row">
+                            <div class="col-8"></div>
+                            <div class="col-2">作者</div>
+                            <div class="col-2">今天9:23</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card" style="padding: 10px 20px 10px 20px">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src=""  style="height: 100%;width: 100%">
+                    </div>
+                    <div class="col-sm-10">
+                        <a href="#" style="color: #0b2e13"> <h3>习近平讲述的故事｜这个小县城不简单</h3></a>
+                        <p>山西省朔州市右玉县
+                            位于山西和内蒙古交界
+                            这个小县城
+                            曾被习近平总书记多次提及</p>
+                        <div class="row">
+                            <div class="col-8"></div>
+                            <div class="col-2">作者</div>
+                            <div class="col-2">今天9:23</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card" style="padding: 10px 20px 10px 20px">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="" style="height: 100%;width: 100%">
+                    </div>
+                    <div class="col-sm-10">
+                        <a href="#" style="color: #0b2e13"> <h3>中国联通辟谣"不支持华为单</h3></a>
+                        <p>目前，中国联通官方微博发布微博，请进行置顶，对实施造谣的自媒体予以曝光和强烈的谴责</p>
+                        <div class="row">
+                            <div class="col-8"></div>
+                            <div class="col-2">作者</div>
+                            <div class="col-2">今天9:23</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-3" style="padding: 20px">
+        <h4>热门版块</h4>
+        <hr>
+        <div class="card" style="padding: 10px">
+            <h3>今日热词</h3>
+            <a href="#" style="color: #0b2e13">仙桃没有桃99+</a>
+            <a href="#" style="color: #0b2e13">外交部发言66+</a>
+            <a href="#" style="color: #0b2e13">华为新声明33+</a>
+        </div>
+        <br>
+        <div class="card" style="padding: 10px">
+            <a href="#" style="color: #0b2e13"> <h3>音乐区</h3></a>
+            <p>音乐是反映人类现实生活情感的一种艺术（英名称：music；法文名称： musique；意大利文：musica）。
+            </p>
+        </div>
+        <br>
+        <div class="card" style="padding: 10px">
+            <a href="#" style="color: #0b2e13"> <h3>动漫区</h3></a>
+            <p>动漫，即动画、漫画的合称，指动画与漫画的集合，取这两个词的第一个字合二为一称之为“动漫”。
+            </p>
+        </div>
+        <br>
+        <div class="card" style="padding: 10px">
+            <a href="#" style="color: #0b2e13"> <h3>游戏区</h3></a>
+            <p>游戏，随人类而造。在人类社会中，游戏不仅仅保留着动物本能活动的特质，为了自身发展的需要创造出多种多样的游戏活动。
+            </p>
+        </div>
+    </div>
+
+    <div class="col-1"></div>
+
 </div>
 </body>
 </html>
