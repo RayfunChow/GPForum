@@ -86,7 +86,7 @@
 							</div>
 							<div class="lowin-group password-group">
 								<label>密&nbsp;&nbsp;码 <a href="#" class="forgot-link" style="visibility: hidden">Forgot Password?</a></label>
-								<input type="password" name="password" autocomplete="current-password" class="lowin-input">
+								<input type="password" maxlength="16" name="password" autocomplete="current-password" class="lowin-input">
 							</div>
 							<button class="lowin-btn login-btn" style="margin-top: 15px">
 								登录
@@ -101,7 +101,7 @@
 
 				<div class="lowin-box lowin-register">
 					<div class="lowin-box-inner">
-						<form id="signForm">
+						<form id="signinForm">
 							<p>1分钟极速注册</p>
 							<div class="lowin-group">
 								<label>Email</label>
@@ -109,15 +109,15 @@
 							</div>
 							<div class="lowin-group">
 								<label>密&nbsp;&nbsp;码</label>
-								<input type="password" name="password" class="lowin-input">
+								<input type="password" maxlength="16" name="password" class="lowin-input">
 							</div>
 							<div class="lowin-group">
 								<label>确认密码</label>
-								<input type="password" name="confirmPassword" class="lowin-input">
+								<input type="password" maxlength="16" name="confirmPassword" class="lowin-input">
 							</div>
 							<div class="lowin-group">
 								<label>验证码</label>
-								<input type="password" name="confirmPassword" class="lowin-input">
+								<input type="text" name="veriCode" class="lowin-input">
 							</div>
 							<button class="lowin-btn" style="margin-top: 15px">
 								注册
@@ -146,56 +146,75 @@
 
         $().ready(function() {
 // 在键盘按下并释放及提交后验证提交表单
-            $("#signupForm").validate({
+            $("#signinForm").validate({
                 rules: {
                     email: "required",
                     password: "required",
                     confirmPassword: "required",
-                    username: {
-                        required: true,
-                        minlength: 2
-                    },
+                    veriCode: "required",
                     password: {
                         required: true,
-                        minlength: 5
+                        minlength: 6,
+                        maxlength: 16
                     },
-                    confirm_password: {
+                    confirmPassword: {
                         required: true,
-                        minlength: 5,
+                        minlength: 6,
+                        maxlength: 16,
                         equalTo: "#password"
                     },
                     email: {
                         required: true,
                         email: true
                     },
-                    topic: {
-                        required: "#newsletter:checked",
-                        minlength: 2
-                    },
-                    agree: "required"
+					veriCode: {
+                        required: true
+					}
+
                 },
                 messages: {
-                    firstname: "请输入您的名字",
-                    lastname: "请输入您的姓氏",
-                    username: {
-                        required: "请输入用户名",
-                        minlength: "用户名必需由两个字母组成"
-                    },
+                    email: "请输入Email",
+                    password: "请输入密码",
                     password: {
                         required: "请输入密码",
-                        minlength: "密码长度不能小于 5 个字母"
+                        minlength: "密码长度不能小于 6 位",
+                        maxlength: "密码长度不能大于 16 位"
                     },
                     confirm_password: {
                         required: "请输入密码",
-                        minlength: "密码长度不能小于 5 个字母",
+                        minlength: "密码长度不能小于 6 位",
+                        maxlength: "密码长度不能大于 16 位",
                         equalTo: "两次密码输入不一致"
                     },
-                    email: "请输入一个正确的邮箱",
-                    agree: "请接受我们的声明",
-                    topic: "请选择两个主题"
+                    email: "请输入一个正确的邮箱"
                 }
             })
         });
 	</script>
+
+<footer class="footer" style="margin-top: 170px">
+	<hr>
+	<div class="row">
+		<div class="col-5" align="left" style="margin-left: 150px;margin-top: 10px">
+			<h2 style="color: #009E94">聚集地论坛 Gathering Place Forum</h2>
+			<p>我们一直致力于为广大同好提供一个优质的兴趣交流平台！</p>
+		</div>
+		<div class="col-3" style="margin-top: 10px">
+			<h5>关于我们</h5>
+				我们是一个年轻的团队<br>
+				我们有着超凡的想象力</p>
+		</div>
+		<div class="col-2" style="margin-top: 20px">
+			<h5>联系我们</h5>
+			<a href="#" style="color: #0b2e13">微博</a>
+			<a href="#" style="color: #0b2e13">邮箱</a>
+			<a href="#" style="color: #0b2e13">公众号</a>
+		</div>
+
+	</div>
+
+
+</footer>
+
 </body>
 </html>
