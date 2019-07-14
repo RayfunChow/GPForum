@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <!--CSS-->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--JS-->
+    <script src="../bootstrap/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="../bootstrap/js/popper.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <aa class="navbar-brand" href="">聚集地论坛</aa>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index">首页<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="section">版块</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile">个人信息</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="form-inline my-2 my-lg-0" style="margin: 10px">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="message">消息中心</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px"
+                             alt="">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
+                           data-target="#changePasswordModal">更改密码</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index" id="login"></a>
+                </li>
+            </ul>
+        </div>
+
+        <!--<a class="btn btn-sm btn-outline-secondary" style="margin-left:5px;" href="../html/signup.html">注册</a>-->
+
+    </div>
+</nav>
+
+<div class="row" style="margin-top: 100px">
+    <div class="col-1"></div>
+    <div class="col-7">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <h4>文章</h4>
+            </div>
+            <div class="col-3"></div>
+            <div class="col-3">
+                <h4>发帖总数：89</h4>
+            </div>
+        </div>
+
+
+        <div class="card" style="padding: 10px 20px 10px 20px">
+                <div class="col-sm-10">
+                    <a href="#" style="color: #0b2e13"> <h3>日韩贸易战升级，韩国深陷绝境，普京及时出手</h3></a>
+                    <p>7月初日本正式对韩国实施了出口限制，用于制造半导体的高纯度氟化氢等原材料被禁止向韩国出口。
+                        如果得不到这些原材料，韩国三星、LG等高科技产业将受到严重冲击，甚至韩国经济都将受到巨大影响，
+                        为了让日本取消出口禁令，韩国政府想了不少办法，然而日本政府态度强硬，拒绝做出让步。
+                    <a href="#" style="color:#7a5e3f">查看原文</a> </p>
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-2">作者</div>
+                        <div class="col-2">今天9:23</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <hr>
+    </div>
+</div>
+
+
+</body>
+</html>
