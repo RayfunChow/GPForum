@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <!--CSS-->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--JS-->
+    <script src="../bootstrap/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="../bootstrap/js/popper.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <aa class="navbar-brand" href="">聚集地论坛</aa>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index">首页<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="section">板块</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile">个人信息</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="form-inline my-2 my-lg-0" style="margin: 10px">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="message">消息中心</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px" alt="">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
+                           data-target="#changePasswordModal">更改密码</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index" id="login"></a>
+                </li>
+            </ul>
+        </div>
+
+        <!--<a class="btn btn-sm btn-outline-secondary" style="margin-left:5px;" href="../html/signup.html">注册</a>-->
+
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 80px">
+    <!--主体-->
+    <div class="card">
+        <div class="card-header">
+            个人信息
+        </div>
+        <div class="card-body">
+            <form action="" id="profileForm" class="text-center">
+                <div class="form-group row">
+                    <img class="nav-item rounded-circle" src="../img/test2.png" width="100px" height="100px" alt="">
+                    <h3>xxx@qq.com</h3>
+                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#changePasswordModal">
+                        更改密码
+                    </button>
+                </div>
+                <div class="form-group row">
+                    <label for="userNickname" class="col-sm-2 col-form-label">昵称</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="userNickname" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="userNickname" class="col-sm-2 col-form-label">性别</label>
+                    <div class="col-sm-4">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">男</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">女</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="userNickname" class="col-sm-2 col-form-label">生日</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="userBirthday" placeholder="YYYY/MM/DD" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="userNickname" class="col-sm-2 col-form-label">地区</label>
+                    <div class="form-group col-md-2">
+                        <!--<label for="inputProvince"></label>-->
+                        <select id="inputProvince" class="form-control">
+                            <option value="" style="display: none;" disabled selected>选择省</option>
+                            <option>...</option>
+                        </select>
+                    </div><div class="form-group col-md-2">
+                    <!--<label for="inputCity">State</label>-->
+                    <select id="inputCity" class="form-control">
+                        <option value="" style="display: none;" disabled selected>选择城市</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                </div>
+                <div class="form-group row">
+                    <label for="userNickname" class="col-sm-2 col-form-label">爱好</label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext" id="userHobby" placeholder="请从下面选择爱好" value="">
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            toggle
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            toggle
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            toggle
+                        </button>
+                        <button type="button" class="btn btn-outline-dark" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            toggle
+                        </button>
+                        <button type="button" class="btn btn-outline-info" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            toggle
+                        </button>
+                        <button type="button" class="btn btn-outline-warning" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            toggle
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="userNickname" class="col-sm-2 col-form-label">个性签名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="userSignature" value="">
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-outline-success" >
+                    修改信息
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document" style="max-width: 500px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">更改密码</h5>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <form action="" id="changePasswordForm">
+                <div class="modal-body">
+                    <p>
+                    <div class="form-group row">
+                        <label for="userEmail" class="col-sm-4 col-form-label">当前用户</label>
+                        <div class="">
+                            <input type="text" readonly class="form-control-plaintext" id="userEmail" name="userEmail" value="xxx@qq.com">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-4 col-form-label">旧密码</label>
+                        <div class="">
+                            <input type="password" class="form-control" id="password" name="password" value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="newPassword" class="col-sm-4 col-form-label">新密码</label>
+                        <div class="">
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="confirmPassword" class="col-sm-4 col-form-label">确认新密码</label>
+                        <div class="">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="">
+                        </div>
+                    </div>
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnChangePassword" class="btn btn-primary" data-dismiss="modal">确认</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $("#changePasswordForm").validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 16
+                },
+                newPassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 16
+                },
+                confirmPassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 16,
+                    equalTo: "#newPassword"
+                },
+                action: "required"
+            },
+            messages: {
+                password: {
+                    required: "该字段为必填项",
+                    // minlength: "密码至少6位",
+                    // maxlength: "密码不应超过16位"
+                },
+                newPassword: {
+                    required: "该字段为必填项",
+                    minlength: "密码至少6位",
+                    maxlength: "密码不应超过16位"
+                },
+                confirmPassword: {
+                    required: "该字段为必填项",
+                    minlength: "密码至少6位",
+                    maxlength: "密码不应超过16位",
+                    equalTo: "两次输入的密码不一致"
+                },
+
+                action: "Please provide some data"
+            }
+        });
+    });
+
+    $("#btnChangePassword").click(function () {
+        var userEmail = $("#userEmail").val();
+        var password = $("#password").val();
+        var newPassword = $("#newPassword").val();
+        var confirmPassword = $("#confirmPassword").val();
+        $.ajax({
+            type: "post",
+            url: "/changePassword",
+            data: {
+                "userEmail": userEmail, "password": password,
+                "newPassword": newPassword, "confirmPassword": confirmPassword
+            },
+            success: function (data) {
+                console.log(data);
+                if (data === "密码修改成功")
+                    bootoast.toast({
+                        message: data,
+                        type: 'success',
+                        position: 'right-bottom',
+                        icon: 'default',
+                        timeout: 2,
+                        animationDuration: 300,
+                        dismissible: true
+                    });
+                else
+                    bootoast.toast({
+                        message: data,
+                        type: 'danger',
+                        position: 'right-bottom',
+                        icon: 'default',
+                        timeout: 2,
+                        animationDuration: 300,
+                        dismissible: true
+                    });
+                $('#changePasswordForm')[0].reset();
+            }
+        });
+    });
+
+</script>
+
+
+</body>
+</html>
