@@ -13,8 +13,85 @@
 
 </head>
 <body style="background: #eff0ea">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <aa class="navbar-brand" href="">聚集地论坛</aa>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<div class="page">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index">首页<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="section">版块</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile">个人信息</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="form-inline my-2 my-lg-0" style="margin: 10px">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="message">消息中心</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px"
+                             alt="">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
+                           data-target="#changePasswordModal">更改密码</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index" id="login"></a>
+                </li>
+            </ul>
+        </div>
+
+        <!--<a class="btn btn-sm btn-outline-secondary" style="margin-left:5px;" href="../html/signup.html">注册</a>-->
+
+    </div>
+</nav>
+
+
+<div id="demo" class="carousel slide container" data-ride="carousel">
+    <!-- 指示符 -->
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+    <!-- 轮播图片 -->
+    <div class="carousel-inner container" style="width: 4000px;height:450px" >
+        <div class="carousel-item active">
+            <img src="../img/long.jpg"  >
+        </div>
+        <div class="carousel-item">
+            <img src="../img/long.jpg">
+        </div>
+        <div class="carousel-item">
+            <img src="../img/long.jpg">
+        </div>
+    </div>
+    <!-- 左右切换按钮 -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+
     <div class="page-main">
         <div class="header py-4">
             <div class="container">
@@ -32,7 +109,7 @@
                                                     class="fe fe-chevron-up"></i>qqq</a>
                                         </div>
                                     </div>
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"  >
                                         <div class="card-body">
                                             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
                                             richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
