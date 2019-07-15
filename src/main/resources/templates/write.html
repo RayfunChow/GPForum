@@ -19,14 +19,24 @@
         <h3>发表帖子</h3>
     </div>
 
-    <form action="writeAction" method="post">
 
-        <input name="title" type="text" class="form-control" id="inputTitle" placeholder="在此处键入标题" autocomplete="off"
-               style="margin-bottom: 30px;" required>
+    <form action="writeAction" method="post" id="writeForm">
 
-        <section id="page-demo">
-            <textarea name="content" id="txt-content" data-autosave="editor-content" id="inputContent" upload="true"
-                      autofocus required>
+        <input name="inputTitle"
+               type="text"
+               maxlength="50"
+               class="form-control "
+               id="inputTitle"
+               placeholder="在此处键入标题"
+               autocomplete="off"
+               autofocus>
+
+        <section id="page-demo" style="margin-top: 30px;">
+            <textarea
+                    name="content"
+                    id="txt-content"
+                    data-autosave="editor-content"
+                    upload="true">
             </textarea>
         </section>
 
@@ -54,7 +64,6 @@
             <!--</div>-->
 
 
-
             <div class="custom-control custom-checkbox col-sm-2" style="margin-left: 30px;">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" name="ispublic"
                        value="public">
@@ -69,7 +78,9 @@
             <div class="col-sm-5"></div>
 
             <div class="col-sm-2">
-                <button class="btn btn-lg btn-primary btn-block" type="submit" style="width:200px;margin-right: 50px">发表</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" style="width:200px;margin-right: 50px">
+                    发表
+                </button>
             </div>
 
             <div class="col-sm-1"></div>
@@ -79,7 +90,7 @@
 </div>
 
 </body>
-<script src="https://static.pengyaou.com/js/jquery-1.8.3.min.js"></script>
+<!--<script src="https://static.pengyaou.com/js/jquery-1.8.3.min.js"></script>-->
 <script type="text/javascript">
     $(document).ready(function (e) {
         SidebarTabHandler.Init();
@@ -93,8 +104,39 @@
                 $($(".tabBodyItem")[$(this).index()]).addClass("tabBodyCurrent");
             });
         }
-    }
+    };
+
+    $().ready(function () {
+        $("#writeForm").validate({
+            rules: {
+                inputTitle: "required"
+            },
+            messages: {
+                inputTitle: "文章标题不能为空！"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("").removeClass("is-invalid");
+            }
+        });
+    });
+
+
 </script>
+
 
 {{>layout/footer}}
 
