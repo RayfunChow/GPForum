@@ -11,54 +11,7 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body style="background: #eff0ea">
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-        <aa class="navbar-brand" href="">聚集地论坛</aa>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="index">首页</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="section">版块<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profile">个人信息</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <form class="form-inline my-2 my-lg-0"  style="margin: 10px">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                <li class="nav-item">
-                    <a class="nav-link" href="message">消息中心</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px" alt="">
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
-                           data-target="#changePasswordModal">更改密码</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index" id="login"></a>
-                </li>
-            </ul>
-        </div>
-
-        <!--<a class="btn btn-sm btn-outline-secondary" style="margin-left:5px;" href="../html/signup.html">注册</a>-->
-    </div>
-</nav>
-
+{{>layout/navbar}}
 
 <div id="demo" class="carousel slide container" data-ride="carousel">
     <!-- 指示符 -->

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--CSS-->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="../auth.css">-->
+    <!--JS-->
+    <script src="../bootstrap/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="../bootstrap/js/popper.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <!--<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>-->
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <!--<script src="../auth.js"></script>-->
+
+</head>
+
+<body style="background: url(../img/loginbg.jpg) center top; height: 700px; margin-top: 50px">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <aa class="navbar-brand" href="">聚集地论坛</aa>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index">首页<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="section">板块</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile">个人信息</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="form-inline my-2 my-lg-0" style="margin: 10px">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="message">消息中心</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" width="30px" height="30px"
+                             alt="">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/UpdatePwd" data-toggle="modal"
+                           data-target="#changePasswordModal">更改密码</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index" id="login"></a>
+                </li>
+            </ul>
+        </div>
+
+        <!--<a class="btn btn-sm btn-outline-secondary" style="margin-left:5px;" href="../html/signup.html">注册</a>-->
+
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-7">
+
+    </div>
+    <div class="card col-3" id="signinTab"
+         style="margin-top: 90px; margin-left: 60px;padding-left:0px;padding-right:0px;">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tabSignin" href="#" onclick="changeTab(this)">登录</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tabSignup" href="#" onclick="changeTab(this)">注册</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <form method="post" action="" id="signinForm">
+                <div class="form-group">
+                <label for="signinUsername">用户名</label>
+                <input type="email" class="form-control" id="signinUsername" name="signinUsername" aria-describedby="emailHelp"
+                placeholder="输入用户名" required>
+                </div>
+                <div class="form-group">
+                <label for="signinPassword">密码</label>
+                <input type="password" class="form-control" id="signinPassword" name="signinPassword" placeholder="输入密码" required>
+                </div>
+                <button id="signinBtn" type="submit" class="btn btn-outline-primary">登录</button>
+
+                <div class="form-group">
+                    <label for="signupEmail">邮&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
+                    <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
+                           name="signupEmail" placeholder="输入Email" required="">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                    <input type="password" class="form-control" id="signupPassword" name="signupPassword"
+                           placeholder="输入密码" required="">
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">确认密码</label>
+                    <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword"
+                           placeholder="请再次输入密码" required="">
+                </div>
+                <div class="form-group">
+                    <label for="signupVeriCode">验&nbsp;证&nbsp;码</label>
+                    <div class="row form-group">
+                        <input type="password" class="form-control col-7" id="signupVeriCode" name="signupVeriCode"
+                               placeholder="输入验证码" required="">
+                        <div class="col-1"></div>
+                        <button class="btn btn-outline-secondary col-4">发送验证码</button>
+                    </div>
+                </div>
+                <button id="registerBtn" type="submit" class="btn btn-outline-primary">注册</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../auth.js"></script>
+<script>
+    function changeTab(that) {
+        var str = "";
+        $("#signinForm").html(str);
+        if ($(that).text() === "登录") {
+            $("#tabSignin").addClass("active");
+            $("#tabSignup").remove("active");
+            str+="                <div class=\"form-group\">\n" +
+                "                <label for=\"signinUsername\">用户名</label>\n" +
+                "                <input type=\"email\" class=\"form-control\" id=\"signinUsername\" name=\"signinUsername\" aria-describedby=\"emailHelp\"\n" +
+                "                placeholder=\"输入用户名\" required>\n" +
+                "                </div>\n" +
+                "                <div class=\"form-group\">\n" +
+                "                <label for=\"signinPassword\">密码</label>\n" +
+                "                <input type=\"password\" class=\"form-control\" id=\"signinPassword\" name=\"signinPassword\" placeholder=\"输入密码\" required>\n" +
+                "                </div>\n" +
+                "                <button id=\"signinBtn\" type=\"submit\" class=\"btn btn-outline-primary\">登录</button>\n";
+        } else if ($(that).text() === "注册") {
+            $("#tabSignin").addClass("active");
+            $("#tabSignup").remove("active");
+            str+="";
+        }
+        $("#signinForm").html(str);
+    }
+
+
+    $().ready(function () {
+// 在键盘按下并释放及提交后验证提交表单
+        $("#signinForm").validate({
+            rules: {
+                email: "required",
+                password: "required",
+                confirmPassword: "required",
+                veriCode: "required",
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 16
+                },
+                confirmPassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 16,
+                    equalTo: "#password"
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                veriCode: {
+                    required: true
+                }
+
+            },
+            messages: {
+                email: "请输入Email",
+                password: "请输入密码",
+                password: {
+                    required: "请输入密码",
+                    minlength: "密码长度不能小于 6 位",
+                    maxlength: "密码长度不能大于 16 位"
+                },
+                confirm_password: {
+                    required: "请输入密码",
+                    minlength: "密码长度不能小于 6 位",
+                    maxlength: "密码长度不能大于 16 位",
+                    equalTo: "两次密码输入不一致"
+                },
+                email: "请输入一个正确的邮箱"
+            }
+        })
+    });
+</script>
+
+<footer class="footer" style="margin-top: 170px">
+    <hr>
+    <div class="row">
+        <div class="col-5" align="left" style="margin-left: 150px;margin-top: 10px">
+            <h2 style="color: #009E94">聚集地论坛 Gathering Place Forum</h2>
+            <p>我们一直致力于为广大同好提供一个优质的兴趣交流平台！</p>
+        </div>
+        <div class="col-3" style="margin-top: 10px">
+            <h5>关于我们</h5>
+            我们是一个年轻的团队<br>
+            我们有着超凡的想象力</p>
+        </div>
+        <div class="col-2" style="margin-top: 20px">
+            <h5>联系我们</h5>
+            <a href="#" style="color: #0b2e13">微博</a>
+            <a href="#" style="color: #0b2e13">邮箱</a>
+            <a href="#" style="color: #0b2e13">公众号</a>
+        </div>
+
+    </div>
+
+
+</footer>
+
+</body>
+</html>
