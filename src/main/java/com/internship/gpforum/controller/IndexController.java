@@ -22,10 +22,32 @@ public class IndexController {
         return "login";
     }
 
+    @RequestMapping("/section")
+    public String toSection(){
+        return "section";
+    }
+
+    @RequestMapping("/profile")
+    public String toProfile(){
+        return "profile";
+    }
+
+    @RequestMapping("/dbManage")
+    public String toDbManage(){
+        return "dbManage";
+    }
+
     @RequestMapping("/index")
-    public String toIndex(){
+    public String toMessage(){
         return "index";
     }
+
+    @RequestMapping("/updateProfile")
+    public String toUpdateProfile(){
+        return "updateProfile";
+    }
+
+
 
 //    @RequestMapping("star")
 //    public String Star(){
