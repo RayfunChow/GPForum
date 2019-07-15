@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-hans">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>文章详情</title>
@@ -12,6 +12,7 @@
 
 <body style="background:#EFF0EA;">
 {{>layout/navbar}}
+
 <div style="margin-top:70px; text-align: left;">
     <div class="row">
 
@@ -241,53 +242,54 @@
                                     </button>
 
                                 </div>
-                                <a data-toggle="collapse"
-                                   href="#replyReplyCollapse"
-                                   style="float: right;"
-                                   aria-expanded="false"
-                                   aria-controls="replyCollapse">
-                                    <small>回复</small>
-                                </a>
+                            </div>
+                            <a data-toggle="collapse"
+                               href="#replyReplyCollapse"
+                               style="float: right;"
+                               aria-expanded="false"
+                               aria-controls="replyCollapse">
+                                <small>回复</small>
+                            </a>
 
-                                <div class="container">
-                                    <p><a href="#">江泽民&nbsp;</a>&nbsp;回复&nbsp;<a href="#">&nbsp;董建华</a>：连任也要按照基本法和选举法去产生
-                                    </p>
-                                </div>
+                            <div class="container">
+                                <p><a href="#">江泽民&nbsp;</a>&nbsp;回复&nbsp;<a href="#">&nbsp;董建华</a>：连任也要按照基本法和选举法去产生
+                                </p>
+                            </div>
 
-                                <div class="collapse" id="replyReplyCollapse" data-parent="#accordion">
-                                    <div class="card card-body">
+                            <div class="collapse" id="replyReplyCollapse" data-parent="#accordion">
+                                <div class="card card-body">
 
-                                        <label>输入回复：</label>
-                                        <textarea placeholder="输入回复内容replyReplyCollapse"></textarea>
-                                        <button type="button" style="float: right;width: 120px"
-                                                class="btn btn-outline-secondary">发表回复
-                                        </button>
+                                    <label>输入回复：</label>
+                                    <textarea placeholder="输入回复内容replyReplyCollapse"></textarea>
+                                    <button type="button" style="float: right;width: 120px"
+                                            class="btn btn-outline-secondary">发表回复
+                                    </button>
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div style="margin-top: 50px;">
-                    <hr>
-                    <h4>发表回复</h4>
-                    <form>
-                        <textarea class="form-control" rows="3" placeholder="输入评论详情"></textarea>
-                        <button type="button" style="float: right;"
-                                class="btn btn-outline-secondary">发表回复
-                        </button>
-                    </form>
                 </div>
 
             </div>
-
-            <div class="col-sm-1"></div>
+            <div style="margin-top: 50px;">
+                <hr>
+                <h4>发表回复</h4>
+                <form>
+                    <textarea class="form-control" rows="3" placeholder="输入评论详情"></textarea>
+                    <button type="button" style="float: right;"
+                            class="btn btn-outline-secondary">发表回复
+                    </button>
+                </form>
+            </div>
 
         </div>
 
+        <div class="col-sm-1"></div>
+
     </div>
+
+</div>
 </div>
 
 </body>
