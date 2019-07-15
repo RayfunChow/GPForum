@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>撰写贴文</title>
-    {{>layout/head}}
     <link media="all" rel="stylesheet" type="text/css" href="/simditor/css/app.css"/>
     <link media="all" rel="stylesheet" type="text/css" href="/simditor/css/simditor.css"/>
+    {{>layout/head}}
 
     <script type="text/javascript" src="/simditor/js/mobilecheck.js"></script>
 </head>
@@ -13,10 +13,15 @@
 
 {{>layout/navbar}}
 
-<div class="container" style="margin-top: 70px">
+<div class="container" style="margin-top: 80px">
+
+    <div style="margin-bottom: 30px;">
+        <h3>发表帖子</h3>
+    </div>
+
     <form action="writeAction" method="post">
 
-        <input name="title" type="text" class="form-control" id="inputTitle" placeholder="请输入标题" autocomplete="off"
+        <input name="title" type="text" class="form-control" id="inputTitle" placeholder="在此处键入标题" autocomplete="off"
                style="margin-bottom: 30px;" required>
 
         <section id="page-demo">
@@ -31,31 +36,44 @@
         <script type="text/javascript" src="/simditor/js/simditor.js"></script>
         <script type="text/javascript" src="/simditor/js/page-demo.js"></script>
 
-        <div class="row" style="margin-top: 20px;">
+
+        <div class="row" style="margin-top: 30px;">
 
             <!--<div class="dropdown col-md-5">-->
-                <!--<label>文章类别：</label>-->
-                <!--<select class="" style="margin-top: 10px;"  name="dropdownlabel">-->
-                    <!--<option value="科技">科技</option>-->
-                    <!--<option value="生活">生活</option>-->
-                    <!--<option value="政治">政治</option>-->
-                    <!--<option value="经济">经济</option>-->
-                    <!--<option value="娱乐">娱乐</option>-->
-                    <!--<option value="社会">社会</option>-->
-                    <!--<option value="健康">健康</option>-->
-                    <!--<option value="文学">文学</option>-->
-                <!--</select>-->
+            <!--<label>文章类别：</label>-->
+            <!--<select class="" style="margin-top: 10px;"  name="dropdownlabel">-->
+            <!--<option value="科技">科技</option>-->
+            <!--<option value="生活">生活</option>-->
+            <!--<option value="政治">政治</option>-->
+            <!--<option value="经济">经济</option>-->
+            <!--<option value="娱乐">娱乐</option>-->
+            <!--<option value="社会">社会</option>-->
+            <!--<option value="健康">健康</option>-->
+            <!--<option value="文学">文学</option>-->
+            <!--</select>-->
             <!--</div>-->
 
-            <div class="custom-control col-md-4 custom-checkbox" style="margin-top: 10px" >
-                <input type="checkbox" class="custom-control-input" id="customCheck1" name="ispublic" value="public" >
+
+
+            <div class="custom-control custom-checkbox col-sm-2" style="margin-left: 30px;">
+                <input type="checkbox" class="custom-control-input" id="customCheck1" name="ispublic"
+                       value="public">
                 <label class="custom-control-label text-center" for="customCheck1"
-                style="margin-top: 5px">仅自己可见</label>
+                       style="user-select: none">仅自己可见</label>
             </div>
 
-            <div class="col-md-3">
-                <button class="btn btn-lg btn-primary btn-block" type="submit" >提交</button>
+            <div class="col-sm-2">
+                <P style="float: left;">本帖将发表到：<a href="#">音乐版</a></P>
             </div>
+
+            <div class="col-sm-5"></div>
+
+            <div class="col-sm-2">
+                <button class="btn btn-lg btn-primary btn-block" type="submit" style="width:200px;margin-right: 50px">发表</button>
+            </div>
+
+            <div class="col-sm-1"></div>
+
         </div>
     </form>
 </div>
@@ -78,29 +96,7 @@
     }
 </script>
 
-<footer class="footer" style="margin-top: 170px">
-    <hr>
-    <div class="row">
-        <div class="col-5" align="left" style="margin-left: 180px;margin-top: 10px">
-            <h2 style="color: #009E94">聚集地论坛 Gathering Place Forum</h2>
-            <p>我们一直致力于为广大同好提供一个优质的兴趣交流平台！</p>
-        </div>
-        <div class="col-3" style="margin-top: 10px">
-            <h5>关于我们</h5>
-            我们是一个年轻的团队<br>
-            我们有着超凡的想象力</p>
-        </div>
-        <div class="col-2" style="margin-top: 20px">
-            <h5>联系我们</h5>
-            <a href="#" style="color: #0b2e13">微博</a>
-            <a href="#" style="color: #0b2e13">邮箱</a>
-            <a href="#" style="color: #0b2e13">公众号</a>
-        </div>
-
-    </div>
-
-
-</footer>
+{{>layout/footer}}
 
 </body>
 </html>
