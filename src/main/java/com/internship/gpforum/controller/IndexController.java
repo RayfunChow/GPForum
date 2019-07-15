@@ -38,7 +38,7 @@ public class IndexController {
     }
 
     @RequestMapping("/index")
-    public String toMessage(){
+    public String toIndex(){
         return "index";
     }
 
@@ -46,6 +46,12 @@ public class IndexController {
     public String toUpdateProfile(){
         return "updateProfile";
     }
+
+    @RequestMapping("/message")
+    public String toMessage(){
+        return "message";
+    }
+
 
 
 
