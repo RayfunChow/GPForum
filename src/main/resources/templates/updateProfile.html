@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>修改个人信息</title>
-    <!--CSS-->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <!--JS-->
-    <script src="../js/jquery-3.3.1.slim.min.js"></script>
-    <script src="../js/popper.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <!--<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>-->
-    <script src="../js/jquery.validate.min.js"></script>
-    <script src="../js/info.js"></script>
+
+    {{>layout/head}}
+    <!--<link rel="stylesheet" href="/layui/css/layui.css">-->
+    <script src="/js/info.js"></script>
     <!--<script src="../js/messages_zh.js"></script>-->
 </head>
 <body>
@@ -24,45 +18,43 @@
             个人信息
         </div>
         <div class="card-body row">
-            <form action="" id="profileForm" class="text-center col-8">
+            <form action="" id="updateProfileForm" class="text-center col-9">
 
                 <div class="form-group row">
-                    <label for="userNickname" class="col-sm-2 col-form-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称</label>
-                    <div class="col-sm-4">
+                    <label for="userNickname" class="col-sm-2 col-form-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称 <span>das</span></label>
+                    <div class="">
                         <input type="text" class="form-control" id="userNickname" value="">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="userNickname" class="col-sm-2 col-form-label">性&nbsp;&nbsp;&nbsp;&nbsp;别</label>
-                    <div class="col-sm-4">
+                    <div class="">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                   value="option1">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
                             <label class="form-check-label" for="inlineRadio1">男</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                   value="option2">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
                             <label class="form-check-label" for="inlineRadio2">女</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="userBirthday" class="col-sm-2 col-form-label">生&nbsp;&nbsp;&nbsp;&nbsp;日</label>
-                    <div class="col-sm-4">
+                    <div class="">
                         <input type="text" class="form-control" id="userBirthday" placeholder="YYYY/MM/DD" value="">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">地&nbsp;&nbsp;&nbsp;&nbsp;区</label>
-                    <div class="form-group col-md-4">
+                    <div class="form-group ">
                         <!--<label for="inputProvince"></label>-->
                         <select id="inputProvince" onchange="getCity()" class="form-control">
                             <option value="" style="display: none;" disabled selected>选择省</option>
                             <option>...</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group ">
                         <!--<label for="inputCity">State</label>-->
                         <select id="inputCity" class="form-control">
                             <option value="" style="display: none;" disabled selected>选择城市</option>
@@ -112,7 +104,7 @@
                 <div class="form-group row btn-group-toggle"></div>
                 <div class="form-group row">
                     <label for="userSignature" class="col-sm-2 col-form-label">个性签名</label>
-                    <div class="col-sm-4">
+                    <div class="">
                         <input type="text" class="form-control" id="userSignature" value="">
                     </div>
                 </div>
@@ -123,12 +115,11 @@
             <div>
                 <div class="form-group col-4" style="text-align: center">
                     <div class="row">
-                        <img class="nav-item rounded-circle" id="userAvatar" src="../img/test2.png" width="100px"
+                        <img class="nav-item rounded-circle" id="userAvatar" src="/img/test2.png" width="100px"
                              height="100px" alt="">
                         <div>
                             <h3>xxx@qq.com</h3>
-                            <button type="button" class="btn btn-outline-info" data-toggle="modal"
-                                    data-target="#changePasswordModal">
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#changePasswordModal">
                                 更改密码
                             </button>
                         </div>
@@ -262,6 +253,33 @@
                 },
                 action: "Please provide some data"
             }
+        });
+
+        $("#updateProfileForm").validate({
+            rules: {
+                userNickname: {
+                    required: true,
+                    maxlength: 10
+                },
+                userBirthday: {
+                    required: true,
+                    dateISO:true,
+                    maxlength: 10
+                },
+                action: "required"
+            },
+            messages: {
+                userNickname: {
+                    required: "旧密码为必填项",
+                    maxlength: "昵称长度不能大于 10 位"
+                },
+                userBirthday: {
+                    required: "新密码为必填项",
+                    dateISO: "请输入有效的日期格式"
+                },
+                action: "Please provide some data"
+            }
+
         });
     });
 

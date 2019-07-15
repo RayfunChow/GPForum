@@ -47,6 +47,16 @@ public class IndexController {
         return "updateProfile";
     }
 
+    @RequestMapping("/postDetail")
+    public String toPostDetail(){
+        return "postDetail";
+    }
+
+    @RequestMapping("/write")
+    public String toWrite(){
+        return "write";
+    }
+
     @RequestMapping("/message")
     public String toMessage(){
         return "message";
