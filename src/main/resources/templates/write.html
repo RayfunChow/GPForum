@@ -31,7 +31,6 @@
                autocomplete="off"
                autofocus>
 
-
         <section id="page-demo" style="margin-top: 30px;">
             <textarea
                     name="content"
@@ -114,6 +113,23 @@
             },
             messages: {
                 inputTitle: "文章标题不能为空！"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("").removeClass("is-invalid");
             }
         });
     });
