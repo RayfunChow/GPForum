@@ -10153,9 +10153,31 @@ a.text-dark:focus, a.text-dark:hover {
     }
 }
 
-/*自定义CSS*/
-.error {
-    color: red;
+.footer {
+    margin: 30px 0 0 0;
+    background-color: #f5f5f5;
 }
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/*.big-container {*/
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*min-height: 80%;*/
+/*}*/
+
+/*.body {*/
+    /*padding-bottom: 50px;*/
+/*}*/
+
+/*.footer {*/
+    /*height: 50px;*/
+    /*position: absolute;*/
+    /*bottom: 0px;*/
+    /*left: 0px;*/
+/*}*/
 
 /*# sourceMappingURL=bootstrap.min.css.map */

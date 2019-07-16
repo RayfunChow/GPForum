@@ -4,501 +4,498 @@
     <meta charset="UTF-8">
     <title>消息中心</title>
     {{>layout/head}}
+    <style>
+        .footer {
+            background-color: #f5f5f5;
+        }
+
+        .footer > .container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        #TabMain {
+            width: 1500px;
+            height: 700px;
+            margin: 0 auto;
+            /*margin-top: 30px;*/
+            /*margin-left: 300px;*/
+        }
+
+        .tabItemContainer {
+            width: 100px;
+            height: 700px;
+            float: left;
+            margin-right: 20px;
+        }
+
+        .tabBodyContainer {
+            width: 1000px;
+            height: 550px;
+            float: left;
+            background-color: #eff0ea;
+            border: 1px solid #eff0ea00;
+            -webkit-border-radius: 0 5px 5px 0;
+            -moz-border-radius: 0 5px 5px 0;
+            border-radius: 0 5px 5px 0;
+            margin-left: 1px;
+        }
+
+        .tabItemContainer > li {
+            list-style: none;
+            text-align: center;
+        }
+
+        .tabItemContainer > li > a {
+            float: left;
+            width: 100%;
+            padding: 10px 0 30px 0;
+            font: 16px "微软雅黑", Arial, Helvetica, sans-serif;
+            color: #808080;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        .tabItemCurrent {
+            background-color: #eff0ea;
+            border: 1px solid #ccc !important;
+            /*border-right: 1px solid #ccc !important;*/
+            position: relative;
+            -webkit-border-radius: 5px 0 0 5px;
+            -moz-border-radius: 5px 0 0 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+        .tabItemContainer > li > a:hover {
+            color: #333;
+        }
+
+        .tabBodyItem {
+            position: absolute;
+            width: 1000px;
+            height: 550px;
+            display: none;
+        }
+
+        .tabBodyItem > p {
+            font: 13px "微软雅黑", Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .tabBodyItem > p > a {
+            text-decoration: none;
+            color: #0F3;
+        }
+
+        .tabBodyCurrent {
+            display: block;
+        }
+
+        .text-overflow {
+            display: block;
+            width: 80%;
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .myGutter
+        {
+            /*margin-right: -10px;*/
+            /*margin-left: -15px;*/
+            margin-bottom: 15px;
+            /*padding: 10px;*/
+            background-color:#f5f5f5;
+            border: 1px solid #ddd;
+        }
+
+        .Mycard {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #eff0ea;
+            background-clip: border-box;
+            /*border: 1px solid rgba(0, 0, 0, .125);*/
+            border-radius: .25rem
+
+        }
+    </style>
 </head>
-<body style="background: #eff0ea">
+<body class="d-flex flex-column h-100" style="background:#eff0ea">
+
 {{>layout/navbar}}
-<style>
-    #TabMain {
-        width: 1500px;
-        height: 700px;
-        margin: 0 auto;
-        margin-top: 100px;
-        margin-left: 300px;
-    }
 
-    .tabItemContainer {
-        width: 100px;
-        height: 700px;
-        float: left;
-        margin-right: 20px;
-    }
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+    <div class="container" style="margin-top: 30px">
+        <!--<div class="col-2"></div>-->
+        <div id="TabMain">
+            <div class="tabItemContainer">
+                <li><a class="tabItemCurrent">回复我的</a></li>
+                <li><a>收到的赞</a></li>
+                <li><a>收藏列表</a></li>
+                <li><a>浏览记录</a></li>
+                <li><a>审核通知</a></li>
 
-    .tabBodyContainer {
-        width: 1000px;
-        height: 550px;
-        float: left;
-        background-color: #eff0ea;
-        border: 1px solid #eff0ea00;
-        -webkit-border-radius: 0 5px 5px 0;
-        -moz-border-radius: 0 5px 5px 0;
-        border-radius: 0 5px 5px 0;
-        margin-left: 1px;
-    }
-
-    .tabItemContainer > li {
-        list-style: none;
-        text-align: center;
-    }
-
-    .tabItemContainer > li > a {
-        float: left;
-        width: 100%;
-        padding: 10px 0 30px 0;
-        font: 16px "微软雅黑", Arial, Helvetica, sans-serif;
-        color: #808080;
-        cursor: pointer;
-        text-decoration: none;
-        border: 1px solid transparent;
-    }
-
-    .tabItemCurrent {
-        background-color: #eff0ea;
-        border: 1px solid #ccc !important;
-        /*border-right: 1px solid #ccc !important;*/
-        position: relative;
-        -webkit-border-radius: 5px 0 0 5px;
-        -moz-border-radius: 5px 0 0 5px;
-        border-radius: 5px 5px 5px 5px;
-    }
-
-    .tabItemContainer > li > a:hover {
-        color: #333;
-    }
-
-    .tabBodyItem {
-        position: absolute;
-        width: 1000px;
-        height: 550px;
-        display: none;
-    }
-
-    .tabBodyItem > p {
-        font: 13px "微软雅黑", Arial, Helvetica, sans-serif;
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .tabBodyItem > p > a {
-        text-decoration: none;
-        color: #0F3;
-    }
-
-    .tabBodyCurrent {
-        display: block;
-    }
-
-    .text-overflow {
-        display: block;
-        width: 80%;
-        word-break: keep-all;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .myGutter
-    {
-        /*margin-right: -10px;*/
-        /*margin-left: -15px;*/
-        margin-bottom: 15px;
-        padding: 10px;
-        background-color:#f5f5f5;
-        border: 1px solid #ddd;
-    }
-
-    .Mycard {
-        position: relative;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #eff0ea;
-        background-clip: border-box;
-        /*border: 1px solid rgba(0, 0, 0, .125);*/
-        border-radius: .25rem
-
-    }
-</style>
-
-<div id="TabMain">
-    <div class="tabItemContainer">
-        <li><a class="tabItemCurrent">回复我的</a></li>
-        <li><a>收到的赞</a></li>
-        <li><a>收藏列表</a></li>
-        <li><a>浏览记录</a></li>
-        <li><a>审核通知</a></li>
-
-    </div>
-    <div class="tabBodyContainer">
-        <div class="tabBodyItem tabBodyCurrent">
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter">
-                    <div class="card-body ">
-                        <a href="#">用户名：Special</a>
-                        回复了你的
-                        <a href="#">帖子：Special</a>
-                        <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                    </div>
-                    <div class="card-text row">
-                        <div class="col-md-11">
-                            <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
-                                lead-in
-                                to additional
-                                content.With supporting text below as a natural lead-in to additional content.With
-                                supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                        <div class="col-md-1 ">
-                            <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="Mycard" style="width: 100%;">
-                    <div class="myGutter">
-                        <div class="card-body">
-                        <a href="#">用户名：Special</a>
-                        回复了你的
-                        <a href="#">帖子：Special</a>
-                        <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                    </div>
-                    <div class="card-text row">
-                        <div class="col-md-11">
-                            <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
-                                lead-in to additional
-                                content.With supporting text below as a natural lead-in to additional content.With
-                                supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                        <div class="col-md-1 ">
-                            <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                        </div>
-
-                    </div>
-                </div>
-                </div>
-                <div class="Mycard" style="width: 100%;">
-                    <div class="myGutter">
-                        <div class="card-body">
-                            <a href="#">用户名：Special</a>
-                            回复了你的
-                            <a href="#">帖子：Special</a>
-                            <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                        </div>
-                        <div class="card-text row">
-                            <div class="col-md-11">
-                                <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
-                                    lead-in to additional
-                                    content.With supporting text below as a natural lead-in to additional content.With
-                                    supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                            <div class="col-md-1 ">
-                                <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="Mycard" style="width: 100%;">
-                    <div class="myGutter">
-                        <div class="card-body">
-                            <a href="#">用户名：Special</a>
-                            回复了你的
-                            <a href="#">帖子：Special</a>
-                            <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                        </div>
-                        <div class="card-text row">
-                            <div class="col-md-11">
-                                <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
-                                    lead-in to additional
-                                    content.With supporting text below as a natural lead-in to additional content.With
-                                    supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                            <div class="col-md-1 ">
-                                <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="Mycard" style="width: 100%;">
-                    <div class="myGutter">
-                        <div class="card-body">
-                            <a href="#">用户名：Special</a>
-                            回复了你的
-                            <a href="#">帖子：Special</a>
-                            <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                        </div>
-                        <div class="card-text row">
-                            <div class="col-md-11">
-                                <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
-                                    lead-in to additional
-                                    content.With supporting text below as a natural lead-in to additional content.With
-                                    supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                            <div class="col-md-1 ">
-                                <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="Mycard" style="width: 100%;">
-                    <div class="myGutter">
-                        <div class="card-body">
-                            <a href="#">用户名：Special</a>
-                            回复了你的
-                            <a href="#">帖子：Special</a>
-                            <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                        </div>
-                        <div class="card-text row">
-                            <div class="col-md-11">
-                                <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
-                                    lead-in to additional
-                                    content.With supporting text below as a natural lead-in to additional content.With
-                                    supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                            <div class="col-md-1 ">
-                                <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="tabBodyItem">
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter">
-                    <div class="card-body">
-                        <a href="#">用户名：Special</a>
-                        赞了你的
-                        <a href="#">帖子：Special</a>
-                        <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter">
-                    <div class="card-body">
-                        <a href="#">用户名：Special</a>
-                        赞了你的
-                        <a href="#">帖子：Special</a>
-                        <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter">
-                    <div class="card-body">
-                        <a href="#">用户名：Special</a>
-                        赞了你的
-                        <a href="#">帖子：Special</a>
-                        <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter">
-                    <div class="card-body">
-                        <a href="#">用户名：Special</a>
-                        赞了你的
-                        <a href="#">帖子：Special</a>
-                        <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter">
-                    <div class="card-body">
-                        <a href="#">用户名：Special</a>
-                        赞了你的
-                        <a href="#">帖子：Special</a>
-                        <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="tabBodyItem">
-            <div class="Mycard" style="padding: 10px 20px 10px 20px">
-<!--                <div class="myGutter">-->
-                    <div class="myGutter row ">
-                        <div class="col-sm-2">
-                            <img src="" style="height: 100%;width: 100%">
+            <div class="tabBodyContainer">
+                <div class="tabBodyItem tabBodyCurrent">
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body ">
+                                <a href="#">用户名：Special</a>
+                                回复了你的
+                                <a href="#">帖子：Special</a>
+                                <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
+                            </div>
+                            <div class="card-text row">
+                                <div class="col-md-11">
+                                    <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
+                                        lead-in
+                                        to additional
+                                        content.With supporting text below as a natural lead-in to additional content.With
+                                        supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                                <div class="col-md-1 ">
+                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-10">
-                            <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                            <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                                由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="card-body">
+                                    <a href="#">用户名：Special</a>
+                                    回复了你的
+                                    <a href="#">帖子：Special</a>
+                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
+                                </div>
+                                <div class="card-text row">
+                                    <div class="col-md-11">
+                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
+                                            lead-in to additional
+                                            content.With supporting text below as a natural lead-in to additional content.With
+                                            supporting text below as a natural lead-in to additional content.</p>
+                                    </div>
+                                    <div class="col-md-1 ">
+                                        <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="card-body">
+                                    <a href="#">用户名：Special</a>
+                                    回复了你的
+                                    <a href="#">帖子：Special</a>
+                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
+                                </div>
+                                <div class="card-text row">
+                                    <div class="col-md-11">
+                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
+                                            lead-in to additional
+                                            content.With supporting text below as a natural lead-in to additional content.With
+                                            supporting text below as a natural lead-in to additional content.</p>
+                                    </div>
+                                    <div class="col-md-1 ">
+                                        <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="card-body">
+                                    <a href="#">用户名：Special</a>
+                                    回复了你的
+                                    <a href="#">帖子：Special</a>
+                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
+                                </div>
+                                <div class="card-text row">
+                                    <div class="col-md-11">
+                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
+                                            lead-in to additional
+                                            content.With supporting text below as a natural lead-in to additional content.With
+                                            supporting text below as a natural lead-in to additional content.</p>
+                                    </div>
+                                    <div class="col-md-1 ">
+                                        <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="card-body">
+                                    <a href="#">用户名：Special</a>
+                                    回复了你的
+                                    <a href="#">帖子：Special</a>
+                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
+                                </div>
+                                <div class="card-text row">
+                                    <div class="col-md-11">
+                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a natural
+                                            lead-in to additional
+                                            content.With supporting text below as a natural lead-in to additional content.With
+                                            supporting text below as a natural lead-in to additional content.</p>
+                                    </div>
+                                    <div class="col-md-1 ">
+                                        <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabBodyItem">
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">用户名：Special</a>
+                                赞了你的
+                                <a href="#">帖子：Special</a>
+                                <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">用户名：Special</a>
+                                赞了你的
+                                <a href="#">帖子：Special</a>
+                                <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">用户名：Special</a>
+                                赞了你的
+                                <a href="#">帖子：Special</a>
+                                <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">用户名：Special</a>
+                                赞了你的
+                                <a href="#">帖子：Special</a>
+                                <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">用户名：Special</a>
+                                赞了你的
+                                <a href="#">帖子：Special</a>
+                                <h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tabBodyItem">
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <!--                <div class="myGutter">-->
+                        <div class="myGutter row ">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                </div>-->
+                    </div>
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <div class="row myGutter">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"> <h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <div class="row myGutter">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"> <h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tabBodyItem">
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <!--                <div class="myGutter">-->
+                        <div class="myGutter row ">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                </div>-->
+                    </div>
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <div class="row myGutter">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"> <h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabBodyItem">
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter ">
+                            <div class="card-body row">
+                                <div class="col-md-11">
+                                    <a href="#">用户名：Special</a>
+                                    申请成为
+                                    <a href="#">板块：Special</a>
+                                    的版主
+                                </div>
+                                <div class="col-md-1 ">
+                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-8"></div>
-                                <a href="#" class="col-2">作者</a>
-                                <div class="col-2">今天9:23</div>
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-1" style="margin-bottom: 5px">
+                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
+                                </div>
+                                <div class="col-md-1" style="margin-bottom: 5px">
+                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-<!--                </div>-->
-            </div>
-            <div class="Mycard" style="padding: 10px 20px 10px 20px">
-                <div class="row myGutter">
-                    <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
-                    </div>
-                    <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"> <h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                        <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                            由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <a href="#" class="col-2">作者</a>
-                            <div class="col-2">今天9:23</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="Mycard" style="padding: 10px 20px 10px 20px">
-                <div class="row myGutter">
-                    <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
-                    </div>
-                    <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"> <h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                        <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                            由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <a href="#" class="col-2">作者</a>
-                            <div class="col-2">今天9:23</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-        <div class="tabBodyItem">
-            <div class="Mycard" style="padding: 10px 20px 10px 20px">
-                <!--                <div class="myGutter">-->
-                <div class="myGutter row ">
-                    <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
                     </div>
-                    <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                        <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                            由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <a href="#" class="col-2">作者</a>
-                            <div class="col-2">今天9:23</div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter ">
+                            <div class="card-body row">
+                                <div class="col-md-11">
+                                    <a href="#">用户名：Special</a>
+                                    申请成为
+                                    <a href="#">板块：Special</a>
+                                    的版主
+                                </div>
+                                <div class="col-md-1 ">
+                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-1" style="margin-bottom: 5px">
+                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
+                                </div>
+                                <div class="col-md-1" style="margin-bottom: 5px">
+                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <!--                </div>-->
-            </div>
-            <div class="Mycard" style="padding: 10px 20px 10px 20px">
-                <div class="row myGutter">
-                    <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
-                    </div>
-                    <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"> <h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                        <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                            由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <a href="#" class="col-2">作者</a>
-                            <div class="col-2">今天9:23</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tabBodyItem">
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter ">
-                <div class="card-body row">
-                    <div class="col-md-11">
-                        <a href="#">用户名：Special</a>
-                        申请成为
-                        <a href="#">板块：Special</a>
-                        的版主
-                    </div>
-                    <div class="col-md-1 ">
-                        <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                    </div>
-                    <div class="col-md-1" style="margin-bottom: 5px">
-                        <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
-                    </div>
-                    <div class="col-md-1" style="margin-bottom: 5px">
-                        <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
-                    </div>
-                </div>
-            </div>
 
-            </div>
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter ">
-                    <div class="card-body row">
-                        <div class="col-md-11">
-                            <a href="#">用户名：Special</a>
-                            申请成为
-                            <a href="#">板块：Special</a>
-                            的版主
-                        </div>
-                        <div class="col-md-1 ">
-                            <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-10">
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter ">
+                            <div class="card-body row">
+                                <div class="col-md-11">
+                                    <a href="#">用户名：Special</a>
+                                    申请成为
+                                    <a href="#">板块：Special</a>
+                                    的版主
+                                </div>
+                                <div class="col-md-1 ">
+                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-1" style="margin-bottom: 5px">
+                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
+                                </div>
+                                <div class="col-md-1" style="margin-bottom: 5px">
+                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-1" style="margin-bottom: 5px">
-                            <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
-                        </div>
-                        <div class="col-md-1" style="margin-bottom: 5px">
-                            <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
-                        </div>
+
                     </div>
+
                 </div>
-
             </div>
-            <div class="Mycard" style="width: 100%;">
-                <div class="myGutter ">
-                    <div class="card-body row">
-                        <div class="col-md-11">
-                            <a href="#">用户名：Special</a>
-                            申请成为
-                            <a href="#">板块：Special</a>
-                            的版主
-                        </div>
-                        <div class="col-md-1 ">
-                            <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                        </div>
-                        <div class="col-md-1" style="margin-bottom: 5px">
-                            <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
-                        </div>
-                        <div class="col-md-1" style="margin-bottom: 5px">
-                            <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
     </div>
-</div>
+</main>
+
+{{>layout/footer}}
 
 </body>
+
 <script src="https://static.pengyaou.com/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function (e) {
@@ -516,7 +513,6 @@
     }
 </script>
 
-{{>layout/footer}}
 
-</body>
+
 </html>

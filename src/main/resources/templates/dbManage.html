@@ -1,59 +1,79 @@
-<!DOCTYPE html>
-<html lang="zh-hans">
+<!doctype html>
+<html lang="zh-hans" class="h-100">
 <head>
     <meta charset="UTF-8">
     <title>数据库管理</title>
+
+    <!--&lt;!&ndash; Bootstrap core CSS &ndash;&gt;-->
+    <!--<link href="bootstrap.min.css" rel="stylesheet">-->
+
     {{>layout/head}}
+
+    <style>
+
+        .footer {
+            background-color: #f5f5f5;
+        }
+
+        .footer > .container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+    </style>
+    <!-- Custom styles for this template -->
 </head>
-<body style="background: #eff0ea">
+<body class="d-flex flex-column h-100" style="background:#eff0ea">
+
 {{>layout/navbar}}
 
-<div class="container">
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <table class="table body table-hover">
+            <thead>
+            <tr>
+                <th scope="col">编号</th>
+                <th scope="col">文件名</th>
+                <th scope="col">备份日期</th>
+                <th scope="col" style="width: 15%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+                    <button type="button" class="btn btn-outline-success btn-sm">备份</button>
+                </td>
 
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">编号</th>
-                    <th scope="col">文件名</th>
-                    <th scope="col">备份日期</th>
-                    <th scope="col" style="width: 15%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger btn-sm">删除</button>
-                        <button type="button" class="btn btn-outline-success btn-sm">备份</button>
-                    </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+                    <button type="button" class="btn btn-outline-success btn-sm">备份</button>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry the Bird</td>
+                <td>Thornton</td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+                    <button type="button" class="btn btn-outline-success btn-sm">备份</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
 
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger btn-sm">删除</button>
-                        <button type="button" class="btn btn-outline-success btn-sm">备份</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry the Bird</td>
-                    <td>Thornton</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger btn-sm">删除</button>
-                        <button type="button" class="btn btn-outline-success btn-sm">备份</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-</div>
-
+{{>layout/footer}}
 
 </body>
-
 </html>
