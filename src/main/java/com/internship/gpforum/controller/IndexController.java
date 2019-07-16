@@ -18,51 +18,54 @@ public class IndexController {
 //    private List<String> codeList=new ArrayList<>();
 
     @RequestMapping("/")
-    public String Start(){
+    public String Start() {
         return "login";
     }
 
     @RequestMapping("/section")
-    public String toSection(){
+    public String toSection() {
         return "section";
     }
 
     @RequestMapping("/profile")
-    public String toProfile(){
+    public String toProfile() {
         return "profile";
     }
 
     @RequestMapping("/dbManage")
-    public String toDbManage(){
+    public String toDbManage() {
         return "dbManage";
     }
 
     @RequestMapping("/index")
-    public String toIndex(){
+    public String toIndex() {
         return "index";
     }
 
     @RequestMapping("/updateProfile")
-    public String toUpdateProfile(){
+    public String toUpdateProfile() {
         return "updateProfile";
     }
 
     @RequestMapping("/postDetail")
-    public String toPostDetail(){
+    public String toPostDetail() {
         return "postDetail";
     }
 
     @RequestMapping("/write")
-    public String toWrite(){
+    public String toWrite() {
         return "write";
     }
 
     @RequestMapping("/message")
-    public String toMessage(){
+    public String toMessage() {
         return "message";
     }
 
-
+    @RequestMapping("/sectionDetail")
+    public String toSectionDetail() {
+        return "sectionDetail";
+    }
 
 
 //    @RequestMapping("star")
