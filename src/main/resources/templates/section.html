@@ -2,17 +2,18 @@
 <html lang="zh-hans" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <title>Cards design - tabler.github.io - a responsive, flat and full featured admin template</title>
+    <title>所有版块</title>
 
     {{>layout/head}}
-    <link href="../css/dashboard.css" rel="stylesheet"/>
+    <!--<link href="/css/dashboard.css" rel="stylesheet"/>-->
+    <link href="/css/card.css" rel="stylesheet"/>
 
 </head>
 <body style="background: #eff0ea">
 {{>layout/navbar}}
 
 
-<div id="demo" class="carousel slide container" data-ride="carousel">
+<div id="demo" class="carousel slide " data-ride="carousel">
     <!-- 指示符 -->
     <ul class="carousel-indicators">
         <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -20,7 +21,7 @@
         <li data-target="#demo" data-slide-to="2"></li>
     </ul>
     <!-- 轮播图片 -->
-    <div class="carousel-inner container" style="width: 4000px;height:450px">
+    <div class="carousel-inner " style="width: 4000px;height:450px">
         <div class="carousel-item active">
             <img src="../img/long.jpg">
         </div>
@@ -44,7 +45,7 @@
     <div class="header py-4">
         <div class="container">
             <div class="my-3 my-md-5">
-                <div class="container">
+                <div class="">
                     <div class="row">
                         <div class="col-md-6 col-xl-4">
                             <div class="card">
@@ -271,7 +272,7 @@
                 <h5 class="modal-title" id="changePasswordModalLabel">创建新版块</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <!--                    <span aria-hidden="true">&times;</span>-->
-                    <span class="oi oi-x"></span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="" id="createNewSectionForm">
@@ -309,6 +310,8 @@
         </div>
     </div>
 </div>
+
+{{>layout/footer}}
 
 </body>
 
