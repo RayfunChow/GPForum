@@ -1,16 +1,20 @@
 package com.internship.gpforum.service;
 
 import com.internship.gpforum.dal.entity.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Date;
 import java.util.List;
 
 public interface PostService {
-    void writeContent(String author_email, Integer section_name, String title, String summary, String content, boolean commentable, String post_status, Date lastEditTime);
+    void writeContent(String author_email, String section_name, String title, String summary, String content, boolean commentable, String post_status, Date lastEditTime);
 
-    List<Post> getByEdiTime(String sectionName);
+    Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest);
 
-    List<Post> getByStarNumber(String sectionName);
+    Page<Post> getByStarNumber(String sectionName,PageRequest pageRequest);
 
     Post getDetail(Integer postId);
+
+    Page<Post> getHisPost(String userEmail,PageRequest pageRequest);
 }

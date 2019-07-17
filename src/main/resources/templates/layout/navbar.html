@@ -31,24 +31,28 @@
                             <span class="oi oi-magnifying-glass"></span>
                         </button>
                     </form>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" href="message">消息中心</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item dropdown">-->
-<!--                        <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"-->
-<!--                           aria-haspopup="true" aria-expanded="false">-->
-<!--                            <img class="nav-item rounded-circle" src="/img/no_avatar.png" width="30px" height="30px" alt="">-->
-<!--                        </a>-->
-<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
-<!--                            <a class="dropdown-item" href="updateProfile">修改个人信息</a>-->
-<!--                            <a class="dropdown-item" href="logout">退出登录</a>-->
-<!--                        </div>-->
-<!--                    </li>-->
+                    {{#User}}
                     <li class="nav-item">
-                        <a class="nav-link" href="index" id="signin">
-                            <span class="oi oi-account-login">&nbsp;登陆</span>
+                        <a class="nav-link" href="message">消息中心</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <img class="nav-item rounded-circle" src="/img/no_avatar.png" width="30px" height="30px" alt="">{{nickName}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="updateProfile">修改个人信息</a>
+                            <a class="dropdown-item" href="signout">退出登录</a>
+                        </div>
+                    </li>
+                    {{/User}}
+                    {{^User}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="login" id="signin">
+                            <span class="oi oi-account-login">&nbsp;登录</span>
                         </a>
                     </li>
+                    {{/User}}
                 </ul>
             </div>
         </div>

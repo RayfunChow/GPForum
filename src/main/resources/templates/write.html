@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-hans">
+<html lang="zh-hans" class="h-100">
 <head>
     <meta charset="UTF-8">
     <title>撰写贴文</title>
@@ -9,85 +9,90 @@
 
     <script type="text/javascript" src="/simditor/js/mobilecheck.js"></script>
 </head>
-<body style="background: #eff0ea">
+<body style="background: #eff0ea" class="d-flex flex-column h-100">
 
 {{>layout/navbar}}
 
-<div class="container">
+<main role="main" class="flex-shrink-0">
 
-    <div style="margin-bottom: 30px;">
-        <h3>发表帖子</h3>
-    </div>
+    <div class="container">
+
+        <div style="margin-bottom: 30px;">
+            <h3>发表帖子</h3>
+        </div>
 
 
-    <form action="writeAction" method="post" id="writeForm">
+        <form action="writeAction" method="post" id="writeForm">
 
-        <input name="inputTitle"
-               type="text"
-               maxlength="50"
-               class="form-control "
-               id="inputTitle"
-               placeholder="在此处键入标题"
-               autocomplete="off"
-               autofocus>
+            <input name="inputTitle"
+                   type="text"
+                   maxlength="50"
+                   class="form-control "
+                   id="inputTitle"
+                   placeholder="在此处键入标题"
+                   autocomplete="off"
+                   autofocus>
 
-        <section id="page-demo" style="margin-top: 30px;">
+            <section id="page-demo" style="margin-top: 30px;">
             <textarea
                     name="content"
                     id="txt-content"
                     data-autosave="editor-content"
                     upload="true">
             </textarea>
-        </section>
+            </section>
 
-        <script type="text/javascript" src="/simditor/js/module.js"></script>
-        <script type="text/javascript" src="/simditor/js/uploader.js"></script>
-        <script type="text/javascript" src="/simditor/js/hotkeys.js"></script>
-        <script type="text/javascript" src="/simditor/js/simditor.js"></script>
-        <script type="text/javascript" src="/simditor/js/page-demo.js"></script>
-
-
-        <div class="row" style="margin-top: 30px;">
-
-            <!--<div class="dropdown col-md-5">-->
-            <!--<label>文章类别：</label>-->
-            <!--<select class="" style="margin-top: 10px;"  name="dropdownlabel">-->
-            <!--<option value="科技">科技</option>-->
-            <!--<option value="生活">生活</option>-->
-            <!--<option value="政治">政治</option>-->
-            <!--<option value="经济">经济</option>-->
-            <!--<option value="娱乐">娱乐</option>-->
-            <!--<option value="社会">社会</option>-->
-            <!--<option value="健康">健康</option>-->
-            <!--<option value="文学">文学</option>-->
-            <!--</select>-->
-            <!--</div>-->
+            <script type="text/javascript" src="/simditor/js/module.js"></script>
+            <script type="text/javascript" src="/simditor/js/uploader.js"></script>
+            <script type="text/javascript" src="/simditor/js/hotkeys.js"></script>
+            <script type="text/javascript" src="/simditor/js/simditor.js"></script>
+            <script type="text/javascript" src="/simditor/js/page-demo.js"></script>
 
 
-            <div class="custom-control custom-checkbox col-sm-2" style="margin-left: 30px;">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" name="ispublic"
-                       value="public">
-                <label class="custom-control-label text-center" for="customCheck1"
-                       style="user-select: none">仅自己可见</label>
+            <div class="row" style="margin-top: 30px;">
+
+                <!--<div class="dropdown col-md-5">-->
+                <!--<label>文章类别：</label>-->
+                <!--<select class="" style="margin-top: 10px;"  name="dropdownlabel">-->
+                <!--<option value="科技">科技</option>-->
+                <!--<option value="生活">生活</option>-->
+                <!--<option value="政治">政治</option>-->
+                <!--<option value="经济">经济</option>-->
+                <!--<option value="娱乐">娱乐</option>-->
+                <!--<option value="社会">社会</option>-->
+                <!--<option value="健康">健康</option>-->
+                <!--<option value="文学">文学</option>-->
+                <!--</select>-->
+                <!--</div>-->
+
+
+                <div class="custom-control custom-checkbox col-sm-2" style="margin-left: 30px;">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" name="ispublic"
+                           value="public">
+                    <label class="custom-control-label text-center" for="customCheck1"
+                           style="user-select: none">仅自己可见</label>
+                </div>
+
+                <div class="col-sm-2">
+                    <P style="float: left;">本帖将发表到：<a href="#">音乐版</a></P>
+                </div>
+
+                <div class="col-sm-5"></div>
+
+                <div class="col-sm-2">
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="write_content()"
+                            style="width:200px;margin-right: 50px">
+                        发表
+                    </button>
+                </div>
+
+                <div class="col-sm-1"></div>
+
             </div>
+        </form>
+    </div>
 
-            <div class="col-sm-2">
-                <P style="float: left;">本帖将发表到：<a href="#">音乐版</a></P>
-            </div>
-
-            <div class="col-sm-5"></div>
-
-            <div class="col-sm-2">
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="write_content()" style="width:200px;margin-right: 50px">
-                    发表
-                </button>
-            </div>
-
-            <div class="col-sm-1"></div>
-
-        </div>
-    </form>
-</div>
+</main>
 
 </body>
 <!--<script src="https://static.pengyaou.com/js/jquery-1.8.3.min.js"></script>-->
@@ -133,11 +138,12 @@
             }
         });
     });
+
     function write_content() {
-        var section_name="11";
-        var title=$("#inputTitle").val();
-        var content=$("#txt-content").val();
-        var commentable=$("#customCheck1").is(":checked");
+        var section_name = "11";
+        var title = $("#inputTitle").val();
+        var content = $("#txt-content").val();
+        var commentable = $("#customCheck1").is(":checked");
         $.ajax({
             type: "POST",
             url: "writeAction",
@@ -148,7 +154,7 @@
                 "commentable": commentable
             },
             dataType: "json",
-            success:function (data) {
+            success: function (data) {
                 alert(data);
             }
         });
