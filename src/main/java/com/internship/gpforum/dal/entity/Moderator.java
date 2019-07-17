@@ -1,6 +1,7 @@
 package com.internship.gpforum.dal.entity;
 
 
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="moderator")
+@ToString
 public class Moderator {
 
     @Id
@@ -17,6 +19,10 @@ public class Moderator {
     private String sectionName;
 
     private String moderatorEmail;
+
+    private String moderatorNickName;
+
+    private String moderatorAvatar;
 
     @CreatedDate
     private Date appointmentTime;
@@ -53,12 +59,30 @@ public class Moderator {
         this.appointmentTime = appointmentTime;
     }
 
+    public String getModeratorNickName() {
+        return moderatorNickName;
+    }
+
+    public void setModeratorNickName(String moderatorNickName) {
+        this.moderatorNickName = moderatorNickName;
+    }
+
+    public String getModeratorAvatar() {
+        return moderatorAvatar;
+    }
+
+    public void setModeratorAvatar(String moderatorAvatar) {
+        this.moderatorAvatar = moderatorAvatar;
+    }
+
     @Override
     public String toString() {
         return "Moderator{" +
                 "moderatorId=" + moderatorId +
                 ", sectionName='" + sectionName + '\'' +
                 ", moderatorEmail='" + moderatorEmail + '\'' +
+                ", moderatorNickName='" + moderatorNickName + '\'' +
+                ", moderatorAvatar='" + moderatorAvatar + '\'' +
                 ", appointmentTime=" + appointmentTime +
                 '}';
     }

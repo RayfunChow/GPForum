@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!---->
+    <link rel="stylesheet" href="/layui/css/layui.css">
     {{>layout/head}}
     <title>音乐版 - 聚集地论坛</title>
 </head>
@@ -43,6 +44,7 @@
 
             <div class="row">
                 <div class="col-7">
+                    {{#postPage}}
                     <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
                         <a href="#" style="color: #0b2e13"><h4>日韩贸易战升级，韩国深陷绝境，普京及时出手</h4></a>
                         <p>7月初日本正式对韩国实施了出口限制，用于制造半导体的高纯度氟化氢等原材料被禁止向韩国出口。
@@ -52,64 +54,84 @@
                         <div class="row">
                             <div class="col-8"></div>
                             <div class="col-2">今天9:23</div>
-                            <div class="col-1"><input type="image" src="/svg/heart.svg"
-                                                      style="height: 20px;width: 20px">
-                            </div>
-                            <div class="col-1"><input type="image" src="/svg/trash.svg"
-                                                      style="height: 20px;width: 20px">
-                            </div>
+                        <div class="col-1"><input type="image" src="/svg/heart.svg" style="height: 20px;width: 20px"></div>
+                        <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
                         </div>
                     </div>
-                    <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
-                        <a href="#" style="color: #0b2e13"><h4>加拿大外交部：又一加拿大公民在华被拘</h4></a>
-                        <p>【环球网报道 记者 朱梦颖】综合美国有线电视新闻网(CNN)、加拿大广播公司(CBC)消息，加拿大全球事务部(外交部)13日证实，
-                            又有一名加拿大公民在中国被拘留。
-                            <!--                        <a href="#" style="color:#7a5e3f">查看原文</a></p>-->
-                        <div class="row ">
-                            <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
-                            <div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
-                        <a href="#" style="color: #0b2e13"><h4>杭州失踪女童确认身亡 妈妈:接到噩耗时"不敢相信"</h4></a>
-                        <p>曾女士表示，凌晨4点40分左右，她就已经起床，“我们老家这里坐车，很不方便，很早就要起床。我一晚上都没睡好，
-                            网上的报道我也都不敢看。”她是前往宁波还是淳安，曾女士表示票是亲戚订的并没有过多透露，但她表示会来浙江。
-                            <!--                        <a href="#" style="color:#7a5e3f">查看原文</a></p>-->
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
-                            <div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
-                        <a href="#" style="color: #0b2e13"><h4>杭州失踪女童确认身亡 妈妈:接到噩耗时"不敢相信"</h4></a>
-                        <p>曾女士表示，凌晨4点40分左右，她就已经起床，“我们老家这里坐车，很不方便，很早就要起床。我一晚上都没睡好，
-                            网上的报道我也都不敢看。”她是前往宁波还是淳安，曾女士表示票是亲戚订的并没有过多透露，但她表示会来浙江。
-                            <!--                        <a href="#" style="color:#7a5e3f">查看原文</a></p>-->
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
-                            <div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>
-                            </div>
-                        </div>
-                    </div>
+                    {{/postPage}}
+                    {{^postPage}}
+                    {{/postPage}}
+                    <!--<div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">-->
+                        <!--<a href="#" style="color: #0b2e13"><h4>日韩贸易战升级，韩国深陷绝境，普京及时出手</h4></a>-->
+                        <!--<p>7月初日本正式对韩国实施了出口限制，用于制造半导体的高纯度氟化氢等原材料被禁止向韩国出口。-->
+                            <!--如果得不到这些原材料，韩国三星、LG等高科技产业将受到严重冲击，甚至韩国经济都将受到巨大影响，-->
+                            <!--为了让日本取消出口禁令，韩国政府想了不少办法，然而日本政府态度强硬，拒绝做出让步。-->
+                            <!--&lt;!&ndash;                        <a href="#" style="color:#7a5e3f">查看原文</a></p>&ndash;&gt;-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-8"></div>-->
+                            <!--<div class="col-2">今天9:23</div>-->
+                            <!--<div class="col-1"><input type="image" src="/svg/heart.svg"-->
+                                                      <!--style="height: 20px;width: 20px">-->
+                            <!--</div>-->
+                            <!--<div class="col-1"><input type="image" src="/svg/trash.svg"-->
+                                                      <!--style="height: 20px;width: 20px">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">-->
+                        <!--<a href="#" style="color: #0b2e13"><h4>加拿大外交部：又一加拿大公民在华被拘</h4></a>-->
+                        <!--<p>【环球网报道 记者 朱梦颖】综合美国有线电视新闻网(CNN)、加拿大广播公司(CBC)消息，加拿大全球事务部(外交部)13日证实，-->
+                            <!--又有一名加拿大公民在中国被拘留。-->
+                            <!--&lt;!&ndash;                        <a href="#" style="color:#7a5e3f">查看原文</a></p>&ndash;&gt;-->
+                        <!--<div class="row ">-->
+                            <!--<div class="col-8"></div>-->
+                            <!--<div class="col-2">今天9:23</div>-->
+                            <!--<div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>-->
+                            <!--<div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">-->
+                        <!--<a href="#" style="color: #0b2e13"><h4>杭州失踪女童确认身亡 妈妈:接到噩耗时"不敢相信"</h4></a>-->
+                        <!--<p>曾女士表示，凌晨4点40分左右，她就已经起床，“我们老家这里坐车，很不方便，很早就要起床。我一晚上都没睡好，-->
+                            <!--网上的报道我也都不敢看。”她是前往宁波还是淳安，曾女士表示票是亲戚订的并没有过多透露，但她表示会来浙江。-->
+                            <!--&lt;!&ndash;                        <a href="#" style="color:#7a5e3f">查看原文</a></p>&ndash;&gt;-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-8"></div>-->
+                            <!--<div class="col-2">今天9:23</div>-->
+                            <!--<div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>-->
+                            <!--<div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">-->
+                        <!--<a href="#" style="color: #0b2e13"><h4>杭州失踪女童确认身亡 妈妈:接到噩耗时"不敢相信"</h4></a>-->
+                        <!--<p>曾女士表示，凌晨4点40分左右，她就已经起床，“我们老家这里坐车，很不方便，很早就要起床。我一晚上都没睡好，-->
+                            <!--网上的报道我也都不敢看。”她是前往宁波还是淳安，曾女士表示票是亲戚订的并没有过多透露，但她表示会来浙江。-->
+                            <!--&lt;!&ndash;                        <a href="#" style="color:#7a5e3f">查看原文</a></p>&ndash;&gt;-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-8"></div>-->
+                            <!--<div class="col-2">今天9:23</div>-->
+                            <!--<div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>-->
+                            <!--<div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div id="pagination"></div>
                 </div>
                 <div class="card col-3" style="max-height: 500px">
                     <div class="card-body" style="padding: 10px;text-align: center">
-                        <h3 style="text-align: center;max-height: 200px">音乐版</h3>
+                        {{#sectionDetail}}
+                        <h3 style="text-align: center;max-height: 200px">{{sectionName}}</h3>
                         <h4 class="container" style="margin-bottom: 50px">
-                            音乐是反映人类现实生活情感的一种艺术。
+                           {{description}}
                         </h4>
+                        {{/sectionDetail}}
                         <hr>
                         <p>
                             版主
                         </p>
+                        {{#moderators}}
                         <div class="row ml-1" style="padding: 0 10px 0 10px; margin: auto auto 20px;">
                             <div class="" style="margin:0 15px 0 0;">
                                 <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=80f0e4b4a61ea8d39e2f7c56f6635b2b/267f9e2f07082838ac3a8f1bb899a9014c08f18e.jpg"
@@ -117,7 +139,7 @@
                                      class="rounded-circle">
                             </div>
                             <div style="margin-top: 13px;">
-                                <a href="#"><span style="color: #0C0C0C"> 江泽民</span></a>
+                                <a href="/profile?userEmail={{moderatorEmail}}"><span style="color: #0C0C0C"> {{moderatorNickName}}</span></a>
                             </div>
                             <button type="button" class="btn btn-outline-primary ml-auto mr-3 float-right"
                                     data-toggle="button"
@@ -126,23 +148,23 @@
                                 关注
                             </button>
                         </div>
-
-                        <div class="row ml-1" style="padding: 0 10px 0 10px; margin: auto auto 20px;">
-                            <div class="" style="margin:0 15px 0 0;">
-                                <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=80f0e4b4a61ea8d39e2f7c56f6635b2b/267f9e2f07082838ac3a8f1bb899a9014c08f18e.jpg"
-                                     style="width: 50px;height: 50px;"
-                                     class="rounded-circle">
-                            </div>
-                            <div style="margin-top: 13px;">
-                                <a href="#"><span style="color: #0C0C0C"> 江泽民</span></a>
-                            </div>
-                            <button type="button" class="btn btn-outline-primary ml-auto mr-3 float-right"
-                                    data-toggle="button"
-                                    aria-pressed="false"
-                                    style="height: 40px;width: 60px; margin-top:5px;">
-                                关注
-                            </button>
-                        </div>
+                        {{/moderators}}
+                        <!--<div class="row ml-1" style="padding: 0 10px 0 10px; margin: auto auto 20px;">-->
+                            <!--<div class="" style="margin:0 15px 0 0;">-->
+                                <!--<img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=80f0e4b4a61ea8d39e2f7c56f6635b2b/267f9e2f07082838ac3a8f1bb899a9014c08f18e.jpg"-->
+                                     <!--style="width: 50px;height: 50px;"-->
+                                     <!--class="rounded-circle">-->
+                            <!--</div>-->
+                            <!--<div style="margin-top: 13px;">-->
+                                <!--<a href="#"><span style="color: #0C0C0C"> 江泽民</span></a>-->
+                            <!--</div>-->
+                            <!--<button type="button" class="btn btn-outline-primary ml-auto mr-3 float-right"-->
+                                    <!--data-toggle="button"-->
+                                    <!--aria-pressed="false"-->
+                                    <!--style="height: 40px;width: 60px; margin-top:5px;">-->
+                                <!--关注-->
+                            <!--</button>-->
+                        <!--</div>-->
                         <div style="position: absolute;bottom: 0;left: 22%;margin-bottom: 20px;">
                             <button type="button" class="btn btn-outline-primary">
                                 <span class="oi oi-pencil"></span>&nbsp;发表新帖
@@ -160,6 +182,28 @@
     </div>
 </main>
 {{>layout/footer}}
+
+<script src="/layui/layui.js"></script>
+<script>
+
+    $(".delete-post").click(function () {
+        confirm("确认删除该帖吗？");
+    });
+
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'pagination' //分页控件id
+            ,limit: 10 //每页显示的条数
+            ,count: 500 //数据总数，从服务端得到
+            ,groups: 5
+            ,layout:['count', 'prev', 'page', 'next', 'skip']
+        });
+    });
+</script>
+
 
 </body>
 </html>
