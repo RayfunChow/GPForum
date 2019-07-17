@@ -115,8 +115,8 @@
                 我的个人信息
             </div>
             <div class="card-body row ">
-                <div class="col-1"></div>
-                <form action="" id="updateProfileForm" class="col-7">
+                <!--                <div class="col-1"></div>-->
+                <form action="" id="updateProfileForm" class="col-7" style="padding-left: 50px;margin-left: 50px;">
                     <div class="form-group row">
                         <label for="userNickname" class="col-sm-2 col-form-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称 <span
                                 style="color: red">*</span></label>
@@ -167,35 +167,43 @@
                         <label class="col-sm-2 col-form-label">爱&nbsp;&nbsp;&nbsp;&nbsp;好</label>
                         <div class="">
                             <div class=" row toggle-button" style="margin-left: 2px">
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     音乐
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     电影
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     动漫
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     电竞
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     读书
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     数码
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     摄影
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                        name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     美食
                                 </button>
@@ -218,7 +226,7 @@
 
                 </form>
                 <hr style="width:1px;height:380px; ">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group" style="text-align: center;margin-top: 30px;margin-left: 70px">
                         <div class="row">
                             <!--                        <input type="image" class="nav-item rounded-circle" id="userAvatar" data-toggle="modal"-->
@@ -234,16 +242,22 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="container">
-                                <h4 id="showUserEmail"></h4>
-                                <button type="button" class="btn btn-outline-info" data-toggle="modal"
-                                        data-target="#changePasswordModal">
-                                    更改密码
-                                </button>
-                            </div>
+
+                            <h4 id="showUserEmail"></h4>
+
+
                             <!--</div>-->
                         </div>
                     </div>
+                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal"
+                            style="float: left;margin-left: 45px;"
+                            data-target="#changePasswordModal">
+                        <span class="oi oi-key"></span> 更改密码
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal"
+                            data-target="#addFaceModal" style="float: right;margin-right: 20px;">
+                        <span class="oi oi-person"></span> 添加面部信息
+                    </button>
                 </div>
             </div>
         </div>
@@ -306,17 +320,17 @@
 </div>
 
 <div class="modal fade" id="changeAvatarModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">更换头像</h5>
+                <h5 class="modal-title" id="changeAvatarModalTitle">更换头像</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body ">
                 <div class="layui-upload">
-                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                    <button type="button" class="layui-btn" id="btnUploadAvatar">上传图片</button>
                     <p>文件大小不超过1M</p>
                     <div class="layui-upload-list">
                         <img class="layui-upload-img" id="demo1" style="width: 250px;height: 250px">
@@ -332,8 +346,105 @@
     </div>
 </div>
 
+<div class="modal fade" id="addFaceModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addFaceModalTitle">添加面部信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <video id="video" autoplay style="width: 120px;height: 150px"></video>
+            </div>
+<!--            <div class="modal-footer">-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
 </body>
 
+<!--描绘video截图-->
+<!--<canvas id="canvas" width="480" height="320"></canvas>-->
+<script type="text/javascript">
+    //访问用户媒体设备的兼容方法
+    function getUserMedia(constrains,success,error){
+        if(navigator.mediaDevices.getUserMedia){
+            //最新标准API
+            navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
+        } else if (navigator.webkitGetUserMedia){
+            //webkit内核浏览器
+            navigator.webkitGetUserMedia(constrains).then(success).catch(error);
+        } else if (navigator.mozGetUserMedia){
+            //Firefox浏览器
+            navagator.mozGetUserMedia(constrains).then(success).catch(error);
+        } else if (navigator.getUserMedia){
+            //旧版API
+            navigator.getUserMedia(constrains).then(success).catch(error);
+        }
+    }
+
+    var video = document.getElementById("video");
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    //成功的回调函数
+    function success(stream) {
+        //兼容webkit内核浏览器
+        var CompatibleURL = window.URL || window.webkitURL;
+        //将视频流设置为video元素的源
+        try {
+            //谷歌浏览器放弃此功能
+            video.src = CompatibleURL.createObjectURL(stream);
+        }catch (e) {
+            console.log(e);
+            video.srcObject=stream;
+        }
+        //播放视频
+        video.play();
+    }
+
+    //异常的回调函数
+    function error(error){
+        console.log("访问用户媒体设备失败：",error.name,error.message);
+    }
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
+        //调用用户媒体设备，访问摄像头
+        getUserMedia({
+            video:{width:480,height:320}
+        },success,error);
+    } else {
+        alert("你的浏览器不支持访问用户媒体设备");
+    }
+
+    //注册拍照按钮的单击事件
+    window.setTimeout("time()",1500);
+
+    function time() {
+        context.drawImage(video,0,0,480,320);
+        // face_login();
+    }
+
+    function face_register(){
+        var jsonObj = {"user_id":$(" textarea[ id='user_id' ] ").val(),"group_id":$(" textarea[ id='group_id' ] ").val(),"image":canvas.toDataURL().replace("data:image/png;base64,",""),}
+        add_json=JSON.stringify(jsonObj);
+        $.ajax({
+            type: "POST",
+            url: "", //添加面部信息的后端方法
+            dataType: "JSON",
+            data: {
+                action:add_json
+            },
+            success: function (data) {
+            },
+            error:function () {
+            }
+        });
+    }
+
+</script>
 <script>
     layui.use('upload', function () {
         var $ = layui.jquery
@@ -341,7 +452,7 @@
 
         //普通图片上传
         var uploadInst = upload.render({
-            elem: '#test1'
+            elem: '#btnUploadAvatar'
             , url: '/upload/'
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
@@ -485,23 +596,23 @@
             }
         });
         console.log(hobby);
-        var location=$("#inputProvince").val()+document.getElementById("inputCity")[$("#inputCity").val()].innerText;
-        var userNickname=$("#userNickname").val();
-        var sex=$('input:radio[name="inlineRadioOptions"]:checked').val();
-        var birthday=$("#userBirthday").val();
-        var userSignature=$("#userSignature").val();
+        var location = $("#inputProvince").val() + document.getElementById("inputCity")[$("#inputCity").val()].innerText;
+        var userNickname = $("#userNickname").val();
+        var sex = $('input:radio[name="inlineRadioOptions"]:checked').val();
+        var birthday = $("#userBirthday").val();
+        var userSignature = $("#userSignature").val();
         $.ajax({
-            type:"post",
-            url:"updateProfileAction",
-            data:{
-                "location":location,
-                "hobby":hobby,
-                "userNickname":userNickname,
-                "sex":sex,
-                "birthday":birthday,
-                "userSignature":userSignature
+            type: "post",
+            url: "updateProfileAction",
+            data: {
+                "location": location,
+                "hobby": hobby,
+                "userNickname": userNickname,
+                "sex": sex,
+                "birthday": birthday,
+                "userSignature": userSignature
             },
-            success:function (data) {
+            success: function (data) {
                 alert(data);
             }
         })
@@ -582,16 +693,16 @@
 
         $("#userNickname").val('{{#User.nickName}}{{.}}{{/User.nickName}}{{^User.nickName}}{{/User.nickName}}');
         var sexInfo = '{{#User.sex}}{{.}}{{/User.sex}}{{^User.sex}}{{/User.sex}}';
-        if('男'==sexInfo){
-            $("input[name='inlineRadioOptions']")[0].checked=true;
-        }else if('女'==sexInfo){
-            $("input[name='inlineRadioOptions']")[1].checked=true;
+        if ('男' == sexInfo) {
+            $("input[name='inlineRadioOptions']")[0].checked = true;
+        } else if ('女' == sexInfo) {
+            $("input[name='inlineRadioOptions']")[1].checked = true;
         }
         var birthdayInfo = '{{#User.birthday}}{{.}}{{/User.birthday}}{{^User.birthday}}{{/User.birthday}}';
         $("#userBirthday").val(birthdayInfo);
         var locationInfo = '{{#User.location}}{{.}}{{/User.location}}{{^User.location}}{{/User.location}}';
         var location = locationInfo;
-        if(locationInfo!='') {
+        if (locationInfo != '') {
             var splitLoc = location.search(/省|市|区/);
             var province = location.substring(0, splitLoc + 1);
             var city = location.substring(splitLoc + 1);
@@ -608,9 +719,9 @@
             getCity();
             // $("#inputCity").text(city);
             // $("#inputCity").find("option[text="+city+"]").attr("selected",true);
-            $("#inputCity").find("option").each(function() {
-                if($(this).text()=="..."){
-                    $(this).css("display","none");
+            $("#inputCity").find("option").each(function () {
+                if ($(this).text() == "...") {
+                    $(this).css("display", "none");
                 } else if ($(this).text() == city) {
                     $(this).attr("selected", true);
                 } else {
@@ -619,11 +730,11 @@
             });
         }
         var hobbyInfo = '{{#User.hobby}}{{.}}{{/User.hobby}}{{^User.hobby}}{{/User.hobby}}';
-        if(hobbyInfo!='') {
+        if (hobbyInfo != '') {
             var hobbyArr = hobbyInfo.split(" ");
             var hooby_tag = document.getElementsByName("hobby_tag");
-            for ( var i=0;i<hooby_tag.length;i++) {
-                for(var j=0;j<hobbyArr.length-1;j++) {
+            for (var i = 0; i < hooby_tag.length; i++) {
+                for (var j = 0; j < hobbyArr.length - 1; j++) {
                     if (hooby_tag[i].innerText == hobbyArr[j]) {
                         hooby_tag[i].click();
                     }
@@ -633,7 +744,7 @@
         var signatureInfo = '{{#User.signature}}{{.}}{{/User.signature}}{{^User.signature}}{{/User.signature}}';
         $("#userSignature").val(signatureInfo);
         var emailInfo = '{{#User.userEmail}}{{.}}{{/User.userEmail}}{{^User.userEmail}}{{/User.userEmail}}';
-        if(emailInfo!=''){
+        if (emailInfo != '') {
             $("#showUserEmail").text(emailInfo);
         }
 

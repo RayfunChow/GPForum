@@ -39,6 +39,8 @@ public class Post {
 
     private boolean commentable;
 
+    private boolean invisible;
+
     @Column(length = 10000)
     private String firstImg;
 
@@ -144,12 +146,20 @@ public class Post {
         this.browseNumber = browseNumber;
     }
 
+    public boolean isInvisible() {
+        return invisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        this.invisible = invisible;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "postId=" + postId +
                 ", authorEmail='" + authorEmail + '\'' +
-                ", sectionName=" + sectionName +
+                ", sectionName='" + sectionName + '\'' +
                 ", content='" + content + '\'' +
                 ", lastEditTime=" + lastEditTime +
                 ", postStatus='" + postStatus + '\'' +
@@ -158,6 +168,7 @@ public class Post {
                 ", starNumber=" + starNumber +
                 ", browseNumber=" + browseNumber +
                 ", commentable=" + commentable +
+                ", invisible=" + invisible +
                 ", firstImg='" + firstImg + '\'' +
                 '}';
     }

@@ -3,6 +3,7 @@ package com.internship.gpforum.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.internship.gpforum.common.PasswordEncryption;
 import com.internship.gpforum.configure.OnlineUserList;
+import com.internship.gpforum.configure.SendEmailUtils;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.RedisService;
 import com.internship.gpforum.service.UserService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -132,29 +135,19 @@ public class LoginController {
         if (!userService.checkRepeat(userEmail)) {
             return "该邮箱已被注册";
         } else {
-            HtmlEmail email = new HtmlEmail();
-            int n = userEmail.indexOf('@');
-            String hostName = userEmail.substring(n + 1);
-            email.setHostName("smtp." + hostName);
-            email.setCharset("utf-8");
             try {
-                email.addTo(userEmail);
-                email.setFrom("1194688236@qq.com", "聚集地论坛");
-                email.setAuthentication("1194688236@qq.com", "rkjhrvjftpizigbg");
-                email.setSubject("邮箱验证");//设置发送主题
                 String code = RandomCode();
-                email.setMsg("您正在注册聚集地论坛，您的验证码为： " + code + ",有效时间三分钟。 如非本人操作，请忽略本邮件。");//设置发送内容
-                email.send();//进行发送
-//            codeList.add(code);
-//            redisUtils.set("codeList",json.toJSONString(codeList));
+                String title = "邮箱验证";
+                String context = "您正在注册聚集地论坛，您的验证码为： " + code + ",有效时间三分钟。 如非本人操作，请忽略本邮件。";
+                SendEmailUtils.send(title, context, userEmail);
                 redisService.set(userEmail, code);
                 redisService.expire(userEmail, 300);
-            } catch (EmailException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return "发送失败，请重试";
             }
-            return "验证码已发送";
         }
+        return "验证码已发送";
     }
 
     public String RandomCode() {
