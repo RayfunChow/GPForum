@@ -1,6 +1,7 @@
 package com.internship.gpforum.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.internship.gpforum.common.PasswordEncryption;
 import com.internship.gpforum.configure.OnlineUserList;
 import com.internship.gpforum.configure.SendEmailUtils;
 import com.internship.gpforum.dal.entity.User;
@@ -21,7 +22,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
@@ -49,7 +49,7 @@ public class LoginController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 //        System.out.println(email+"\t"+password);
-        User user = userService.signIn(email, password);
+        User user = userService.signIn(email, PasswordEncryption.encryption_SHA_256(password));
         if (user != null) { //用户名密码正确
             HttpSession newSession = request.getSession();
             if (OnlineUserList.containsKey(email)) {  //判断该账户是否已登录
@@ -91,8 +91,8 @@ public class LoginController {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         String veriCode = request.getParameter("veriCode");
-        String code = new String();
-        String msg = new String();
+        String code;
+        String msg;
         code = redisService.get(email);
         if (!userService.checkRepeat(email)) {
             msg = "该邮箱已被注册";
@@ -112,7 +112,7 @@ public class LoginController {
 //        if(password.equals(confirmPassword)){
         User user = new User();
         user.setUserEmail(email);
-        user.setUserPassword(password);
+        user.setUserPassword(PasswordEncryption.encryption_SHA_256(password));
         user.setNickName(email);
         user.setAvatar("/img/no_avatar.png");
         user.setRegTime(new Date());
