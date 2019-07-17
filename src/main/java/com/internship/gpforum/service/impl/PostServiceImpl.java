@@ -17,13 +17,13 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     public Page<Post> getByEdiTime(String sectionName,PageRequest pageRequest){
-        Page<Post> postList=postRepository.findBySectionNameAndCommentableOrderByLastEditTimeDesc(sectionName,pageRequest,true);
+        Page<Post> postList=postRepository.findBySectionNameAndInvisibleOrderByLastEditTimeDesc(sectionName,pageRequest,false);
         return postList;
     }
 
     @Override
     public Page<Post> getByStarNumber(String sectionName, PageRequest pageRequest) {
-        Page<Post> postList=postRepository.findBySectionNameAndCommentableOrderByStarNumberDesc(sectionName,pageRequest,true);
+        Page<Post> postList=postRepository.findBySectionNameAndInvisibleOrderByStarNumberDesc(sectionName,pageRequest,false);
         return postList;
     }
 
@@ -38,7 +38,7 @@ public class PostServiceImpl implements PostService {
     }
 
 
-    public void writeContent(String author_email, String section_name, String title, String summary, String content, boolean commentable, String post_status, Date lastEditTime) {
+    public void writeContent(String author_email, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
         Post post=new Post();
         post.setAuthorEmail(author_email);
         post.setSectionName(section_name);
@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
         post.setSummary(summary);
         post.setContent(content);
         post.setFirstImg(content);
-        post.setCommentable(commentable);
+        post.setInvisible(invisible);
         post.setPostStatus(post_status);
         post.setLastEditTime(lastEditTime);
         postRepository.save(post);

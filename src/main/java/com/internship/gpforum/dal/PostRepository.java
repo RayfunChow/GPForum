@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,String> {
 
-    Page<Post> findBySectionNameAndCommentableOrderByLastEditTimeDesc(String sectionName, Pageable request,boolean commentable);
+    Page<Post> findBySectionNameAndInvisibleOrderByLastEditTimeDesc(String sectionName, Pageable request,boolean invisible);
 
-    Page<Post> findBySectionNameAndCommentableOrderByStarNumberDesc(String sectionName,Pageable request,boolean commentable);
+    Page<Post> findBySectionNameAndInvisibleOrderByStarNumberDesc(String sectionName,Pageable request,boolean invisible);
 
     Post findByPostId(Integer id);
 

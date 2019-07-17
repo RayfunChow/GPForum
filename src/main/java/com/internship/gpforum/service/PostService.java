@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface PostService {
-    void writeContent(String author_email, String section_name, String title, String summary, String content, boolean commentable, String post_status, Date lastEditTime);
+    void writeContent(String author_email, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime);
 
     Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest);
 

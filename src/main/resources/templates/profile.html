@@ -20,68 +20,43 @@
             <h2>我发的帖子</h2>
             <div class="row">
                 <div class="col-7">
+
+                    {{#postPage}}
                     <div class="card" style="padding: 10px 20px 10px 20px">
-                        <a href="#" style="color: #0b2e13"><h4>日韩贸易战升级，韩国深陷绝境，普京及时出手</h4></a>
-                        <p>7月初日本正式对韩国实施了出口限制，用于制造半导体的高纯度氟化氢等原材料被禁止向韩国出口。
-                            如果得不到这些原材料，韩国三星、LG等高科技产业将受到严重冲击，甚至韩国经济都将受到巨大影响，
-                            为了让日本取消出口禁令，韩国政府想了不少办法，然而日本政府态度强硬，拒绝做出让步。
+                        <a href="#" style="color: #0b2e13"><h4>{{title}}</h4></a>
+                        <p>{{summary}}
                             <a href="#" style="color:#7a5e3f">查看原文</a></p>
                         <div class="row">
                             <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
+                            <div class="col-2" name="lastEditTimes">{{lastEditTime}}</div>
                             <div class="col-1"><input type="image" src="/svg/heart.svg" style="height: 20px;width: 20px"></div>
                             <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
                         </div>
                     </div>
-                    <div class="card" style="padding: 10px 20px 10px 20px">
-                        <a href="#" style="color: #0b2e13"><h4>加拿大外交部：又一加拿大公民在华被拘</h4></a>
-                        <p>【环球网报道 记者 朱梦颖】综合美国有线电视新闻网(CNN)、加拿大广播公司(CBC)消息，加拿大全球事务部(外交部)13日证实，
-                            又有一名加拿大公民在中国被拘留。
-                            <a href="#" style="color:#7a5e3f">查看原文</a></p>
-                        <div class="row ">
-                            <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
-                            <div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="padding: 10px 20px 10px 20px">
-                        <a href="#" style="color: #0b2e13"><h4>杭州失踪女童确认身亡 妈妈:接到噩耗时"不敢相信"</h4></a>
-                        <p>曾女士表示，凌晨4点40分左右，她就已经起床，“我们老家这里坐车，很不方便，很早就要起床。我一晚上都没睡好，
-                            网上的报道我也都不敢看。”她是前往宁波还是淳安，曾女士表示票是亲戚订的并没有过多透露，但她表示会来浙江。
-                            <a href="#" style="color:#7a5e3f">查看原文</a></p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
-                            <div class="col-1"><img src="../img/like.png" style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><a href=""><img src="../img/delete.png" style="height: 20px;width: 20px"></a>
-                            </div>
-                        </div>
-                    </div>
+                    {{/postPage}}
+
+
                     <div id="pagination"></div>
                 </div>
                 <div class="card col-3" style="max-height: 500px">
                     <div class="card-body" style="padding: 10px;text-align: center">
                         <img class="nav-item rounded-circle" src="../img/no_avatar.png"
                              style="width: 70px;height: 70px">
-                        <h5 style="text-align: center">用户名</h5>
+                        <h5 style="text-align: center" id="userNickname1">用户名</h5>
                         <div class="row" style="text-align: center">
-                            <div class="col-4">发帖:xxx</div>
+                            <div class="col-4" id="showUserPostNumber">发帖:xxx</div>
                             <div class="col-4">评论:xxx</div>
                             <div class="col-4">粉丝:xxx</div>
                         </div>
                         <br>
-                        <span class="badge badge-primary">音乐</span>
-                        <span class="badge badge-secondary">动物</span>
-                        <span class="badge badge-success">美食</span>
-                        <span class="badge badge-danger">美妆</span>
-                        <span class="badge badge-warning">服饰</span>
-                        <h6>邮箱账号：xxxxxxxxxx@jjd.com</h6>
-                        <a>生日：1997-09-21</a><br>
-                        <a>地区：重庆&nbsp;&nbsp;南岸</a><br>
+                        <div id="userHobby">
+
+                        </div>
+                        <h6 id="showUserEmail">邮箱账号：xxxxxxxxxx@jjd.com</h6>
+                        <a id="userBirthday">生日：1997-09-21</a><br>
+                        <a id="userLocation">地区：重庆&nbsp;&nbsp;南岸</a><br>
                         <br>
-                        <a>个人描述：此生此夜不长好，明月明年何处看。</a>
+                        <a id="userSignature">个人描述：此生此夜不长好，明月明年何处看。</a>
                     </div>
                 </div>
             </div>
@@ -97,6 +72,7 @@
 <script src="/layui/layui.js"></script>
 <script>
 
+
     $(".delete-post").click(function () {
         confirm("确认删除该帖吗？");
     });
@@ -108,13 +84,83 @@
         laypage.render({
             elem: 'pagination' //分页控件id
             ,limit: 10 //每页显示的条数
-            ,count: 500 //数据总数，从服务端得到
+            ,count: {{postPage.totalElements}} //数据总数，从服务端得到
             ,groups: 5
+            ,curr:Number({{postPage.number}}+1)
+        ,jump:function(obj,first){//当点击分页的页码，切换后的调用该函数
+            if(!first){
+                //改变浏览器的地址
+                location.href="profile?pageIndex="+obj.curr;
+            }
+        }
             ,layout:['count', 'prev', 'page', 'next', 'skip']
         });
+
+
     });
+
+
+
+    $(function () {
+
+        var lastEditTimes = document.getElementsByName("lastEditTimes");
+        for (var i=0;i<lastEditTimes.length;i++){
+            lastEditTimes[i].innerText = (process(lastEditTimes[i].innerText));
+        }
+
+        function process(data) {
+            var flag = data.indexOf(" ");
+            return data.substring(0,flag);
+        }
+    });
+
 </script>
 
+<script>
+    $(function () {
+        $("#showUserPostNumber").html('发帖:'+'{{#User.userPostNumber}}{{.}}{{/User.userPostNumber}}{{^User.userPostNumber}}0{{/User.userPostNumber}}');
+        $("#userNickname1").text('{{#User.nickName}}{{.}}{{/User.nickName}}{{^User.nickName}}{{/User.nickName}}');
+
+        var birthdayInfo = '{{#User.birthday}}{{.}}{{/User.birthday}}{{^User.birthday}}未设置{{/User.birthday}}';
+        $("#userBirthday").text('生日：'+birthdayInfo);
+        var locationInfo = '{{#User.location}}{{.}}{{/User.location}}{{^User.location}}{{/User.location}}';
+        var location = locationInfo;
+        if(locationInfo!='') {
+            var splitLoc = location.search(/省|市|区/);
+            var province = location.substring(0, splitLoc + 1);
+            var city = location.substring(splitLoc + 1);
+            $("#userLocation").text('地区：'+ province +' '+city);
+        }else{
+            $("#userLocation").text('地区：未设置');
+        }
+        var hobbyInfo = '{{#User.hobby}}{{.}}{{/User.hobby}}{{^User.hobby}}{{/User.hobby}}';
+        if(hobbyInfo!='') {
+            var hobbyArr = hobbyInfo.split(" ");
+                for(var j=0;j<hobbyArr.length-1;j++) {
+                    $("#userHobby").append('<span class="badge '+ getHobbyTagStyle(j) +'">'+ hobbyArr[j] +'</span> ')
+
+                }
+
+        }
+        var signatureInfo = '{{#User.signature}}{{.}}{{/User.signature}}{{^User.signature}}无{{/User.signature}}';
+        $("#userSignature").text('个人描述：'+signatureInfo);
+
+            $("#showUserEmail").text('邮箱账号：{{User.userEmail}}');
+
+
+    });
+    function getHobbyTagStyle(i) {
+        var res;
+        switch (i%5) {
+            case 0:res='badge-primary';break;
+            case 1:res='badge-secondary';break;
+            case 2:res='badge-success';break;
+            case 3:res='badge-danger';break;
+            case 4:res='badge-warning';break;
+        }
+        return res;
+    }
+</script>
 
 </body>
 

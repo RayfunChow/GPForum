@@ -38,7 +38,9 @@ public class ProfileController {
         PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize);
         if(userEmail==null||userEmail==user.getUserEmail()) {
             Page<Post> postPage=postService.getHisPost(user.getUserEmail(),pageRequest);
+//            System.out.println(postPage.getTotalPages());
             modelMap.put("postPage",postPage);
+//            modelMap.put("postPageSize",postPage.getTotalPages());
             modelMap.put("User", user);
         }else{
             User other=userService.userCoookie(userEmail);

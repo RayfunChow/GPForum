@@ -94,8 +94,8 @@ public class PostController {
             String section_name = request.getParameter("section_name");       //板块
             String title = request.getParameter("title");                                        //标题
             String content = request.getParameter("content");                                    //内容
-            Boolean commentable = Boolean.parseBoolean(request.getParameter("commentable"));     //是否可评论
-            String summary = content.replaceAll("<([^>]*)>", "");               //摘要需要先把内容正则化，然后再次判断其长度;
+            Boolean invisible = Boolean.parseBoolean(request.getParameter("invisible"));        //是否可评论
+            String summary = content.replaceAll("<([^>]*)>", "");                //摘要需要先把内容正则化，然后再次判断其长度;
 
             if(BaiduAPI.image_audit(content).equals("不合规")) {                                        //图片审核
                 return JSON.toJSONString("图片不合规，请重试！");
@@ -108,7 +108,7 @@ public class PostController {
                 if (!BaiduAPI.content_adult(title).equals("0") || !BaiduAPI.content_adult(content.replaceAll("<([^>]*)>", "")).equals("0")) {
                     return JSON.toJSONString("内容涉及敏感词，请重试！");
                 } else {
-                    postService.writeContent(author_email, section_name, title, summary, content, commentable, "正常", new Date());
+                    postService.writeContent(author_email, section_name, title, summary, content, invisible, "正常", new Date());
                     return JSON.toJSONString("发表成功！");
                 }
             }
