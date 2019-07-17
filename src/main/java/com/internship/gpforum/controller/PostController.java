@@ -5,6 +5,7 @@ import com.internship.gpforum.dal.entity.Comment;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.CommentService;
+import com.internship.gpforum.service.BaiduAPI;
 import com.internship.gpforum.service.PostService;
 import com.internship.gpforum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,14 +94,24 @@ public class PostController {
             String section_name = request.getParameter("section_name");       //板块
             String title = request.getParameter("title");                                        //标题
             String content = request.getParameter("content");                                    //内容
-            Boolean commentable = Boolean.parseBoolean(request.getParameter("commentable"));        //是否可评论
-            String summary = content.replaceAll("<([^>]*)>", "");                      //摘要需要先把内容正则化，然后再次判断其长度;                                                                //取摘要
-            if(summary.length()>=20)
-                summary=summary.substring(0,20);
-            User user= (User)request.getSession().getAttribute("User");
-            String author_email=user.getUserEmail();
-            postService.writeContent(author_email, section_name, title, summary, content,  commentable, "正常", new Date());
-            return JSON.toJSONString("发表成功！");
+            Boolean commentable = Boolean.parseBoolean(request.getParameter("commentable"));     //是否可评论
+            String summary = content.replaceAll("<([^>]*)>", "");               //摘要需要先把内容正则化，然后再次判断其长度;
+
+            if(BaiduAPI.image_audit(content).equals("不合规")) {                                        //图片审核
+                return JSON.toJSONString("图片不合规，请重试！");
+            }else {
+                if (summary.length() >= 20)                                                                // 取摘要
+                    summary = summary.substring(0, 20);
+                User user = (User) request.getSession().getAttribute("User");
+                String author_email = user.getUserEmail();
+                //敏感词
+                if (!BaiduAPI.content_adult(title).equals("0") || !BaiduAPI.content_adult(content.replaceAll("<([^>]*)>", "")).equals("0")) {
+                    return JSON.toJSONString("内容涉及敏感词，请重试！");
+                } else {
+                    postService.writeContent(author_email, section_name, title, summary, content, commentable, "正常", new Date());
+                    return JSON.toJSONString("发表成功！");
+                }
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return JSON.toJSONString("发表失败！");
