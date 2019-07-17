@@ -34,12 +34,22 @@ public class User {
 
     private String permission;
 
+    private String sex;
+
     @CreatedDate
     private Date regTime;
 
     private Date thisLogTime;
 
     private Date lastLogTime;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public Date getRegTime() {
         return regTime;
@@ -158,6 +168,7 @@ public class User {
                 ", userPostNumber=" + userPostNumber +
                 ", signature='" + signature + '\'' +
                 ", permission='" + permission + '\'' +
+                ", sex='" + sex + '\'' +
                 ", regTime=" + regTime +
                 ", thisLogTime=" + thisLogTime +
                 ", lastLogTime=" + lastLogTime +

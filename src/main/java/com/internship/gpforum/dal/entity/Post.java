@@ -33,6 +33,10 @@ public class Post {
 
     private String summary;
 
+    private Integer starNumber;
+
+    private Integer browseNumber;
+
     private boolean commentable;
 
     @Column(length = 10000)
@@ -59,14 +63,10 @@ public class Post {
     }
 
     public void setFirstImg(String content) {
-
-        //String s = "<img alt=\"Image\" src=\"";
         Document document= Jsoup.parse(content);
         Element element=document.select("img[src]").first();
         if(element!=null){
             this.firstImg=element.attr("src");
-            //int ix = content.indexOf(s)+s.length();
-            //this.firstImg = content.substring(ix, content.indexOf("\"", ix + 1));
         }else{
             this.firstImg="";
         }
@@ -128,6 +128,22 @@ public class Post {
         this.postStatus = postStatus;
     }
 
+    public Integer getStarNumber() {
+        return starNumber;
+    }
+
+    public void setStarNumber(Integer starNumber) {
+        this.starNumber = starNumber;
+    }
+
+    public Integer getBrowseNumber() {
+        return browseNumber;
+    }
+
+    public void setBrowseNumber(Integer browseNumber) {
+        this.browseNumber = browseNumber;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -139,6 +155,8 @@ public class Post {
                 ", postStatus='" + postStatus + '\'' +
                 ", title='" + title + '\'' +
                 ", summary='" + summary + '\'' +
+                ", starNumber=" + starNumber +
+                ", browseNumber=" + browseNumber +
                 ", commentable=" + commentable +
                 ", firstImg='" + firstImg + '\'' +
                 '}';

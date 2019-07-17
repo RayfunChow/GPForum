@@ -278,7 +278,7 @@
                 <form>
                     <textarea class="form-control" rows="3" placeholder="输入评论详情"></textarea>
                     <button type="button" style="float: right;"
-                            class="btn btn-outline-secondary">发表回复
+                            class="btn btn-outline-secondary" onclick="writeComment()">发表回复
                     </button>
                 </form>
             </div>
@@ -318,5 +318,23 @@
         });
 
     });
+
+    function writeComment() {
+        var commentContent=$("#commentContent").val();
+        $.ajax({
+            type:"post",
+            url:"writeComment",
+            data:{
+                "commentContent":commentContent
+            },
+            success:function (data) {
+                if(data) {
+                    window.location.href="postDetail";
+                }else{
+                    alert("评论失败，请重试");
+                }
+            }
+        })
+    }
 </script>
 </html>

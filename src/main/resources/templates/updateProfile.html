@@ -167,35 +167,35 @@
                         <label class="col-sm-2 col-form-label">爱&nbsp;&nbsp;&nbsp;&nbsp;好</label>
                         <div class="">
                             <div class=" row toggle-button" style="margin-left: 2px">
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     音乐
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     电影
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     动漫
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     电竞
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     读书
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     数码
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     摄影
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="button"
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="button" name="hobby_tag"
                                         aria-pressed="false" autocomplete="off">
                                     美食
                                 </button>
@@ -235,7 +235,7 @@
                                 </div>
                             </div>
                             <div class="container">
-                                <h4>xxx@qq.com</h4>
+                                <h4 id="showUserEmail"></h4>
                                 <button type="button" class="btn btn-outline-info" data-toggle="modal"
                                         data-target="#changePasswordModal">
                                     更改密码
@@ -485,6 +485,26 @@
             }
         });
         console.log(hobby);
+        var location=$("#inputProvince").val()+document.getElementById("inputCity")[$("#inputCity").val()].innerText;
+        var userNickname=$("#userNickname").val();
+        var sex=$('input:radio[name="inlineRadioOptions"]:checked').val();
+        var birthday=$("#userBirthday").val();
+        var userSignature=$("#userSignature").val();
+        $.ajax({
+            type:"post",
+            url:"updateProfileAction",
+            data:{
+                "location":location,
+                "hobby":hobby,
+                "userNickname":userNickname,
+                "sex":sex,
+                "birthday":birthday,
+                "userSignature":userSignature
+            },
+            success:function (data) {
+                alert(data);
+            }
+        })
     });
 
     function getProvince() {
@@ -556,6 +576,67 @@
                 $('#changePasswordForm')[0].reset();
             }
         });
+    });
+
+    $(function () {
+
+        $("#userNickname").val('{{#User.nickName}}{{.}}{{/User.nickName}}{{^User.nickName}}{{/User.nickName}}');
+        var sexInfo = '{{#User.sex}}{{.}}{{/User.sex}}{{^User.sex}}{{/User.sex}}';
+        if('男'==sexInfo){
+            $("input[name='inlineRadioOptions']")[0].checked=true;
+        }else if('女'==sexInfo){
+            $("input[name='inlineRadioOptions']")[1].checked=true;
+        }
+        var birthdayInfo = '{{#User.birthday}}{{.}}{{/User.birthday}}{{^User.birthday}}{{/User.birthday}}';
+        $("#userBirthday").val(birthdayInfo);
+        var locationInfo = '{{#User.location}}{{.}}{{/User.location}}{{^User.location}}{{/User.location}}';
+        var location = locationInfo;
+        if(locationInfo!='') {
+            var splitLoc = location.search(/省|市|区/);
+            var province = location.substring(0, splitLoc + 1);
+            var city = location.substring(splitLoc + 1);
+            $("#inputProvince").val(province);
+            // $('#inputCity').empty();
+            var index = $("#inputProvince").get(0).selectedIndex;
+            var cityName = cityArr[index];
+            $("#inputCity").length = cityName.length;
+
+            // for (var i = 1; i < cityName.length; i++) {
+            //     // $("#inputCity").options[$("#inputCity").options.length] = new Option(cityName[i], i);
+            //     $("#inputCity").append("<option value='"+i+"'>"+cityName[i]+"</option>");
+            // }
+            getCity();
+            // $("#inputCity").text(city);
+            // $("#inputCity").find("option[text="+city+"]").attr("selected",true);
+            $("#inputCity").find("option").each(function() {
+                if($(this).text()=="..."){
+                    $(this).css("display","none");
+                } else if ($(this).text() == city) {
+                    $(this).attr("selected", true);
+                } else {
+                    $(this).attr("selected", false);
+                }
+            });
+        }
+        var hobbyInfo = '{{#User.hobby}}{{.}}{{/User.hobby}}{{^User.hobby}}{{/User.hobby}}';
+        if(hobbyInfo!='') {
+            var hobbyArr = hobbyInfo.split(" ");
+            var hooby_tag = document.getElementsByName("hobby_tag");
+            for ( var i=0;i<hooby_tag.length;i++) {
+                for(var j=0;j<hobbyArr.length-1;j++) {
+                    if (hooby_tag[i].innerText == hobbyArr[j]) {
+                        hooby_tag[i].click();
+                    }
+                }
+            }
+        }
+        var signatureInfo = '{{#User.signature}}{{.}}{{/User.signature}}{{^User.signature}}{{/User.signature}}';
+        $("#userSignature").val(signatureInfo);
+        var emailInfo = '{{#User.userEmail}}{{.}}{{/User.userEmail}}{{^User.userEmail}}{{/User.userEmail}}';
+        if(emailInfo!=''){
+            $("#showUserEmail").text(emailInfo);
+        }
+
     });
 
 </script>

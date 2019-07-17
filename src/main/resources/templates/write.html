@@ -78,7 +78,7 @@
             <div class="col-sm-5"></div>
 
             <div class="col-sm-2">
-                <button class="btn btn-lg btn-primary btn-block" type="submit" style="width:200px;margin-right: 50px">
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="write_content()" style="width:200px;margin-right: 50px">
                     发表
                 </button>
             </div>
@@ -133,7 +133,26 @@
             }
         });
     });
-
+    function write_content() {
+        var section_name="11";
+        var title=$("#inputTitle").val();
+        var content=$("#txt-content").val();
+        var commentable=$("#customCheck1").is(":checked");
+        $.ajax({
+            type: "POST",
+            url: "writeAction",
+            data: {
+                "section_name": section_name,
+                "title": title,
+                "content": content,
+                "commentable": commentable
+            },
+            dataType: "json",
+            success:function (data) {
+                alert(data);
+            }
+        });
+    }
 
 </script>
 

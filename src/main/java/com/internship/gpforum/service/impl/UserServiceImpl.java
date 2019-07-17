@@ -34,4 +34,14 @@ public class UserServiceImpl implements UserService {
         }else                                   //否则返回false
         return false;
     }
+
+    @Override
+    public User userCoookie(String email) {
+        return userRepository.findByUserEmail(email);
+    }
+
+    @Override
+    public void update(User user) {
+        userRepository.saveAndFlush(user);
+    }
 }
