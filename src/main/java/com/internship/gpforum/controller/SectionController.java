@@ -49,7 +49,6 @@ public class SectionController {
         modelMap.put("User",user);
         PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize);
         Page<Post> postPage=postService.getByEdiTime(sectionName,pageRequest);
-
         modelMap.put("postPage",postPage);
         Section sectionDetail=sectionService.sectionDetail(sectionName);
         modelMap.put("sectionDetail",sectionDetail);

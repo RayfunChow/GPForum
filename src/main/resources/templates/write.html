@@ -140,7 +140,7 @@
     });
 
     function write_content() {
-        var section_name = "11";
+        var section_name = '{{sectionName}}';
         var title = $("#inputTitle").val();
         var content = $("#txt-content").val();
         var invisible = $("#customCheck1").is(":checked");
@@ -156,6 +156,7 @@
             dataType: "json",
             success: function (data) {
                 alert(data);
+                window.location.href="profile";
             }
         });
     }

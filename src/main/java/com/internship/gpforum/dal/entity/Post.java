@@ -19,6 +19,8 @@ public class Post {
 
     private String authorEmail;
 
+    private String authorNickName;
+
     private String sectionName;
 
     @Column(length=10000)
@@ -39,8 +41,6 @@ public class Post {
 
 //    是否可评论
     private boolean commentable;
-
-
 
     //    是否可见
     private boolean invisible;
@@ -157,12 +157,21 @@ public class Post {
         this.browseNumber = browseNumber;
     }
 
+    public String getAuthorNickName() {
+        return authorNickName;
+    }
+
+    public void setAuthorNickName(String authorNickName) {
+        this.authorNickName = authorNickName;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "postId=" + postId +
                 ", authorEmail='" + authorEmail + '\'' +
-                ", sectionName=" + sectionName +
+                ", authorNickName='" + authorNickName + '\'' +
+                ", sectionName='" + sectionName + '\'' +
                 ", content='" + content + '\'' +
                 ", lastEditTime=" + lastEditTime +
                 ", postStatus='" + postStatus + '\'' +
@@ -171,6 +180,7 @@ public class Post {
                 ", starNumber=" + starNumber +
                 ", browseNumber=" + browseNumber +
                 ", commentable=" + commentable +
+                ", invisible=" + invisible +
                 ", firstImg='" + firstImg + '\'' +
                 '}';
     }

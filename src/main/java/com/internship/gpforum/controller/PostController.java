@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,7 @@ public class PostController {
     private PostService postService;
 
     @RequestMapping("postDetail")
-    public String toPostDetail(ModelMap modelMap){
-        Integer postId=1;
+    public String toPostDetail(ModelMap modelMap,Integer postId){
         Post postDetail=postService.getDetail(postId);
         modelMap.put("postDetail",postDetail);
         List<Comment> parentComments=commentService.findAllParentComment(postId);
@@ -57,11 +57,12 @@ public class PostController {
         String userEmail=user.getUserEmail();
         String nickName=user.getNickName();
         String content=request.getParameter("commentContent");
+        Integer postId=Integer.parseInt(request.getParameter("postId"));
         Comment comment=new Comment();
         comment.setUserEmail(userEmail);
         comment.setCommentTime(new Date());
         comment.setContent(content);
-        comment.setPostId(1);
+        comment.setPostId(postId);
         comment.setUserNickName(nickName);
         commentService.insert(comment);
         return true;

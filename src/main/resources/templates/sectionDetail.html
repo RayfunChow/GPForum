@@ -46,7 +46,7 @@
                 <div class="col-7">
                     {{#postPage}}
                     <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
-                        <a href="#" style="color: #0b2e13"><h4>{{title}}</h4></a>
+                        <h4><a href="/postDetail?postId={{postId}}" style="color: #0b2e13">{{title}}</a></h4>
                         <p>{{summary}}
                             <!--                        <a href="#" style="color:#7a5e3f">查看原文</a></p>-->
                         <div class="row">
@@ -167,9 +167,11 @@
                             <!--</button>-->
                         <!--</div>-->
                         <div style="position: absolute;bottom: 0;left: 22%;margin-bottom: 20px;">
-                            <button type="button" class="btn btn-outline-primary">
+                            {{#sectionDetail}}
+                            <a type="button" class="btn btn-outline-primary" href="/write?sectionName={{sectionName}}">
                                 <span class="oi oi-pencil"></span>&nbsp;发表新帖
-                            </button>
+                            </a>
+                            {{/sectionDetail}}
                             <button type="button" class="btn btn-outline-primary">
                                 <span class="oi oi-puzzle-piece"></span>&nbsp;申请版主
                             </button>
