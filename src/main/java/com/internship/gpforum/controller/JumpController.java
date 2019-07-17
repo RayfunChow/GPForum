@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 public class JumpController {
 
     @RequestMapping("profile")
-    public String toProfile(){
+    public String toProfile(ModelMap modelMap, HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
+        modelMap.put("User",user);
         return "profile";
     }
 
@@ -23,12 +25,16 @@ public class JumpController {
     }
 
     @RequestMapping("write")
-    public String toWrite(){
+    public String toWrite(HttpServletRequest request,ModelMap modelMap){
+        User user = (User)request.getSession().getAttribute("User");
+        modelMap.put("User",user);
         return "write";
     }
 
     @RequestMapping("section")
-    public String toSection(){
+    public String toSection(HttpServletRequest request,ModelMap modelMap){
+        User user = (User)request.getSession().getAttribute("User");
+        modelMap.put("User",user);
         return "section";
     }
 

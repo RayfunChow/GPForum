@@ -41,17 +41,18 @@ public class PostController {
             user = userService.userCoookie(parentComments.get(i).getUserEmail());
             parentComments.get(i).setUserNickName(user.getNickName());
         }
+        modelMap.put("parentCommentsNumber", parentComments.size());
         if(parentComments.size()!=0) {
             modelMap.put("parentComments", parentComments);
-            modelMap.put("parentCommentsNumber", parentComments.size());
         }
         return "postDetail";
     }
 
     @RequestMapping(value = "writeComment",method = RequestMethod.POST)
     @ResponseBody
-    public boolean writeComment(HttpServletRequest request){
+    public boolean writeComment(HttpServletRequest request,ModelMap modelMap){
         User user=(User)request.getSession().getAttribute("User");
+        modelMap.put("User",user);
         String userEmail=user.getUserEmail();
         String nickName=user.getNickName();
         String content=request.getParameter("commentContent");
@@ -65,7 +66,9 @@ public class PostController {
         return true;
     }
     @RequestMapping("commentDetail")
-    public String commentDetail(ModelMap modelMap){
+    public String commentDetail(ModelMap modelMap,HttpServletRequest request){
+        User user0=(User)request.getSession().getAttribute("User");
+        modelMap.put("User",user0);
         Integer parentId=1;
         Integer postId=1;
         List<Comment> childrenComments=commentService.findAllChildComment(parentId,postId);
