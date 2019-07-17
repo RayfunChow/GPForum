@@ -90,7 +90,7 @@ public class PostController {
     @RequestMapping(value = "writeAction", method = RequestMethod.POST)
     public String write(HttpServletRequest request){
         try {
-            Integer section_name = Integer.parseInt(request.getParameter("section_name"));       //板块
+            String section_name = request.getParameter("section_name");       //板块
             String title = request.getParameter("title");                                        //标题
             String content = request.getParameter("content");                                    //内容
             Boolean commentable = Boolean.parseBoolean(request.getParameter("commentable"));        //是否可评论

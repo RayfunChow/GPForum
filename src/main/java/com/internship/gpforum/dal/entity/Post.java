@@ -19,7 +19,7 @@ public class Post {
 
     private String authorEmail;
 
-    private Integer sectionName;
+    private String sectionName;
 
     @Column(length=10000)
     private String content;
@@ -96,11 +96,11 @@ public class Post {
         this.authorEmail = authorEmail;
     }
 
-    public Integer getSectionName() {
+    public String getSectionName() {
         return sectionName;
     }
 
-    public void setSectionName(Integer sectionName) {
+    public void setSectionName(String sectionName) {
         this.sectionName = sectionName;
     }
 

@@ -2,6 +2,7 @@
 <html lang="zh-hans" class="h-100">
 <head>
     <title>xxx的个人主页</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
     {{>layout/head}}
 
     <!-- Custom styles for this template -->
@@ -28,10 +29,8 @@
                         <div class="row">
                             <div class="col-8"></div>
                             <div class="col-2">今天9:23</div>
-                            <div class="col-1"><input type="image" src="/svg/heart.svg"
-                                                      style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><input type="image" src="/svg/trash.svg"
-                                                      style="height: 20px;width: 20px"></div>
+                            <div class="col-1"><input type="image" src="/svg/heart.svg" style="height: 20px;width: 20px"></div>
+                            <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
                         </div>
                     </div>
                     <div class="card" style="padding: 10px 20px 10px 20px">
@@ -60,6 +59,7 @@
                             </div>
                         </div>
                     </div>
+                    <div id="pagination"></div>
                 </div>
                 <div class="card col-3" style="max-height: 500px">
                     <div class="card-body" style="padding: 10px;text-align: center">
@@ -93,6 +93,28 @@
 <br>
 <br>
 {{>layout/footer}}
+
+<script src="/layui/layui.js"></script>
+<script>
+
+    $(".delete-post").click(function () {
+        confirm("确认删除该帖吗？");
+    });
+
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'pagination' //分页控件id
+            ,limit: 10 //每页显示的条数
+            ,count: 500 //数据总数，从服务端得到
+            ,groups: 5
+            ,layout:['count', 'prev', 'page', 'next', 'skip']
+        });
+    });
+</script>
+
 
 </body>
 

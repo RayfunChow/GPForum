@@ -47,94 +47,94 @@
                 <div class="my-3 my-md-5">
                     <div class="">
                         <div class="row">
+                            {{#sections}}
                             <div class="col-md-6 col-xl-4">
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-status bg-pink"></div>
-                                        <h3 class="card-title">This is a standard card</h3>
+                                        <h3 class="card-title"><a href="/sectionDetail?sectionName={{sectionName}}">{{sectionName}}</a></h3>
                                         <div class="card-options">
                                             <!--<a href="#" data-toggle="collapse" data-target="#collapseOne"-->
                                             <!--aria-expanded="true" aria-controls="collapseOne"><i-->
                                             <!--class="oi oi-chevron-top"></i>qqq</a>-->
                                         </div>
                                     </div>
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                                    <div id="{{sectionId}}" class="collapse show" aria-labelledby="headingOne">
                                         <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
-                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-                                            tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                            assumenda shoreditch et.
+                                            {{description}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card">
-                                    <div class="card-status bg-teal"></div>
-                                    <div class="card-header">
-                                        <h3 class="card-title">Built card</h3>
-                                        <div class="card-options">
-                                            <!--<a href="#" data-toggle="collapse" data-target="#collapseTwo"-->
-                                            <!--aria-expanded="true" aria-controls="collapseTwo"><i-->
-                                            <!--class="fe fe-chevron-up"></i>qqq</a>-->
-                                        </div>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
-                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-                                            tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                            assumenda shoreditch et.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card">
-                                    <div class="card-status bg-blue"></div>
-                                    <div class="card-header">
-                                        <h3 class="card-title">Card blue</h3>
-                                        <div class="card-options">
-                                            <!--<a href="#" data-toggle="collapse" data-target="#collapseThree"-->
-                                            <!--aria-expanded="true" aria-controls="collapseThree"><i-->
-                                            <!--class="fe fe-chevron-up"></i>qqq</a>-->
-                                        </div>
-                                    </div>
-                                    <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
-                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-                                            tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                            assumenda shoreditch et.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card">
-                                    <div class="card-status bg-green"></div>
-                                    <div class="card-header">
-                                        <h3 class="card-title">Card green</h3>
-                                        <div class="card-options">
-                                            <!--<a href="#" data-toggle="collapse" data-target="#collapseFour"-->
-                                            <!--aria-expanded="true" aria-controls="collapseFour"><i-->
-                                            <!--class="fe fe-chevron-up"></i>qqq</a>-->
-                                        </div>
-                                    </div>
-                                    <div id="collapseFour" class="collapse show" aria-labelledby="headingFour">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
-                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-                                            tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                            assumenda shoreditch et.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{/sections}}
+                            {{^sections}}
+                            {{/sections}}
+                            <!--<div class="col-md-6 col-xl-4">-->
+                                <!--<div class="card">-->
+                                    <!--<div class="card-status bg-teal"></div>-->
+                                    <!--<div class="card-header">-->
+                                        <!--<h3 class="card-title">Built card</h3>-->
+                                        <!--<div class="card-options">-->
+                                            <!--&lt;!&ndash;<a href="#" data-toggle="collapse" data-target="#collapseTwo"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;aria-expanded="true" aria-controls="collapseTwo"><i&ndash;&gt;-->
+                                            <!--&lt;!&ndash;class="fe fe-chevron-up"></i>qqq</a>&ndash;&gt;-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">-->
+                                        <!--<div class="card-body">-->
+                                            <!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry-->
+                                            <!--richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard-->
+                                            <!--dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon-->
+                                            <!--tempor, sunt aliqua put a bird on it squid single-origin coffee nulla-->
+                                            <!--assumenda shoreditch et.-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-6 col-xl-4">-->
+                                <!--<div class="card">-->
+                                    <!--<div class="card-status bg-blue"></div>-->
+                                    <!--<div class="card-header">-->
+                                        <!--<h3 class="card-title">Card blue</h3>-->
+                                        <!--<div class="card-options">-->
+                                            <!--&lt;!&ndash;<a href="#" data-toggle="collapse" data-target="#collapseThree"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;aria-expanded="true" aria-controls="collapseThree"><i&ndash;&gt;-->
+                                            <!--&lt;!&ndash;class="fe fe-chevron-up"></i>qqq</a>&ndash;&gt;-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div id="collapseThree" class="collapse show" aria-labelledby="headingThree">-->
+                                        <!--<div class="card-body">-->
+                                            <!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry-->
+                                            <!--richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard-->
+                                            <!--dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon-->
+                                            <!--tempor, sunt aliqua put a bird on it squid single-origin coffee nulla-->
+                                            <!--assumenda shoreditch et.-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-6 col-xl-4">-->
+                                <!--<div class="card">-->
+                                    <!--<div class="card-status bg-green"></div>-->
+                                    <!--<div class="card-header">-->
+                                        <!--<h3 class="card-title">Card green</h3>-->
+                                        <!--<div class="card-options">-->
+                                            <!--&lt;!&ndash;<a href="#" data-toggle="collapse" data-target="#collapseFour"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;aria-expanded="true" aria-controls="collapseFour"><i&ndash;&gt;-->
+                                            <!--&lt;!&ndash;class="fe fe-chevron-up"></i>qqq</a>&ndash;&gt;-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div id="collapseFour" class="collapse show" aria-labelledby="headingFour">-->
+                                        <!--<div class="card-body">-->
+                                            <!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry-->
+                                            <!--richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard-->
+                                            <!--dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon-->
+                                            <!--tempor, sunt aliqua put a bird on it squid single-origin coffee nulla-->
+                                            <!--assumenda shoreditch et.-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <!--
                             <div class="col-md-6 col-xl-4">
                             <div class="card">
@@ -303,7 +303,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btnChangePassword" class="btn btn-primary">确认
+                        <button type="submit" id="btnCreateSection" class="btn btn-primary" onclick="createSection()">确认
                         </button>
                     </div>
                 </form>
