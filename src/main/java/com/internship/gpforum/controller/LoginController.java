@@ -1,6 +1,7 @@
 package com.internship.gpforum.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.internship.gpforum.common.PasswordEncryption;
 import com.internship.gpforum.configure.OnlineUserList;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.RedisService;
@@ -18,7 +19,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
@@ -46,7 +46,7 @@ public class LoginController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 //        System.out.println(email+"\t"+password);
-        User user = userService.signIn(email, password);
+        User user = userService.signIn(email, PasswordEncryption.encryption_SHA_256(password));
         if (user != null) { //用户名密码正确
             HttpSession newSession = request.getSession();
             if (OnlineUserList.containsKey(email)) {  //判断该账户是否已登录
@@ -56,24 +56,24 @@ public class LoginController {
                 } else {  //两台机器登录同一账号，后一个把前一个挤掉
                     session.invalidate();
                     OnlineUserList.remove(email);
-                    if(user.getThisLogTime()!=null){
+                    if (user.getThisLogTime() != null) {
                         user.setLastLogTime(user.getThisLogTime());
                     }
                     user.setThisLogTime(new Date());
                     newSession.setAttribute("User", user);
                     OnlineUserList.put(email, newSession);
-                    addCookie(response,user);
+                    addCookie(response, user);
                     return "登录成功";
                 }
             } else {  //该账号未登陆，正常进行登录
-                if(user.getThisLogTime()!=null){
+                if (user.getThisLogTime() != null) {
                     user.setLastLogTime(user.getThisLogTime());
                 }
                 user.setThisLogTime(new Date());
                 newSession.setAttribute("User", user);
                 OnlineUserList.put(email, newSession);
                 modelMap.put("user", user);
-                addCookie(response,user);
+                addCookie(response, user);
                 return "登录成功";
             }
         } else {  //用户名或密码错误
@@ -83,16 +83,16 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/signupAction", method = RequestMethod.POST)
-    public String SignUp(HttpServletRequest request, ModelMap modelMap,HttpServletResponse response) {
+    public String SignUp(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         String veriCode = request.getParameter("veriCode");
-        String code = new String();
-        String msg = new String();
+        String code;
+        String msg;
         code = redisService.get(email);
-        if(!userService.checkRepeat(email)){
-            msg="该邮箱已被注册";
+        if (!userService.checkRepeat(email)) {
+            msg = "该邮箱已被注册";
             return msg;
         }
         if (code == null || code.equals("")) {
@@ -109,7 +109,7 @@ public class LoginController {
 //        if(password.equals(confirmPassword)){
         User user = new User();
         user.setUserEmail(email);
-        user.setUserPassword(password);
+        user.setUserPassword(PasswordEncryption.encryption_SHA_256(password));
         user.setNickName(email);
         user.setAvatar("/img/no_avatar.png");
         user.setRegTime(new Date());
@@ -119,7 +119,7 @@ public class LoginController {
         modelMap.put("user", user);
         redisService.remove(email);
         msg = "注册成功";
-        addCookie(response,user);
+        addCookie(response, user);
         return msg;
 //        }else
 //            return "redirect:login";
@@ -166,9 +166,9 @@ public class LoginController {
         return code.toString();
     }
 
-    public void addCookie(HttpServletResponse response, User user){
-        String email= user.getUserEmail();
-        Cookie cookie = new Cookie(LoginController.COOKIE_NAME,email);
+    public void addCookie(HttpServletResponse response, User user) {
+        String email = user.getUserEmail();
+        Cookie cookie = new Cookie(LoginController.COOKIE_NAME, email);
 //        redisService.set(email+LoginController.COOKIE_NAME,user.getUserPassword());
         cookie.setMaxAge(604800);//保存一周
 //        redisService.expire(email+LoginController.COOKIE_NAME,604800);
@@ -178,7 +178,7 @@ public class LoginController {
 
 
     @RequestMapping("signout")
-    public String signOut(HttpServletRequest request,HttpServletResponse response){
+    public String signOut(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = new Cookie(LoginController.COOKIE_NAME, "");
         cookie.setMaxAge(0);
         cookie.setPath("/");
