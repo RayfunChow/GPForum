@@ -177,13 +177,13 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "signout",method = RequestMethod.POST)
+    @RequestMapping("signout")
     public String signOut(HttpServletRequest request,HttpServletResponse response){
         Cookie cookie = new Cookie(LoginController.COOKIE_NAME, "");
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
         request.getSession().removeAttribute("User");
-        return "index";
+        return "login";
     }
 }
