@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="zh-hans" class="h-100">
 <head>
-    <title>xxx的个人主页</title>
+    <title>欢迎来到聚集地！</title>
     {{>layout/head}}
     <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/slider.css">
     <!-- Custom styles for this template -->
 </head>
 
@@ -35,10 +36,27 @@
                                         <input type="password" maxlength="16" name="password"
                                                autocomplete="current-password" class="lowin-input" id="Password">
                                     </div>
-                                    <button class="lowin-btn login-btn" style="margin-top: 15px" onclick="signin()"
-                                            type="button">
-                                        登录
-                                    </button>
+                                    <a href="" data-toggle="modal" data-target="#faceLoginModal">使用刷脸登录</a>
+                                    <br>
+                                    <br>
+                                    <!--                                    <button class="lowin-btn login-btn" style="margin-top: 15px" onclick="signin()" type="button">-->
+                                    <!--                                        登录-->
+                                    <!--                                    </button>-->
+                                    <div id="slideBar"></div>
+                                    <script type="text/javascript" src="/js/slider.js"></script>
+                                    <script type="text/javascript">
+                                        var dataList = ["0","1"];
+                                        var options = {
+                                            dataList: dataList,
+                                            success:function(){
+                                                signin();
+                                            },
+                                            fail: function(){
+                                                console.log("fail");
+                                            }
+                                        };
+                                        SliderBar("slideBar", options);
+                                    </script>
 
                                     <div class="text-foot">
                                         还没有账户？ <a href="" class="register-link">现在注册</a>
@@ -97,8 +115,106 @@
 </div>
 {{>layout/footer}}
 
-</body>
+<div class="modal fade" id="faceLoginModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">人脸识别</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <video id="video" autoplay style="width: 120px;height: 150px"></video>
+            </div>
+            <!--            <div class="modal-footer"></div>-->
+        </div>
+    </div>
+</div>
 
+
+</body>
+<!--描绘video截图-->
+<!--<canvas id="canvas" width="480" height="320"></canvas>-->
+<script type="text/javascript">
+    //访问用户媒体设备的兼容方法
+    function getUserMedia(constrains,success,error){
+        if(navigator.mediaDevices.getUserMedia){
+            //最新标准API
+            navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
+        } else if (navigator.webkitGetUserMedia){
+            //webkit内核浏览器
+            navigator.webkitGetUserMedia(constrains).then(success).catch(error);
+        } else if (navigator.mozGetUserMedia){
+            //Firefox浏览器
+            navagator.mozGetUserMedia(constrains).then(success).catch(error);
+        } else if (navigator.getUserMedia){
+            //旧版API
+            navigator.getUserMedia(constrains).then(success).catch(error);
+        }
+    }
+
+    var video = document.getElementById("video");
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    //成功的回调函数
+    function success(stream) {
+        //兼容webkit内核浏览器
+        var CompatibleURL = window.URL || window.webkitURL;
+        //将视频流设置为video元素的源
+        try {
+            //谷歌浏览器放弃此功能
+            video.src = CompatibleURL.createObjectURL(stream);
+        }catch (e) {
+            console.log(e);
+            video.srcObject=stream;
+        }
+        //播放视频
+        video.play();
+    }
+
+    //异常的回调函数
+    function error(error){
+        console.log("访问用户媒体设备失败：",error.name,error.message);
+    }
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
+        //调用用户媒体设备，访问摄像头
+        getUserMedia({
+            video:{width:480,height:320}
+        },success,error);
+    } else {
+        alert("你的浏览器不支持访问用户媒体设备");
+    }
+
+    //注册拍照按钮的单击事件
+    window.setTimeout("time()",1500);
+
+    function time() {
+        context.drawImage(video,0,0,480,320);
+        face_login();
+    }
+
+    function face_login() {
+        var dataURL=canvas.toDataURL();
+        console.log(dataURL);
+        $.ajax({
+            type: "POST",
+            url: "",    //刷脸登录的后端方法
+            dataType: "JSON",
+            data: {
+                action:dataURL
+            },
+            success: function (data) {
+
+            },
+            error:function () {
+
+            }
+        });
+    }
+
+</script>
 <script src="/js/auth.js"></script>
 <script>
     Auth.init({
@@ -184,8 +300,8 @@
             },
             // dataType: "json",
             success: function (data) {
-                if (data) {
-                    window.location.href = 'index';
+                if (data==="登录成功") {
+                    window.location.href = 'updateProfile';
                 } else {
                     alert("用户名或密码错误！");
                 }
