@@ -234,7 +234,8 @@
                             <!--                               alt="" title="更换头像"> -->
                             <div class="icon">
                                 <div class="icon_head" data-toggle="modal" data-target="#changeAvatarModal">
-                                    <img class="nav-item rounded-circle" src="/img/no_avatar.png" width="150px"
+                                    <img class="nav-item rounded-circle" src="{{User.avatar}}" width="150px"
+                                         id="UserAvatar"
                                          height="150px"/>
                                     <a href="#" class="trans_name">
                                         <span class="icon_translucent"></span>
@@ -340,7 +341,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-primary" id="startUpload">提交</button>
             </div>
         </div>
     </div>
@@ -454,7 +455,9 @@
         var uploadInst = upload.render({
             elem: '#btnUploadAvatar'
             , url: '/upload/'
-            , before: function (obj) {
+            ,auto:false
+            ,bindAction:"#startUpload"
+            ,choose: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result); //图片链接（base64）
@@ -462,10 +465,17 @@
             }
             , done: function (res) {
                 //如果上传失败
-                if (res.code > 0) {
+                if (!res.success) {
                     return layer.msg('上传失败');
                 }
                 //上传成功
+                else{
+                    $('#UserAvatar').attr('src', res.data);
+                    $('#navbarAvator').attr('src', res.data);
+                    layer.msg("上传成功");
+                    $("#changeAvatarModal").modal('hide');
+                    // this.trigger('click');
+                }
             }
             , error: function () {
                 //演示失败状态，并实现重传
