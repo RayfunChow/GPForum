@@ -51,12 +51,15 @@ public class PostController {
 
     @RequestMapping(value = "writeComment",method = RequestMethod.POST)
     @ResponseBody
-    public boolean writeComment(HttpServletRequest request,ModelMap modelMap){
+    public String writeComment(HttpServletRequest request,ModelMap modelMap){
         User user=(User)request.getSession().getAttribute("User");
         modelMap.put("User",user);
         String userEmail=user.getUserEmail();
         String nickName=user.getNickName();
-        String content=request.getParameter("commentContent");
+        String content=request.getParameter("commentContent");                     //评论内容
+        if (!BaiduAPI.content_adult(content).equals("0") ) {
+            return "内容涉及敏感词，请重试！";
+        }
         Integer postId=Integer.parseInt(request.getParameter("postId"));
         Comment comment=new Comment();
         comment.setUserEmail(userEmail);
@@ -65,7 +68,7 @@ public class PostController {
         comment.setPostId(postId);
         comment.setUserNickName(nickName);
         commentService.insert(comment);
-        return true;
+        return "发表成功";
     }
     @RequestMapping("commentDetail")
     public String commentDetail(ModelMap modelMap,HttpServletRequest request){
