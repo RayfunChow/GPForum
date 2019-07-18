@@ -26,9 +26,10 @@ public class JumpController {
     }
 
     @RequestMapping("write")
-    public String toWrite(HttpServletRequest request,ModelMap modelMap){
+    public String toWrite(HttpServletRequest request,ModelMap modelMap,String sectionName){
         User user = (User)request.getSession().getAttribute("User");
         modelMap.put("User",user);
+        modelMap.put("sectionName",sectionName);
         return "write";
     }
 

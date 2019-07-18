@@ -140,10 +140,10 @@
     });
 
     function write_content() {
-        var section_name = "11";
+        var section_name = '{{sectionName}}';
         var title = $("#inputTitle").val();
         var content = $("#txt-content").val();
-        var commentable = $("#customCheck1").is(":checked");
+        var invisible = $("#customCheck1").is(":checked");
         $.ajax({
             type: "POST",
             url: "writeAction",
@@ -151,11 +151,12 @@
                 "section_name": section_name,
                 "title": title,
                 "content": content,
-                "commentable": commentable
+                "invisible": invisible
             },
             dataType: "json",
             success: function (data) {
                 alert(data);
+                window.location.href="profile";
             }
         });
     }

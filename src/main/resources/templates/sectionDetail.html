@@ -46,14 +46,12 @@
                 <div class="col-7">
                     {{#postPage}}
                     <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
-                        <a href="#" style="color: #0b2e13"><h4>日韩贸易战升级，韩国深陷绝境，普京及时出手</h4></a>
-                        <p>7月初日本正式对韩国实施了出口限制，用于制造半导体的高纯度氟化氢等原材料被禁止向韩国出口。
-                            如果得不到这些原材料，韩国三星、LG等高科技产业将受到严重冲击，甚至韩国经济都将受到巨大影响，
-                            为了让日本取消出口禁令，韩国政府想了不少办法，然而日本政府态度强硬，拒绝做出让步。
+                        <h4><a href="/postDetail?postId={{postId}}" style="color: #0b2e13">{{title}}</a></h4>
+                        <p>{{summary}}
                             <!--                        <a href="#" style="color:#7a5e3f">查看原文</a></p>-->
                         <div class="row">
                             <div class="col-8"></div>
-                            <div class="col-2">今天9:23</div>
+                            <div class="col-2" name="lastEditTimes">{{lastEditTime}}</div>
                         <div class="col-1"><input type="image" src="/svg/heart.svg" style="height: 20px;width: 20px"></div>
                         <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
                         </div>
@@ -61,6 +59,8 @@
                     {{/postPage}}
                     {{^postPage}}
                     {{/postPage}}
+
+                    <div>
                     <!--<div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">-->
                         <!--<a href="#" style="color: #0b2e13"><h4>日韩贸易战升级，韩国深陷绝境，普京及时出手</h4></a>-->
                         <!--<p>7月初日本正式对韩国实施了出口限制，用于制造半导体的高纯度氟化氢等原材料被禁止向韩国出口。-->
@@ -117,6 +117,7 @@
                             <!--</div>-->
                         <!--</div>-->
                     <!--</div>-->
+                    </div>
                     <div id="pagination"></div>
                 </div>
                 <div class="card col-3" style="max-height: 500px">
@@ -166,9 +167,11 @@
                             <!--</button>-->
                         <!--</div>-->
                         <div style="position: absolute;bottom: 0;left: 22%;margin-bottom: 20px;">
-                            <button type="button" class="btn btn-outline-primary">
+                            {{#sectionDetail}}
+                            <a type="button" class="btn btn-outline-primary" href="/write?sectionName={{sectionName}}">
                                 <span class="oi oi-pencil"></span>&nbsp;发表新帖
-                            </button>
+                            </a>
+                            {{/sectionDetail}}
                             <button type="button" class="btn btn-outline-primary">
                                 <span class="oi oi-puzzle-piece"></span>&nbsp;申请版主
                             </button>
@@ -197,10 +200,30 @@
         laypage.render({
             elem: 'pagination' //分页控件id
             ,limit: 10 //每页显示的条数
-            ,count: 500 //数据总数，从服务端得到
+            ,count: {{postPage.totalElements}} //数据总数，从服务端得到
             ,groups: 5
+            ,curr:Number({{postPage.number}}+1)
+    ,jump:function(obj,first){//当点击分页的页码，切换后的调用该函数
+            if(!first){
+                //改变浏览器的地址
+                location.href="sectionDetail?pageIndex="+obj.curr+'&sectionName='+'{{sectionDetail.sectionName}}';
+            }
+        }
             ,layout:['count', 'prev', 'page', 'next', 'skip']
         });
+    });
+
+    $(function () {
+
+        var lastEditTimes = document.getElementsByName("lastEditTimes");
+        for (var i=0;i<lastEditTimes.length;i++){
+            lastEditTimes[i].innerText = (process(lastEditTimes[i].innerText));
+        }
+
+        function process(data) {
+            var flag = data.indexOf(" ");
+            return data.substring(0,flag);
+        }
     });
 </script>
 

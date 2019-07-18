@@ -5,6 +5,7 @@ import com.internship.gpforum.dal.entity.Comment;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.CommentService;
+import com.internship.gpforum.service.BaiduAPI;
 import com.internship.gpforum.service.PostService;
 import com.internship.gpforum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +33,7 @@ public class PostController {
     private PostService postService;
 
     @RequestMapping("postDetail")
-    public String toPostDetail(ModelMap modelMap){
-        Integer postId=1;
+    public String toPostDetail(ModelMap modelMap,Integer postId){
         Post postDetail=postService.getDetail(postId);
         modelMap.put("postDetail",postDetail);
         List<Comment> parentComments=commentService.findAllParentComment(postId);
@@ -56,11 +57,12 @@ public class PostController {
         String userEmail=user.getUserEmail();
         String nickName=user.getNickName();
         String content=request.getParameter("commentContent");
+        Integer postId=Integer.parseInt(request.getParameter("postId"));
         Comment comment=new Comment();
         comment.setUserEmail(userEmail);
         comment.setCommentTime(new Date());
         comment.setContent(content);
-        comment.setPostId(1);
+        comment.setPostId(postId);
         comment.setUserNickName(nickName);
         commentService.insert(comment);
         return true;
@@ -93,14 +95,24 @@ public class PostController {
             String section_name = request.getParameter("section_name");       //板块
             String title = request.getParameter("title");                                        //标题
             String content = request.getParameter("content");                                    //内容
-            Boolean commentable = Boolean.parseBoolean(request.getParameter("commentable"));        //是否可评论
-            String summary = content.replaceAll("<([^>]*)>", "");                      //摘要需要先把内容正则化，然后再次判断其长度;                                                                //取摘要
-            if(summary.length()>=20)
-                summary=summary.substring(0,20);
-            User user= (User)request.getSession().getAttribute("User");
-            String author_email=user.getUserEmail();
-            postService.writeContent(author_email, section_name, title, summary, content,  commentable, "正常", new Date());
-            return JSON.toJSONString("发表成功！");
+            Boolean invisible = Boolean.parseBoolean(request.getParameter("invisible"));        //是否可评论
+            String summary = content.replaceAll("<([^>]*)>", "");                //摘要需要先把内容正则化，然后再次判断其长度;
+
+            if(BaiduAPI.image_audit(content).equals("不合规")) {                                        //图片审核
+                return JSON.toJSONString("图片不合规，请重试！");
+            }else {
+                if (summary.length() >= 20)                                                                // 取摘要
+                    summary = summary.substring(0, 20);
+                User user = (User) request.getSession().getAttribute("User");
+                String author_email = user.getUserEmail();
+                //敏感词
+                if (!BaiduAPI.content_adult(title).equals("0") || !BaiduAPI.content_adult(content.replaceAll("<([^>]*)>", "")).equals("0")) {
+                    return JSON.toJSONString("内容涉及敏感词，请重试！");
+                } else {
+                    postService.writeContent(author_email, section_name, title, summary, content, invisible, "正常", new Date());
+                    return JSON.toJSONString("发表成功！");
+                }
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return JSON.toJSONString("发表失败！");
