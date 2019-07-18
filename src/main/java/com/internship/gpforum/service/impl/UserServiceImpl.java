@@ -2,6 +2,7 @@ package com.internship.gpforum.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.internship.gpforum.dal.UserRepository;
+import com.internship.gpforum.dal.entity.BrowseRecord;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -78,5 +78,18 @@ public class UserServiceImpl implements UserService {
         redisTemplate.opsForHash().delete("userList",user.getUserEmail());
         redisTemplate.opsForHash().put("userList",user.getUserEmail(),json.toJSONString(user));
         userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void addBrowseRecord(String email, Integer id, String title) {
+        BrowseRecord browseRecord=new BrowseRecord();
+        String browseUrl="/postDetail?postId="+id;
+        browseRecord.setPostTitle(title);
+        browseRecord.setBrowseUrl(browseUrl);
+        browseRecord.setBrowseTime(new Date());
+        if(redisTemplate.opsForHash().hasKey(email+"_records",browseUrl)) {
+           redisTemplate.opsForHash().delete(email+"_records",browseUrl);
+        }
+        redisTemplate.opsForHash().put(email+"_records",browseUrl,json.toJSONString(browseRecord));
     }
 }

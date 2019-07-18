@@ -4,18 +4,19 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name="browseRecord")
 @ToString
-public class BrowseRecord {
+public class BrowseRecord implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer recordId;
 
-    private Integer postId;
+    private String browseUrl;
 
     private String postTitle;
 
@@ -30,12 +31,12 @@ public class BrowseRecord {
         this.recordId = recordId;
     }
 
-    public Integer getPostId() {
-        return postId;
+    public String getBrowseUrl() {
+        return browseUrl;
     }
 
-    public void setPostId(Integer postId) {
-        this.postId = postId;
+    public void setBrowseUrl(String browseUrl) {
+        this.browseUrl = browseUrl;
     }
 
     public String getPostTitle() {
@@ -58,7 +59,7 @@ public class BrowseRecord {
     public String toString() {
         return "BrowseRecord{" +
                 "recordId=" + recordId +
-                ", postId=" + postId +
+                ", postId=" + browseUrl +
                 ", postTitle='" + postTitle + '\'' +
                 ", browseTime=" + browseTime +
                 '}';
