@@ -33,67 +33,79 @@ public class PostController {
     private PostService postService;
 
     @RequestMapping("postDetail")
-    public String toPostDetail(ModelMap modelMap,Integer postId){
-        Post postDetail=postService.getDetail(postId);
-        modelMap.put("postDetail",postDetail);
-        List<Comment> parentComments=commentService.findAllParentComment(postId);
+    public String toPostDetail(ModelMap modelMap, Integer postId,HttpServletRequest request) {
+        User userInfo=(User)request.getSession().getAttribute("User");
+        modelMap.put("User",userInfo);
+        Post postDetail = postService.getDetail(postId);
+        modelMap.put("postDetail", postDetail);
+        List<Comment> parentComments = commentService.findAllParentComment(postId);
         User user;
-        for(int i=0;i<parentComments.size();i++){
+        for (int i = 0; i < parentComments.size(); i++) {
             user = userService.userCoookie(parentComments.get(i).getUserEmail());
             parentComments.get(i).setUserNickName(user.getNickName());
         }
         modelMap.put("parentCommentsNumber", parentComments.size());
-        if(parentComments.size()!=0) {
+        if (parentComments.size() != 0) {
             modelMap.put("parentComments", parentComments);
         }
         return "postDetail";
     }
 
-    @RequestMapping(value = "writeComment",method = RequestMethod.POST)
+    @RequestMapping(value = "writeComment", method = RequestMethod.POST)
     @ResponseBody
-    public String writeComment(HttpServletRequest request,ModelMap modelMap){
-        User user=(User)request.getSession().getAttribute("User");
-        modelMap.put("User",user);
-        String userEmail=user.getUserEmail();
-        String nickName=user.getNickName();
-        String content=request.getParameter("commentContent");                     //评论内容
-        if (!BaiduAPI.content_adult(content).equals("0") ) {
+    public String writeComment(HttpServletRequest request, ModelMap modelMap) {
+        User user = (User) request.getSession().getAttribute("User");
+        modelMap.put("User", user);
+        String userEmail = user.getUserEmail();
+        String nickName = user.getNickName();
+        String content = request.getParameter("commentContent");                     //评论内容
+        if (!BaiduAPI.content_adult(content).equals("0")) {
             return "内容涉及敏感词，请重试！";
         }
-        Integer postId=Integer.parseInt(request.getParameter("postId"));
-        Comment comment=new Comment();
+        Comment comment = new Comment();
+        Integer postId = Integer.parseInt(request.getParameter("postId"));
+        comment.setPostId(postId);
+        Integer parentCommentId=Integer.parseInt(request.getParameter("parentCommentId"));
+        String respondentEmail=request.getParameter("respondentEmail");
+        String respondentNickname=request.getParameter("respondentNickname");
+        if ( parentCommentId!= null&&respondentEmail!=null&&respondentNickname!=null) {
+            comment.setParentCommentId(parentCommentId);
+            comment.setRespondentUserNickName(respondentNickname);
+            comment.setRespondentUserEmail(respondentEmail);
+        }
         comment.setUserEmail(userEmail);
         comment.setCommentTime(new Date());
         comment.setContent(content);
-        comment.setPostId(postId);
         comment.setUserNickName(nickName);
         commentService.insert(comment);
         return "发表成功";
     }
+
+    @ResponseBody
     @RequestMapping("commentDetail")
-    public String commentDetail(ModelMap modelMap,HttpServletRequest request){
-        User user0=(User)request.getSession().getAttribute("User");
-        modelMap.put("User",user0);
-        Integer parentId=1;
-        Integer postId=1;
-        List<Comment> childrenComments=commentService.findAllChildComment(parentId,postId);
+    public String commentDetail(ModelMap modelMap, HttpServletRequest request) {
+        User user0 = (User) request.getSession().getAttribute("User");
+        modelMap.put("User", user0);
+        Integer parentId = Integer.valueOf(request.getParameter("parentCommentId"));
+        Integer postId = Integer.valueOf(request.getParameter("postId"));
+        List<Comment> childrenComments = commentService.findAllChildComment(parentId, postId);
         User user;
-        for(int i=0;i<childrenComments.size();i++){
+        for (int i = 0; i < childrenComments.size(); i++) {
             user = userService.userCoookie(childrenComments.get(i).getUserEmail());
             childrenComments.get(i).setUserNickName(user.getNickName());
-            user=userService.userCoookie(childrenComments.get(i).getRespondentUserEmail());
+            user = userService.userCoookie(childrenComments.get(i).getRespondentUserEmail());
             childrenComments.get(i).setRespondentUserNickName(user.getNickName());
         }
-        if(childrenComments.size()!=0) {
-            modelMap.put("childrenComments", childrenComments);
-            modelMap.put("childrenCommentsNumber", childrenComments.size());
-        }
-        return "postDetail";
+//        if (childrenComments.size() != 0) {
+//            modelMap.put("childrenComments", childrenComments);
+//            modelMap.put("childrenCommentsNumber", childrenComments.size());
+//        }
+        return JSON.toJSONString(childrenComments);
     }
 
     @ResponseBody
     @RequestMapping(value = "writeAction", method = RequestMethod.POST)
-    public String write(HttpServletRequest request){
+    public String write(HttpServletRequest request) {
         try {
             String section_name = request.getParameter("section_name");       //板块
             String title = request.getParameter("title");                                        //标题
@@ -101,9 +113,9 @@ public class PostController {
             Boolean invisible = Boolean.parseBoolean(request.getParameter("invisible"));        //是否可评论
             String summary = content.replaceAll("<([^>]*)>", "");                //摘要需要先把内容正则化，然后再次判断其长度;
 
-            if(BaiduAPI.image_audit(content).equals("不合规")) {                                        //图片审核
+            if (BaiduAPI.image_audit(content).equals("不合规")) {                                        //图片审核
                 return JSON.toJSONString("图片不合规，请重试！");
-            }else {
+            } else {
                 if (summary.length() >= 20)                                                                // 取摘要
                     summary = summary.substring(0, 20);
                 User user = (User) request.getSession().getAttribute("User");
