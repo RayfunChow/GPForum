@@ -6,12 +6,13 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @ToString
 @Table(name="user")
-public class User {
+public class User implements Serializable {
 
     @Id
     private String userEmail;

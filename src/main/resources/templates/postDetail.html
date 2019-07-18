@@ -171,33 +171,35 @@
 
                         <div style="margin-left: 20px;" class="col-10">
                             <div>
-                                <small>{{userNickName}}</small>
+                                <small><a href="profile?userEmail={{userEmail}}"></a>{{userNickName}}</small>
                                 <small style="margin-left: 7px;margin-right: 7px;">|</small>
                                 <small>{{commentTime}}</small>
-                                <a data-toggle="collapse"
-                                   href="#replyCollapse{{commentId}}"
-                                   style="float: right;"
-                                   aria-expanded="false"
-                                   aria-controls="replyCollapse">
+                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#replyModal"
+                                   style="float: right;" onclick="toReplyModal({{commentId}}, '{{userNickName}}', '{{userEmail}}', {{commentId}})">
                                     <small>回复</small>
-                                </a>
-
+                                </button>
                             </div>
-                            <div style="margin-top: 5px">
+
+                            <div  style="margin-top: 5px">
                                 <p>
                                     {{content}}
                                 </p>
-                                <div class="collapse" id="replyCollapse{{commentId}}" data-parent="#accordion">
-                                    <div class="card card-body">
+                                <div class="container" id="childComments{{commentId}}">
+                                    <!--<small><a href="profile?userEmail=">江泽民 </a> 对 <a href="profile?userEmail="> 董建华</a>-->
+                                         <!--说：连任也要按照基本法和选举法去产生<a href="#replyCollapse{{commentId}}"> 回复</a></small>-->
+                                    <!--<div class="collapse" id="replyCollapse{{commentId}}" data-parent="#accordion">-->
+                                        <!--<div class="card card-body">-->
+                                            <!--<label>输入回复：</label>-->
+                                            <!--<textarea id="childCommentContent{{commentId}}" placeholder="输入回复内容"></textarea>-->
+                                            <!--<button type="button" style="float: right;width: 120px" value="{{commentId}}" onclick="writeChildComment(this)"-->
+                                                    <!--class="btn btn-outline-secondary">发表回复-->
+                                            <!--</button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <small><input type="button" class="btn btn-sm btn-outline-secondary" onclick="getChildComments({{commentId}})" value="显示回复"></input></small>
 
-                                        <label>输入回复：</label>
-                                        <textarea id="childCommentContent{{commentId}}" placeholder="输入回复内容"></textarea>
-                                        <button type="button" style="float: right;width: 120px" value="{{commentId}}" onclick="writeChildComment(this)"
-                                                class="btn btn-outline-secondary">发表回复
-                                        </button>
-
-                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -205,13 +207,14 @@
                     {{^parentComments}}
                     {{/parentComments}}
                 </div>
+                <input type="text" value="obj.commentId" hidden>
                 <div style="margin-top: 50px;">
                     <hr>
                     <h4>发表回复</h4>
                     <form>
                         <textarea class="form-control" rows="3" placeholder="输入评论详情" id="commentContent"></textarea>
                         <button type="button" style="float: right;"
-                                class="btn btn-outline-secondary" onclick="writeComment()">发表回复
+                                class="btn btn-outline-primary" onclick="writeComment()">发表回复
                         </button>
                     </form>
                 </div>
@@ -221,9 +224,35 @@
             <div class="col-sm-1"></div>
 
         </div>
-
     </div>
 </main>
+
+<div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="text" id="parentCommentId" hidden>
+            <input type="text" id="targetCommentId" hidden>
+            <input type="text" id="respondentEmail" hidden>
+            <input type="text" id="respondentNickname" hidden>
+            <div class="modal-header">
+                <h5 class="modal-title" id="replyModalTitle">回复</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <textarea class="form-control" id="replyContent" placeholder="输入回复内容"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="writeChildComment()" id="btnWriteChildComment"
+                        class="btn btn-outline-primary">发表回复
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{>layout/footer}}
 </body>
@@ -252,22 +281,61 @@
 
     });
 
-    function writeChildComment(that) {
+    function toReplyModal(commentId, respondentNickname, respondentEmail, targetCommentId){
+        $("#replyModalTitle").text("回复：" + respondentNickname);
+        $("#parentCommentId").val(commentId);
+        $("#targetCommentId").val(targetCommentId);
+        $("#respondentEmail").val(respondentEmail);
+        $("#respondentNickname").val(respondentNickname);
+    }
 
-        var parentCommentId = $(that).val();
-        var commentContent = $("#childCommentContent"+parentCommentId).val();
+    function getChildComments(parentCommentId) {
+
+        var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
+        $.ajax({
+            type: "post",
+            url: "commentDetail",
+            dataType: "json",
+            data: {
+                "postId": postId,
+                "parentCommentId": parentCommentId
+            },
+            success: function (data) {
+                console.log(data);
+                str="";
+                $.each(data, function(i, obj) {
+                    str+="<p><small><a href=\"profile?userEmail="+obj.userEmail+"\">"+obj.userNickName+" </a> 对 <a href=\"profile?userEmail="+obj.respondentUserNickName+"\">"+ obj.respondentUserNickName+"</a>\n" +
+                        " 说："+obj.content+"<a  data-toggle=\"modal\" data-target=\"#replyModal\" href=\"#\" onclick=\"toReplyModal("+obj.parentCommentId+",'"+ obj.userEmail+"','"+ obj.userNickName+"','"+ obj.commentId+"')\"> 回复</a></small></p>\n";
+                });
+                $("#childComments"+parentCommentId).html(str);
+                console.log(data);
+            }
+        })
+    }
+
+    function writeChildComment() {
+        var parentCommentId=$("#parentCommentId").val();
+        var targetCommentId=$("#targetCommentId").val();
+        var respondentEmail=$("#respondentEmail").val();
+        var respondentNickname=$("#respondentNickname").val();
+        var commentContent = $("#replyContent").val();
+        var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
         $.ajax({
             type: "post",
             url: "writeComment",
             data: {
+                "postId": postId,
+                "respondentEmail": respondentEmail,
+                "respondentNickname": respondentNickname,
                 "parentCommentId": parentCommentId,
-                "commentContent": commentContent
+                "commentContent": commentContent,
+                "targetCommentId": targetCommentId
             },
             success: function (data) {
-                if (data) {
+                if (data==="发表成功") {
                     window.location.href="postDetail?postId="+postId;
                 } else {
-                    alert("评论失败，请重试");
+                    alert(data);
                 }
             }
         })

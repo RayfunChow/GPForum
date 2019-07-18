@@ -91,7 +91,9 @@ public class ProfileController {
         String sex=request.getParameter("sex");
         String birthday=request.getParameter("birthday");
         user.setNickName(nickName);
-        user.setBirthday(birthday);
+        if(!birthday.equals("")) {
+            user.setBirthday(birthday);
+        }
         user.setHobby(hobby);
         user.setLocation(location);
         user.setSignature(signature);
