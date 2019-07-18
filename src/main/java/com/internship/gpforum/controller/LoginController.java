@@ -176,6 +176,8 @@ public class LoginController {
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
+        User user=(User)request.getSession().getAttribute("User");
+        OnlineUserList.remove(user.getUserEmail());
         request.getSession().removeAttribute("User");
         return "login";
     }

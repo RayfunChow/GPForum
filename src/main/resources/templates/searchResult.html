@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-hans" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <title>消息中心</title>
+    {{>layout/head}}
+    <style>
+        .footer {
+            background-color: #f5f5f5;
+        }
+
+        .footer > .container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        #TabMain {
+            width: 1500px;
+            height: 700px;
+            margin: 0 auto;
+            /*margin-top: 30px;*/
+            /*margin-left: 300px;*/
+        }
+
+        .tabItemContainer {
+            width: 100px;
+            height: 700px;
+            float: left;
+            margin-right: 20px;
+        }
+
+        .tabBodyContainer {
+            width: 1000px;
+            height: 550px;
+            float: left;
+            background-color: #eff0ea;
+            border: 1px solid #eff0ea00;
+            -webkit-border-radius: 0 5px 5px 0;
+            -moz-border-radius: 0 5px 5px 0;
+            border-radius: 0 5px 5px 0;
+            margin-left: 1px;
+        }
+
+        .tabItemContainer > li {
+            list-style: none;
+            text-align: center;
+        }
+
+        .tabItemContainer > li > a {
+            float: left;
+            width: 100%;
+            padding: 10px 0 30px 0;
+            font: 16px "微软雅黑", Arial, Helvetica, sans-serif;
+            color: #808080;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        .tabItemCurrent {
+            background-color: #eff0ea;
+            border: 1px solid #ccc !important;
+            /*border-right: 1px solid #ccc !important;*/
+            position: relative;
+            -webkit-border-radius: 5px 0 0 5px;
+            -moz-border-radius: 5px 0 0 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+        .tabItemContainer > li > a:hover {
+            color: #333;
+        }
+
+        .tabBodyItem {
+            position: absolute;
+            width: 1000px;
+            height: 550px;
+            display: none;
+        }
+
+        .tabBodyItem > p {
+            font: 13px "微软雅黑", Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .tabBodyItem > p > a {
+            text-decoration: none;
+            color: #0F3;
+        }
+
+        .tabBodyCurrent {
+            display: block;
+        }
+
+
+
+        .myGutter {
+            /*margin-right: -10px;*/
+            /*margin-left: -15px;*/
+            margin-bottom: 15px;
+            /*padding: 10px;*/
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+        }
+
+        .Mycard {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #eff0ea;
+            background-clip: border-box;
+            /*border: 1px solid rgba(0, 0, 0, .125);*/
+            border-radius: .25rem
+
+        }
+    </style>
+</head>
+<body class="d-flex flex-column h-100" style="background:#eff0ea">
+
+{{>layout/navbar}}
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+    <div class="container" style="margin-top: 30px">
+        <!--<div class="col-2"></div>-->
+        <div id="TabMain">
+            <div class="tabItemContainer">
+                <li><a class="tabItemCurrent">用户</a></li>
+                <li><a>板块</a></li>
+                <li><a>帖子</a></li>
+
+
+            </div>
+            <div class="tabBodyContainer">
+                <div class="tabBodyItem tabBodyCurrent">
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <img src="../static/img/no_avatar.png"
+                                         style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
+                                    <a href="#" style="margin-left: 15px">用户名</a>
+                                </div>
+                                <div class="col-md-2 container">
+                                    <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <img src="../static/img/no_avatar.png"
+                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
+                                        <a href="#" style="margin-left: 15px">用户名</a>
+                                    </div>
+                                    <div class="col-md-2 container">
+                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <img src="../static/img/no_avatar.png"
+                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
+                                        <a href="#" style="margin-left: 15px">用户名</a>
+                                    </div>
+                                    <div class="col-md-2 container">
+                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Mycard" style="width: 100%;">
+                            <div class="myGutter">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <img src="../static/img/no_avatar.png"
+                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
+                                        <a href="#" style="margin-left: 15px">用户名</a>
+                                    </div>
+                                    <div class="col-md-2 container">
+                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabBodyItem">
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">版块名：Special</a>
+                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
+                                <div class="card-text">
+                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">版块名：Special</a>
+                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
+                                <div class="card-text">
+                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">版块名：Special</a>
+                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
+                                <div class="card-text">
+                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="width: 100%;">
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <a href="#">版块名：Special</a>
+                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
+                                <div class="card-text">
+                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tabBodyItem">
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <!--                <div class="myGutter">-->
+                        <div class="myGutter row ">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                </div>-->
+                    </div>
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <div class="row myGutter">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                        <div class="row myGutter">
+                            <div class="col-sm-2">
+                                <img src="" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="col-sm-10">
+                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
+                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
+                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <div class="row">
+                                    <div class="col-8"></div>
+                                    <a href="#" class="col-2">作者</a>
+                                    <div class="col-2">今天9:23</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{{>layout/footer}}
+
+</body>
+
+<script src="https://static.pengyaou.com/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        SidebarTabHandler.Init();
+    });
+    var SidebarTabHandler = {
+        Init: function () {
+            $(".tabItemContainer>li").click(function () {
+                $(".tabItemContainer>li>a").removeClass("tabItemCurrent");
+                $(".tabBodyItem").removeClass("tabBodyCurrent");
+                $(this).find("a").addClass("tabItemCurrent");
+                $($(".tabBodyItem")[$(this).index()]).addClass("tabBodyCurrent");
+            });
+        }
+    }
+</script>
+
+
+</html>

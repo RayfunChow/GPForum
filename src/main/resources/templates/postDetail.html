@@ -175,7 +175,7 @@
                                 <small style="margin-left: 7px;margin-right: 7px;">|</small>
                                 <small>{{commentTime}}</small>
                                 <a data-toggle="collapse"
-                                   href="#replyCollapse1"
+                                   href="#replyCollapse{{commentId}}"
                                    style="float: right;"
                                    aria-expanded="false"
                                    aria-controls="replyCollapse">
@@ -187,12 +187,12 @@
                                 <p>
                                     {{content}}
                                 </p>
-                                <div class="collapse" id="replyCollapse1" data-parent="#accordion">
+                                <div class="collapse" id="replyCollapse{{commentId}}" data-parent="#accordion">
                                     <div class="card card-body">
 
                                         <label>输入回复：</label>
-                                        <textarea placeholder="输入回复内容replyCollapse1"></textarea>
-                                        <button type="button" style="float: right;width: 120px"
+                                        <textarea id="childCommentContent{{commentId}}" placeholder="输入回复内容"></textarea>
+                                        <button type="button" style="float: right;width: 120px" value="{{commentId}}" onclick="writeChildComment(this)"
                                                 class="btn btn-outline-secondary">发表回复
                                         </button>
 
@@ -252,6 +252,27 @@
 
     });
 
+    function writeChildComment(that) {
+
+        var parentCommentId = $(that).val();
+        var commentContent = $("#childCommentContent"+parentCommentId).val();
+        $.ajax({
+            type: "post",
+            url: "writeComment",
+            data: {
+                "parentCommentId": parentCommentId,
+                "commentContent": commentContent
+            },
+            success: function (data) {
+                if (data) {
+                    window.location.href="postDetail?postId="+postId;
+                } else {
+                    alert("评论失败，请重试");
+                }
+            }
+        })
+    }
+
     function writeComment() {
         var commentContent = $("#commentContent").val();
         var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
@@ -263,10 +284,10 @@
                 "commentContent": commentContent
             },
             success: function (data) {
-                if (data) {
+                if (data==="发表成功") {
                     window.location.href="postDetail?postId="+postId;
                 } else {
-                    alert("评论失败，请重试");
+                    alert(data);
                 }
             }
         })
