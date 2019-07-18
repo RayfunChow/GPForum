@@ -41,6 +41,7 @@
                 <div class="card col-3" style="max-height: 500px">
                     <div class="card-body" style="padding: 10px;text-align: center">
                         <img class="nav-item rounded-circle" src="../img/no_avatar.png"
+                             id="UserAvatar"
                              style="width: 70px;height: 70px">
                         <h5 style="text-align: center" id="userNickname1">用户名</h5>
                         <div class="row" style="text-align: center">
@@ -118,6 +119,7 @@
 
 <script>
     $(function () {
+        $("#UserAvatar").attr("src",'{{User.avatar}}');
         $("#showUserPostNumber").html('发帖:'+'{{#User.userPostNumber}}{{.}}{{/User.userPostNumber}}{{^User.userPostNumber}}0{{/User.userPostNumber}}');
         $("#userNickname1").text('{{#User.nickName}}{{.}}{{/User.nickName}}{{^User.nickName}}{{/User.nickName}}');
 

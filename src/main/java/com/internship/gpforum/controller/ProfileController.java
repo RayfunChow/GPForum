@@ -1,6 +1,7 @@
 package com.internship.gpforum.controller;
 
 import com.internship.gpforum.configure.OnlineUserList;
+import com.internship.gpforum.configure.UploadPhotoResult;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.PostService;
@@ -15,13 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 public class ProfileController {
+
+//    @Value("${static.upload.path}")
+    private String uploadPath = "F:/image/";
+
+//    @Value("${static.server.address}")
+    private String staticServerAddr = "http://127.0.0.1:7999/";
+
 
     @Autowired
     private UserService userService;
@@ -98,5 +110,21 @@ public class ProfileController {
         user.setSex(sex);
         userService.update(user);
         return "修改信息成功";
+    }
+
+    @RequestMapping(value="upload",method = RequestMethod.POST)
+    @ResponseBody
+    public UploadPhotoResult upload(MultipartFile file, HttpServletRequest request){
+        String fileName = UUID.randomUUID()+file.getOriginalFilename();
+        try {
+            file.transferTo(new File(uploadPath+fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new UploadPhotoResult(false,null,"上传出错，请稍后再试");
+        }
+        User user = (User)request.getSession().getAttribute("User");
+        user.setAvatar(staticServerAddr+fileName);
+        userService.update(user);
+        return new UploadPhotoResult(true,staticServerAddr+fileName,null);
     }
 }
