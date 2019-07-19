@@ -121,11 +121,12 @@ public class PostController {
                     summary = summary.substring(0, 20);
                 User user = (User) request.getSession().getAttribute("User");
                 String author_email = user.getUserEmail();
+                String authorNickname=user.getNickName();
                 //敏感词
                 if (!BaiduAPI.content_adult(title).equals("0") || !BaiduAPI.content_adult(content.replaceAll("<([^>]*)>", "")).equals("0")) {
                     return JSON.toJSONString("内容涉及敏感词，请重试！");
                 } else {
-                    postService.writeContent(author_email, section_name, title, summary, content, invisible, "正常", new Date());
+                    postService.writeContent(author_email,authorNickname, section_name, title, summary, content, invisible, "正常", new Date());
                     return JSON.toJSONString("发表成功！");
                 }
             }
@@ -135,4 +136,14 @@ public class PostController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "star",method = RequestMethod.POST)
+    public boolean Star(HttpServletRequest request){
+        User user=(User)request.getSession().getAttribute("User");
+        String postTitle=request.getParameter("postTitle");
+        Integer postId=Integer.valueOf(request.getParameter("postId"));
+        Integer starType=Integer.valueOf(request.getParameter("starType"));
+        postService.Star(user,postId,postTitle,starType);
+        return true;
+    }
 }

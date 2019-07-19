@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -32,9 +33,10 @@ public class UserServiceImpl implements UserService {
         try {
             String result=String.valueOf(redisTemplate.opsForHash().get("userList",email));
             user= json.parseObject(result,User.class);
-            return user;
-        }
-       catch (Exception e) {
+            if(user!=null) {
+                return user;
+            }
+        }catch (Exception e) {
            e.printStackTrace();
         }
         user = userRepository.findByUserEmailAndUserPassword(email, password);
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkRepeat(String email) {   //检查是否重复注册
+
         User user;
         try {
             boolean result=redisTemplate.opsForHash().hasKey("userList",email);
@@ -63,6 +66,7 @@ public class UserServiceImpl implements UserService {
         }else                                   //否则返回false
             return true;
     }
+
 
     @Override
     public User userCoookie(String email) {
@@ -88,6 +92,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findByNickName(String keyword) {
+        return userRepository.findByNickName(keyword);
+    }
+  
     public void addBrowseRecord(String email, Integer id, String title) {
         BrowseRecord browseRecord=new BrowseRecord();
         String browseUrl="/postDetail?postId="+id;
@@ -98,5 +106,8 @@ public class UserServiceImpl implements UserService {
            redisTemplate.opsForHash().delete(email+"_records",browseUrl);
         }
         redisTemplate.opsForHash().put(email+"_records",browseUrl,json.toJSONString(browseRecord));
+        if(!redisTemplate.opsForHash().hasKey(email+"_records",browseUrl)) {
+            redisTemplate.opsForHash().increment("browseNumber", id + "", 1);
+        }
     }
 }

@@ -2,11 +2,12 @@ package com.internship.gpforum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class GpforumApplication extends SpringBootServletInitializer {
-
+@EnableScheduling
+public class GpforumApplication {
+  
     public static void main(String[] args) {
         SpringApplication.run(GpforumApplication.class, args);
     }

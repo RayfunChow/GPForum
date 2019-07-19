@@ -2,6 +2,8 @@ package com.internship.gpforum.service;
 
 import com.internship.gpforum.dal.entity.User;
 
+import java.util.List;
+
 public interface UserService {
 
     User signIn(String email,String password);
@@ -14,5 +16,9 @@ public interface UserService {
 
     void update(User user);
 
+
+    List<User> findByNickName(String keyword);
+
     void addBrowseRecord(String email,Integer id,String title);
+
 }

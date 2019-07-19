@@ -25,9 +25,11 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="form-inline my-2 my-lg-0" style="margin: 10px">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" style="margin: 10px" action="/searchAction" method="post">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchKeyword" name="keyword"
+                               aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            <!--                                onclick="search()">-->
                             <span class="oi oi-magnifying-glass"></span>
                         </button>
                     </form>
@@ -38,7 +40,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userName" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <img class="nav-item rounded-circle" src="{{avatar}}" id="navbarAvator" width="30px" height="30px" alt="">{{nickName}}
+                            <img class="nav-item rounded-circle" src="{{avatar}}" id="navbarAvator" width="30px"
+                                 height="30px" alt="">{{nickName}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="updateProfile">修改个人信息</a>
@@ -57,5 +60,20 @@
             </div>
         </div>
     </nav>
+
+    <script>
+        function search() {
+            var keyword = $("#searchKeyword").val();
+            $.ajax({
+                type: "post",
+                url: "/searchAction",
+                data: {"keyword": keyword},
+                // dataType: "json",
+                success: function (data) {
+                    alert(data);
+                }
+            })
+        }
+    </script>
 
 </header>

@@ -1,12 +1,10 @@
 <!doctype html>
 <html lang="zh-hans" class="h-100">
 <head>
-    <title>xxx的个人主页</title>
+    <title>欢迎来到聚集地！</title>
     {{>layout/head}}
-
     <link rel="stylesheet" href="/css/auth.css">
     <link rel="stylesheet" href="/css/slider.css">
-
     <!-- Custom styles for this template -->
     <style>
         .div-a{ position:absolute; left:60px; top:40px;  width:360px; height:240px}
@@ -17,7 +15,7 @@
 <body class="d-flex flex-column h-100" style="background: url(../img/loginbg.jpg) center top;">
 {{>layout/navbar}}
 
-<div>
+<div >
     <main role="main" class="flex-shrink-0">
         <div class="container">
             <div class="row">
@@ -45,9 +43,9 @@
                                     <a href="" data-toggle="modal" data-target="#faceLoginModal" onclick="photo(),time_out()">使用刷脸登录</a>
                                     <br>
                                     <br>
-<!--                                    <button class="lowin-btn login-btn" style="margin-top: 15px" onclick="signin()" type="button">-->
-<!--                                        登录-->
-<!--                                    </button>-->
+                                    <!--                                    <button class="lowin-btn login-btn" style="margin-top: 15px" onclick="signin()" type="button">-->
+                                    <!--                                        登录-->
+                                    <!--                                    </button>-->
                                     <div id="slideBar"></div>
                                     <script type="text/javascript" src="/js/slider.js"></script>
                                     <script type="text/javascript">
@@ -63,6 +61,7 @@
                                         };
                                         SliderBar("slideBar", options);
                                     </script>
+
                                     <div class="text-foot">
                                         还没有账户？ <a href="" class="register-link">现在注册</a>
                                     </div>
@@ -133,7 +132,7 @@
                 <canvas id="canvas" width="360" height="240" class="div-a"></canvas>
                 <video id="video" autoplay style="width: 360px;height: 240px" class="div-a"></video>
             </div>
-<!--  <div class="modal-footer"></div>-->
+            <!--            <div class="modal-footer"></div>-->
         </div>
     </div>
 </div>
