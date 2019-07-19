@@ -16,18 +16,46 @@ public class Star {
     private Integer starId;
     
     private Integer postId;
+
+    private String postTitle;
     
     private String userEmail;
+
+    private String userNickName;
 
     @CreatedDate
     private Date starTime;
 
-    public Integer getstarId() {
+    public Integer getStarId() {
         return starId;
     }
 
-    public void setstarId(Integer starId) {
+    public void setStarId(Integer starId) {
         this.starId = starId;
+    }
+
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
+    public Date getStarTime() {
+        return starTime;
+    }
+
+    public void setStarTime(Date starTime) {
+        this.starTime = starTime;
     }
 
     public Integer getPostId() {
@@ -46,21 +74,16 @@ public class Star {
         this.userEmail = userEmail;
     }
 
-    public Date getstarTime() {
-        return starTime;
-    }
-
-    public void setstarTime(Date starTime) {
-        this.starTime = starTime;
-    }
 
     @Override
     public String toString() {
-        return "star{" +
+        return "Star{" +
                 "starId=" + starId +
                 ", postId=" + postId +
+                ", postTitle='" + postTitle + '\'' +
                 ", userEmail='" + userEmail + '\'' +
-                ", starTime='" + starTime + '\'' +
+                ", userNickName='" + userNickName + '\'' +
+                ", starTime=" + starTime +
                 '}';
     }
 }

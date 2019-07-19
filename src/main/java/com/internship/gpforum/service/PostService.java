@@ -1,6 +1,7 @@
 package com.internship.gpforum.service;
 
 import com.internship.gpforum.dal.entity.Post;
+import com.internship.gpforum.dal.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -22,4 +23,7 @@ public interface PostService {
 
     List<Post> findInTitleAndContent(String keyword);
 
+    void Star(User user, Integer id,String title, Integer starType);
+
+    void update(Integer id,Integer number,Integer type);
 }

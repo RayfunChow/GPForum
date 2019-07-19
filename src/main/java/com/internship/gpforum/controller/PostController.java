@@ -146,4 +146,14 @@ public class PostController {
         return postService.getDetail(Integer.parseInt(postId)).getContent();
     }
 
+    @ResponseBody
+    @RequestMapping(value = "star",method = RequestMethod.POST)
+    public boolean Star(HttpServletRequest request){
+        User user=(User)request.getSession().getAttribute("User");
+        String postTitle=request.getParameter("postTitle");
+        Integer postId=Integer.valueOf(request.getParameter("postId"));
+        Integer starType=Integer.valueOf(request.getParameter("starType"));
+        postService.Star(user,postId,postTitle,starType);
+        return true;
+    }
 }
