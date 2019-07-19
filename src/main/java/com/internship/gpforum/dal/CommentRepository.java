@@ -3,6 +3,7 @@ package com.internship.gpforum.dal;
 import com.internship.gpforum.dal.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface CommentRepository  extends JpaRepository<Comment,Integer> {
 
     List<Comment> findByParentCommentIdAndPostIdOrderByCommentTime(Integer parentCommentId,Integer postId);
 
+    @Transactional
+    void deleteAllByPostId(Integer postId);
 }

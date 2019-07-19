@@ -53,7 +53,10 @@
                             <div class="col-8"></div>
                             <div class="col-2" name="lastEditTimes">{{lastEditTime}}</div>
                         <div class="col-1"><input type="image" src="/svg/heart.svg" style="height: 20px;width: 20px"></div>
-                        <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
+                        <div class="col-1">
+                            <input type="image" class="delete-post"
+                                   name="btnDeletePost" btnPostId="{{postId}}" btnAuthorEmail="{{authorEmail}}" src="/svg/trash.svg" style="height: 20px;width: 20px">
+                        </div>
                         </div>
                     </div>
                     {{/postPage}}
@@ -139,6 +142,7 @@
                                      style="width: 50px;height: 50px;"
                                      class="rounded-circle">
                             </div>
+                            <input type="hidden" name="btnModeratorEmail" value="{{moderatorEmail}}">
                             <div style="margin-top: 13px;">
                                 <a href="/profile?userEmail={{moderatorEmail}}"><span style="color: #0C0C0C"> {{moderatorNickName}}</span></a>
                             </div>
@@ -190,7 +194,24 @@
 <script>
 
     $(".delete-post").click(function () {
-        confirm("确认删除该帖吗？");
+        if(confirm("确认删除该帖吗？")){
+            var postId = this.getAttribute("btnPostId");
+            $.ajax({
+                type: "post",
+                url: "deletePost",
+                data: {
+                    "postId": postId
+                },
+                success: function (data) {
+                    if(data=="删除成功") {
+                        // alert("删除成功");
+                        window.location.reload();
+                    }else{
+                        alert("删除失败");
+                    }
+                }
+            })
+        }
     });
 
     layui.use('laypage', function(){
@@ -227,6 +248,37 @@
     });
 </script>
 
+<script>
+    $(function () {
+        var deletePostDivs = document.getElementsByName("btnDeletePost");
+        var identity;
+        var userEmail = '{{#User.userEmail}}{{.}}{{/User.userEmail}}{{^User.userEmail}}null{{/User.userEmail}}';
+        if(userEmail=='null')identity = 0;//游客
+        else {
+            var moderator = document.getElementsByName("btnModeratorEmail");
+            for (var i = 0; i < moderator.length; i++) {
+                if (userEmail == moderator[i].value) {
+                    identity = 1;//版主
+                    break;
+                }
+            }
+        }
+        // alert(identity);
+
+        for(var i = 0;i<deletePostDivs.length;i++){
+            if(identity==0){
+                deletePostDivs[i].disabled=true;
+            }else if(identity==1){
+
+            }else if(userEmail != deletePostDivs[i].getAttribute("btnAuthorEmail")){
+                deletePostDivs[i].disabled=true;
+            }
+        }
+
+    });
+
+
+</script>
 
 </body>
 </html>

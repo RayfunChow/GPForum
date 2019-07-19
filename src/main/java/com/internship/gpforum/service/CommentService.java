@@ -11,4 +11,6 @@ public interface CommentService {
     List<Comment> findAllChildComment(Integer parentCommentId,Integer postId);
 
     void insert(Comment comment);
+
+    void deleteAllByPostId(Integer postId);
 }

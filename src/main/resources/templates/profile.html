@@ -30,7 +30,8 @@
                             <div class="col-8"></div>
                             <div class="col-2" name="lastEditTimes">{{lastEditTime}}</div>
                             <div class="col-1"><input type="image" src="/svg/heart.svg" style="height: 20px;width: 20px"></div>
-                            <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
+                            <div class="col-1"><input type="image" class="delete-post" id=""
+                                                      name="btnDeletePost" btnPostId="{{postId}}" btnAuthorEmail="{{authorEmail}}"src="/svg/trash.svg" style="height: 20px;width: 20px"></div>
                         </div>
                     </div>
                     {{/postPage}}
@@ -75,7 +76,24 @@
 
 
     $(".delete-post").click(function () {
-        confirm("确认删除该帖吗？");
+        if(confirm("确认删除该帖吗？")){
+            var postId = this.getAttribute("btnPostId");
+            $.ajax({
+                type: "post",
+                url: "deletePost",
+                data: {
+                    "postId": postId
+                },
+                success: function (data) {
+                    if(data=="删除成功") {
+                        // alert("删除成功");
+                        window.location.reload();
+                    }else{
+                        alert("删除失败");
+                    }
+                }
+            })
+        }
     });
 
     layui.use('laypage', function(){
@@ -119,13 +137,13 @@
 
 <script>
     $(function () {
-        $("#UserAvatar").attr("src",'{{User.avatar}}');
-        $("#showUserPostNumber").html('发帖:'+'{{#User.userPostNumber}}{{.}}{{/User.userPostNumber}}{{^User.userPostNumber}}0{{/User.userPostNumber}}');
-        $("#userNickname1").text('{{#User.nickName}}{{.}}{{/User.nickName}}{{^User.nickName}}{{/User.nickName}}');
+        $("#UserAvatar").attr("src",'{{#targetUser.avatar}}{{.}}{{/targetUser.avatar}}{{^targetUser.avatar}}img/no_avatar.png{{/targetUser.avatar}}');
+        $("#showUserPostNumber").html('发帖:'+'{{#targetUser.userPostNumber}}{{.}}{{/targetUser.userPostNumber}}{{^targetUser.userPostNumber}}0{{/targetUser.userPostNumber}}');
+        $("#userNickname1").text('{{#targetUser.nickName}}{{.}}{{/targetUser.nickName}}{{^targetUser.nickName}}{{/targetUser.nickName}}');
 
-        var birthdayInfo = '{{#User.birthday}}{{.}}{{/User.birthday}}{{^User.birthday}}未设置{{/User.birthday}}';
+        var birthdayInfo = '{{#targetUser.birthday}}{{.}}{{/targetUser.birthday}}{{^targetUser.birthday}}未设置{{/targetUser.birthday}}';
         $("#userBirthday").text('生日：'+birthdayInfo);
-        var locationInfo = '{{#User.location}}{{.}}{{/User.location}}{{^User.location}}{{/User.location}}';
+        var locationInfo = '{{#targetUser.location}}{{.}}{{/targetUser.location}}{{^targetUser.location}}{{/targetUser.location}}';
         var location = locationInfo;
         if(locationInfo!='') {
             var splitLoc = location.search(/省|市|区/);
@@ -135,7 +153,7 @@
         }else{
             $("#userLocation").text('地区：未设置');
         }
-        var hobbyInfo = '{{#User.hobby}}{{.}}{{/User.hobby}}{{^User.hobby}}{{/User.hobby}}';
+        var hobbyInfo = '{{#targetUser.hobby}}{{.}}{{/targetUser.hobby}}{{^targetUser.hobby}}{{/targetUser.hobby}}';
         if(hobbyInfo!='') {
             var hobbyArr = hobbyInfo.split(" ");
                 for(var j=0;j<hobbyArr.length-1;j++) {
@@ -144,10 +162,10 @@
                 }
 
         }
-        var signatureInfo = '{{#User.signature}}{{.}}{{/User.signature}}{{^User.signature}}无{{/User.signature}}';
+        var signatureInfo = '{{#targetUser.signature}}{{.}}{{/targetUser.signature}}{{^targetUser.signature}}无{{/targetUser.signature}}';
         $("#userSignature").text('个人描述：'+signatureInfo);
 
-            $("#showUserEmail").text('邮箱账号：{{User.userEmail}}');
+            $("#showUserEmail").text('邮箱账号：{{targetUser.userEmail}}');
 
 
     });
@@ -162,6 +180,18 @@
         }
         return res;
     }
+    $(function () {
+        var deletePostDivs = document.getElementsByName("btnDeletePost");
+        var userEmail = '{{#User.userEmail}}{{.}}{{/User.userEmail}}{{^User.userEmail}}null{{/User.userEmail}}';
+        var targetUserEmail = '{{#targetUser.userEmail}}{{.}}{{/targetUser.userEmail}}{{^targetUser.userEmail}}{{/targetUser.userEmail}}';
+
+        for(var i = 0;i<deletePostDivs.length;i++){
+            if(userEmail!=targetUserEmail){
+                deletePostDivs[i].disabled=true;
+            }
+        }
+    });
+
 </script>
 
 </body>

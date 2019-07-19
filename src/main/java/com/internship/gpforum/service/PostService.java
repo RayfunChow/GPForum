@@ -22,4 +22,6 @@ public interface PostService {
 
     List<Post> findInTitleAndContent(String keyword);
 
+    void deleteByPostId(Integer postId);
+
 }
