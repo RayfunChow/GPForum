@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface PostService {
-    void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime);
+    void writeContent(String author_email, String author_nickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime);
 
     Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest);
 
@@ -26,7 +26,7 @@ public interface PostService {
     String getHotWords();
 
     List<Post> findInTitleAndContent(String keyword);
-  
+
     void Star(User user, Integer id,String title, Integer starType);
 
     void update(Integer id,Integer number,Integer type);
