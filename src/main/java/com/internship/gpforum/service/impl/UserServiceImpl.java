@@ -65,7 +65,8 @@ public class UserServiceImpl implements UserService {
             return false;
         }else                                   //否则返回false
             return true;
-   }
+    }
+
 
     @Override
     public User userCoookie(String email) {
