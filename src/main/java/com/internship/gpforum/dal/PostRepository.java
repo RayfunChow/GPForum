@@ -4,16 +4,20 @@ import com.internship.gpforum.dal.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<Post,String> {
+public interface PostRepository extends JpaRepository<Post, String> {
 
-    Page<Post> findBySectionNameAndInvisibleOrderByLastEditTimeDesc(String sectionName, Pageable request,boolean invisible);
+    Page<Post> findBySectionNameAndInvisibleOrderByLastEditTimeDesc(String sectionName, Pageable request, boolean invisible);
 
-    Page<Post> findBySectionNameAndInvisibleOrderByStarNumberDesc(String sectionName,Pageable request,boolean invisible);
+    Page<Post> findBySectionNameAndInvisibleOrderByStarNumberDesc(String sectionName, Pageable request, boolean invisible);
 
     Post findByPostId(Integer id);
 
-    Page<Post> findByAuthorEmailOrderByLastEditTimeDesc(String authorEmail,Pageable request);
+    Page<Post> findByAuthorEmailOrderByLastEditTimeDesc(String authorEmail, Pageable request);
+
+    @Query(value = "select * from post where title like %?1% or content like %?1%", nativeQuery = true)
+    List<Post> findInTitleAndContent(String keyword);
 }

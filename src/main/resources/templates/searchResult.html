@@ -141,109 +141,114 @@
                     <div class="Mycard" style="width: 100%;">
                         <div class="myGutter">
                             <div class="row">
+                                {{#users}}
                                 <div class="col-md-10">
                                     <img src="../static/img/no_avatar.png"
                                          style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
-                                    <a href="#" style="margin-left: 15px">用户名</a>
+                                    <a href="#" style="margin-left: 15px">用户名：{{nickName}}</a>
                                 </div>
                                 <div class="col-md-2 container">
-                                    <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
+                                    <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：{{regTime}}</p>
                                 </div>
+                                {{/users}}
                             </div>
                         </div>
 
-                        <div class="Mycard" style="width: 100%;">
-                            <div class="myGutter">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <img src="../static/img/no_avatar.png"
-                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
-                                        <a href="#" style="margin-left: 15px">用户名</a>
-                                    </div>
-                                    <div class="col-md-2 container">
-                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Mycard" style="width: 100%;">
-                            <div class="myGutter">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <img src="../static/img/no_avatar.png"
-                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
-                                        <a href="#" style="margin-left: 15px">用户名</a>
-                                    </div>
-                                    <div class="col-md-2 container">
-                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Mycard" style="width: 100%;">
-                            <div class="myGutter">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <img src="../static/img/no_avatar.png"
-                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
-                                        <a href="#" style="margin-left: 15px">用户名</a>
-                                    </div>
-                                    <div class="col-md-2 container">
-                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!--                        <div class="Mycard" style="width: 100%;">-->
+<!--                            <div class="myGutter">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-10">-->
+<!--                                        <img src="../static/img/no_avatar.png"-->
+<!--                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">-->
+<!--                                        <a href="#" style="margin-left: 15px">用户名</a>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-2 container">-->
+<!--                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="Mycard" style="width: 100%;">-->
+<!--                            <div class="myGutter">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-10">-->
+<!--                                        <img src="../static/img/no_avatar.png"-->
+<!--                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">-->
+<!--                                        <a href="#" style="margin-left: 15px">用户名</a>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-2 container">-->
+<!--                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="Mycard" style="width: 100%;">-->
+<!--                            <div class="myGutter">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-10">-->
+<!--                                        <img src="../static/img/no_avatar.png"-->
+<!--                                             style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">-->
+<!--                                        <a href="#" style="margin-left: 15px">用户名</a>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-2 container">-->
+<!--                                        <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：04-13</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <div class="tabBodyItem">
+                    {{#sections}}
                     <div class="Mycard" style="width: 100%;">
                         <div class="myGutter">
                             <div class="card-body">
-                                <a href="#">版块名：Special</a>
+                                <a href="#">版块名：{{sectionName}}</a>
                                 <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
                                 <div class="card-text">
-                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
+                                    <p>{{description}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter">
-                            <div class="card-body">
-                                <a href="#">版块名：Special</a>
-                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
-                                <div class="card-text">
-                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter">
-                            <div class="card-body">
-                                <a href="#">版块名：Special</a>
-                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
-                                <div class="card-text">
-                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter">
-                            <div class="card-body">
-                                <a href="#">版块名：Special</a>
-                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>
-                                <div class="card-text">
-                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{/sections}}
+<!--                    <div class="Mycard" style="width: 100%;">-->
+<!--                        <div class="myGutter">-->
+<!--                            <div class="card-body">-->
+<!--                                <a href="#">版块名：Special</a>-->
+<!--                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>-->
+<!--                                <div class="card-text">-->
+<!--                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Mycard" style="width: 100%;">-->
+<!--                        <div class="myGutter">-->
+<!--                            <div class="card-body">-->
+<!--                                <a href="#">版块名：Special</a>-->
+<!--                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>-->
+<!--                                <div class="card-text">-->
+<!--                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Mycard" style="width: 100%;">-->
+<!--                        <div class="myGutter">-->
+<!--                            <div class="card-body">-->
+<!--                                <a href="#">版块名：Special</a>-->
+<!--                                <a href="#" class="card-subtitle mb-2 text-muted float-right">版主名</a>-->
+<!--                                <div class="card-text">-->
+<!--                                    <p>充电话费等几个地方在和大V金夫人腐恶哈佛阿斯回复数都会放假都是回复回复丢二娃回复我我亲爱额回复啊</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </div>
                 <div class="tabBodyItem">
+                    {{#posts}}
                     <div class="Mycard" style="padding: 10px 20px 10px 20px">
                         <!--                <div class="myGutter">-->
                         <div class="myGutter row ">
@@ -251,52 +256,52 @@
                                 <img src="" style="height: 100%;width: 100%">
                             </div>
                             <div class="col-sm-10">
-                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                                <a href="#" style="color: #0b2e13"><h5>{{sectionName}}</h5></a>
+                                <p>{{summary}}</p>
                                 <div class="row">
                                     <div class="col-8"></div>
-                                    <a href="#" class="col-2">作者</a>
+                                    <a href="profile?userEmail=" class="col-2">作者：{{authorNickName}}</a>
                                     <div class="col-2">今天9:23</div>
                                 </div>
                             </div>
                         </div>
                         <!--                </div>-->
                     </div>
-                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
-                        <div class="row myGutter">
-                            <div class="col-sm-2">
-                                <img src="" style="height: 100%;width: 100%">
-                            </div>
-                            <div class="col-sm-10">
-                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
-                                <div class="row">
-                                    <div class="col-8"></div>
-                                    <a href="#" class="col-2">作者</a>
-                                    <div class="col-2">今天9:23</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
-                        <div class="row myGutter">
-                            <div class="col-sm-2">
-                                <img src="" style="height: 100%;width: 100%">
-                            </div>
-                            <div class="col-sm-10">
-                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>
-                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
-                                <div class="row">
-                                    <div class="col-8"></div>
-                                    <a href="#" class="col-2">作者</a>
-                                    <div class="col-2">今天9:23</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{/posts}}
+<!--                    <div class="Mycard" style="padding: 10px 20px 10px 20px">-->
+<!--                        <div class="row myGutter">-->
+<!--                            <div class="col-sm-2">-->
+<!--                                <img src="" style="height: 100%;width: 100%">-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-10">-->
+<!--                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>-->
+<!--                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，-->
+<!--                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-8"></div>-->
+<!--                                    <a href="#" class="col-2">作者</a>-->
+<!--                                    <div class="col-2">今天9:23</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Mycard" style="padding: 10px 20px 10px 20px">-->
+<!--                        <div class="row myGutter">-->
+<!--                            <div class="col-sm-2">-->
+<!--                                <img src="" style="height: 100%;width: 100%">-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-10">-->
+<!--                                <a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>-->
+<!--                                <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，-->
+<!--                                    由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-8"></div>-->
+<!--                                    <a href="#" class="col-2">作者</a>-->
+<!--                                    <div class="col-2">今天9:23</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </div>
 

@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface SectionRepository extends JpaRepository<Section,Integer> {
+public interface SectionRepository extends JpaRepository<Section, Integer> {
 
-    @Query(value = "select * from section",nativeQuery = true)
+    @Query(value = "select * from section", nativeQuery = true)
     List<Section> findAll();
 
     Section findBySectionName(String sectionName);
+
+    @Query(value = "select * from section where section_name like %?1%", nativeQuery = true)
+    List<Section> findSections(String keyword);
 }
