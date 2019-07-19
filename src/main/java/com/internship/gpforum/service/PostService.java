@@ -1,12 +1,14 @@
 package com.internship.gpforum.service;
 
 import com.internship.gpforum.dal.entity.Post;
+import com.internship.gpforum.dal.entity.Star;
 import com.internship.gpforum.dal.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface PostService {
     void writeContent(String author_email, String author_nickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime);
@@ -19,6 +21,8 @@ public interface PostService {
 
     Page<Post> getHisPost(String userEmail, PageRequest pageRequest);
 
+    List<Post> getPosts(String email);
+
     String getHotWords();
 
     List<Post> findInTitleAndContent(String keyword);
@@ -26,4 +30,10 @@ public interface PostService {
     void Star(User user, Integer id,String title, Integer starType);
 
     void update(Integer id,Integer number,Integer type);
+
+    void saveAll(List<Star> stars);
+
+    void confirmStar(String email,String id);
+
+
 }
