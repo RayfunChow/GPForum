@@ -13,4 +13,6 @@ public interface UserService {
     User userCoookie(String email);
 
     void update(User user);
+
+    void addBrowseRecord(String email,Integer id,String title);
 }

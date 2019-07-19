@@ -38,6 +38,7 @@ public class PostController {
         modelMap.put("User",userInfo);
         Post postDetail = postService.getDetail(postId);
         modelMap.put("postDetail", postDetail);
+        userService.addBrowseRecord(userInfo.getUserEmail(),postId,postDetail.getTitle());
         List<Comment> parentComments = commentService.findAllParentComment(postId);
         User user;
         for (int i = 0; i < parentComments.size(); i++) {
