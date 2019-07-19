@@ -9,4 +9,8 @@ public interface SectionService {
     List<Section> findAll();
 
     Section sectionDetail(String sectionName);
+
+    Section findBySectionName(String sectionName);
+
+    List<Section> findSections(String keyword);
 }
