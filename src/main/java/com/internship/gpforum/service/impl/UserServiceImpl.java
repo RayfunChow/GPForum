@@ -32,9 +32,10 @@ public class UserServiceImpl implements UserService {
         try {
             String result=String.valueOf(redisTemplate.opsForHash().get("userList",email));
             user= json.parseObject(result,User.class);
-            return user;
-        }
-       catch (Exception e) {
+            if(user!=null) {
+                return user;
+            }
+        }catch (Exception e) {
            e.printStackTrace();
         }
         user = userRepository.findByUserEmailAndUserPassword(email, password);
@@ -98,5 +99,8 @@ public class UserServiceImpl implements UserService {
            redisTemplate.opsForHash().delete(email+"_records",browseUrl);
         }
         redisTemplate.opsForHash().put(email+"_records",browseUrl,json.toJSONString(browseRecord));
+        if(!redisTemplate.opsForHash().hasKey(email+"_records",browseUrl)) {
+            redisTemplate.opsForHash().increment("browseNumber", id + "", 1);
+        }
     }
 }
