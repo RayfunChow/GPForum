@@ -130,18 +130,18 @@
                     </div>
                     <p>
                         <!--此处是作者信息-->
-                        <small>作者：<a
+                        <label>作者：<a
                                 href="/profile?userEmail={{postDetail.authorEmail}}">{{postDetail.authorNickName}}</a>
-                        </small>
-                        <small style="margin: 10px">最后修改时间：{{postDetail.lastEditTime}}</small>
+                        </label>
+                        <label style="margin: 10px">最后修改时间：{{postDetail.lastEditTime}}</label>
 
                         <!--此处是浏览信息-->
-                        <label style="float: right;margin-top: 7px">浏览数：{{postDetail.browseNumber}}</label>
+                        <label style="float: right;margin-top: 7px">浏览数： {{postDetail.browseNumber}}</label>
                     </p>
                     <hr>
                     <!--在此处进行文章的渲染-->
-                    <div>
-                        {{postDetail.content}}
+                    <div id="postContent">
+
                     </div>
 
 
@@ -174,29 +174,36 @@
                                 <small><a href="profile?userEmail={{userEmail}}"></a>{{userNickName}}</small>
                                 <small style="margin-left: 7px;margin-right: 7px;">|</small>
                                 <small>{{commentTime}}</small>
-                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#replyModal"
-                                   style="float: right;" onclick="toReplyModal({{commentId}}, '{{userNickName}}', '{{userEmail}}', {{commentId}})">
+                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
+                                        data-target="#replyModal"
+                                        style="float: right;"
+                                        onclick="toReplyModal({{commentId}}, '{{userNickName}}', '{{userEmail}}', {{commentId}})">
                                     <small>回复</small>
                                 </button>
                             </div>
 
-                            <div  style="margin-top: 5px">
+                            <div style="margin-top: 5px">
                                 <p>
                                     {{content}}
                                 </p>
                                 <div class="container" id="childComments{{commentId}}">
                                     <!--<small><a href="profile?userEmail=">江泽民 </a> 对 <a href="profile?userEmail="> 董建华</a>-->
-                                         <!--说：连任也要按照基本法和选举法去产生<a href="#replyCollapse{{commentId}}"> 回复</a></small>-->
+                                    <!--说：连任也要按照基本法和选举法去产生<a href="#replyCollapse{{commentId}}"> 回复</a></small>-->
                                     <!--<div class="collapse" id="replyCollapse{{commentId}}" data-parent="#accordion">-->
-                                        <!--<div class="card card-body">-->
-                                            <!--<label>输入回复：</label>-->
-                                            <!--<textarea id="childCommentContent{{commentId}}" placeholder="输入回复内容"></textarea>-->
-                                            <!--<button type="button" style="float: right;width: 120px" value="{{commentId}}" onclick="writeChildComment(this)"-->
-                                                    <!--class="btn btn-outline-secondary">发表回复-->
-                                            <!--</button>-->
-                                        <!--</div>-->
+                                    <!--<div class="card card-body">-->
+                                    <!--<label>输入回复：</label>-->
+                                    <!--<textarea id="childCommentContent{{commentId}}" placeholder="输入回复内容"></textarea>-->
+                                    <!--<button type="button" style="float: right;width: 120px" value="{{commentId}}" onclick="writeChildComment(this)"-->
+                                    <!--class="btn btn-outline-secondary">发表回复-->
+                                    <!--</button>-->
                                     <!--</div>-->
-                                    <small><input type="button" class="btn btn-sm btn-outline-secondary" onclick="getChildComments({{commentId}})" value="显示回复"></input></small>
+                                    <!--</div>-->
+                                    <small>
+                                        <button class="btn btn-sm btn-outline-secondary"
+                                                onclick="getChildComments({{commentId}})" value="显示回复">
+                                            <span class="oi oi-caret-bottom"></span> 显示回复
+                                        </button>
+                                    </small>
 
                                 </div>
 
@@ -260,6 +267,9 @@
 <script>
     $(document).ready(function () {
 
+        getPostContent();
+
+
         $('body').on("click", '.heart', function () {
 
             var A = $(this).attr("id");
@@ -281,7 +291,28 @@
 
     });
 
-    function toReplyModal(commentId, respondentNickname, respondentEmail, targetCommentId){
+    function getPostContent() {
+        var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
+
+        $.ajax({
+            type: "post",
+            url: "getPostContent",
+            dataType: "text",
+            data: {
+                "postId": postId
+            },
+            success: function (data) {
+                console.log(data)
+                $("#postContent").html(data);
+            }
+            // , error: function (data) {
+            //     console.log(data)
+            // }
+        })
+
+    }
+
+    function toReplyModal(commentId, respondentNickname, respondentEmail, targetCommentId) {
         $("#replyModalTitle").text("回复：" + respondentNickname);
         $("#parentCommentId").val(commentId);
         $("#targetCommentId").val(targetCommentId);
@@ -302,22 +333,26 @@
             },
             success: function (data) {
                 console.log(data);
-                str="";
-                $.each(data, function(i, obj) {
-                    str+="<p><small><a href=\"profile?userEmail="+obj.userEmail+"\">"+obj.userNickName+" </a> 对 <a href=\"profile?userEmail="+obj.respondentUserNickName+"\">"+ obj.respondentUserNickName+"</a>\n" +
-                        " 说："+obj.content+"<a  data-toggle=\"modal\" data-target=\"#replyModal\" href=\"#\" onclick=\"toReplyModal("+obj.parentCommentId+",'"+ obj.userEmail+"','"+ obj.userNickName+"','"+ obj.commentId+"')\"> 回复</a></small></p>\n";
-                });
-                $("#childComments"+parentCommentId).html(str);
+                if (data.length != 0) {
+                    str = "";
+                    $.each(data, function (i, obj) {
+                        str += "<p><small><a href=\"profile?userEmail=" + obj.userEmail + "\">" + obj.userNickName + " </a> 对 <a href=\"profile?userEmail=" + obj.respondentUserNickName + "\">" + obj.respondentUserNickName + "</a>\n" +
+                            " 说：" + obj.content + "<a  data-toggle=\"modal\" data-target=\"#replyModal\" href=\"#\" onclick=\"toReplyModal(" + obj.parentCommentId + ",'" + obj.userEmail + "','" + obj.userNickName + "','" + obj.commentId + "')\"> 回复</a></small></p>\n";
+                    });
+                    $("#childComments" + parentCommentId).html(str);
+                }else {
+                    $("#childComments" + parentCommentId).html("<small style='color: rgba(100,99,102,0.93)'>没有更多回复了 :(</small>");
+                }
                 console.log(data);
             }
         })
     }
 
     function writeChildComment() {
-        var parentCommentId=$("#parentCommentId").val();
-        var targetCommentId=$("#targetCommentId").val();
-        var respondentEmail=$("#respondentEmail").val();
-        var respondentNickname=$("#respondentNickname").val();
+        var parentCommentId = $("#parentCommentId").val();
+        var targetCommentId = $("#targetCommentId").val();
+        var respondentEmail = $("#respondentEmail").val();
+        var respondentNickname = $("#respondentNickname").val();
         var commentContent = $("#replyContent").val();
         var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
         $.ajax({
@@ -332,8 +367,8 @@
                 "targetCommentId": targetCommentId
             },
             success: function (data) {
-                if (data==="发表成功") {
-                    window.location.href="postDetail?postId="+postId;
+                if (data === "发表成功") {
+                    window.location.href = "postDetail?postId=" + postId;
                 } else {
                     alert(data);
                 }
@@ -352,8 +387,8 @@
                 "commentContent": commentContent
             },
             success: function (data) {
-                if (data==="发表成功") {
-                    window.location.href="postDetail?postId="+postId;
+                if (data === "发表成功") {
+                    window.location.href = "postDetail?postId=" + postId;
                 } else {
                     alert(data);
                 }

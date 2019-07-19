@@ -49,7 +49,7 @@ public class PostServiceImpl implements PostService {
     }
 
 
-    public void writeContent(String author_email, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
+    public void writeContent(String author_email, String author_nickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
         Post post = new Post();
         post.setAuthorEmail(author_email);
         post.setSectionName(section_name);
@@ -60,6 +60,9 @@ public class PostServiceImpl implements PostService {
         post.setInvisible(invisible);
         post.setPostStatus(post_status);
         post.setLastEditTime(lastEditTime);
+        post.setAuthorNickName(author_nickname);
+        post.setBrowseNumber(0);
+        post.setStarNumber(0);
         postRepository.save(post);
     }
 
@@ -68,7 +71,7 @@ public class PostServiceImpl implements PostService {
 
         List<Post> posts = postRepository.findAll();
 
-        String FILEPATH = "C:\\Users\\Administrator\\Desktop\\123.txt";
+        String FILEPATH = "C:\\Users\\Administrator\\Desktop\\post_content.txt";
 
         Path target = Paths.get(FILEPATH);
 
@@ -120,11 +123,9 @@ public class PostServiceImpl implements PostService {
 
 
             try {
-
                 if (fileWriter != null) {
                     fileWriter.write(repContent);
                 }
-
             } catch (IOException e) {
                 try {
                     fileWriter.flush();
@@ -134,7 +135,6 @@ public class PostServiceImpl implements PostService {
                 }
                 e.printStackTrace();
             }
-
         }
         try {
             fileWriter.flush();
@@ -175,17 +175,11 @@ public class PostServiceImpl implements PostService {
     private static Map.Entry<String, Integer> getMax(Map<String, Integer> map) {
 
         if (map.size() == 0) {
-
             return null;
-
         }
-
         Map.Entry<String, Integer> maxEntry = null;
-
         boolean flag = false;
-
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-
             if (!flag) {
                 maxEntry = entry;
                 flag = true;
@@ -195,19 +189,14 @@ public class PostServiceImpl implements PostService {
             }
         }
         map.remove(maxEntry.getKey());
-
         return maxEntry;
-
     }
 
     private static String wordFrequency(String FILEPATH) throws IOException {
-
         Map<String, Integer> map = new HashMap<>();
-
         String article = getString(FILEPATH);
         String result = ToAnalysis.parse(article).toStringWithOutNature();
         String[] words = result.split(",");
-
         for (String word : words) {
             String str = word.trim();
             // 过滤空白字符
@@ -228,23 +217,16 @@ public class PostServiceImpl implements PostService {
 
         }
 
-
         List<Map.Entry<String, Integer>> list = new ArrayList<>();
-
         Map.Entry<String, Integer> entry;
-
         int i=0;
         while ((entry = getMax(map)) != null) {
-
             list.add(entry);
             i++;
-
             if(i==10){
                 break;
             }
-
         }
-
         return JSON.toJSONString(list.toArray());
 
     }

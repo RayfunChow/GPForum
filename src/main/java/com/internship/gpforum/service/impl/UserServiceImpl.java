@@ -33,10 +33,14 @@ public class UserServiceImpl implements UserService {
         try {
             String result=String.valueOf(redisTemplate.opsForHash().get("userList",email));
             user= json.parseObject(result,User.class);
+            if(user!=null){
+                return user;
+            }
         }
-       catch (Exception e) {
-            user = userRepository.findByUserEmailAndUserPassword(email, password);
+        catch (Exception e) {
+            e.printStackTrace();
         }
+        user = userRepository.findByUserEmailAndUserPassword(email, password);
         return user;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -28,15 +29,22 @@ public class SearchController {
 
 
     @RequestMapping("searchAction")
-    public String searchAction(HttpServletRequest request, ModelMap modelMap, String sectionName) {
-        String keyword = request.getParameter("keyword");
+    public String searchAction(ModelMap modelMap, String keyword) {
+//        String keyword = request.getParameter("keyword");
         List<User> users = userService.findByNickName(keyword);
         List<Section> section = sectionService.findSections(keyword);
         List<Post> posts = postService.findInTitleAndContent(keyword);
         modelMap.put("users", users);
         modelMap.put("sections", section);
         modelMap.put("posts", posts);
+        modelMap.put("keyword", keyword);
         return "searchResult";
+    }
+
+    @ResponseBody
+    @RequestMapping("getVeryHotWord")
+    public String getVeryHotWord(){
+        return postService.getHotWords();
     }
 
 
