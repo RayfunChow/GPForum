@@ -1,10 +1,13 @@
 package com.internship.gpforum.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.internship.gpforum.common.PasswordEncryption;
 import com.internship.gpforum.configure.OnlineUserList;
 import com.internship.gpforum.configure.SendEmailUtils;
 import com.internship.gpforum.dal.entity.User;
+import com.internship.gpforum.service.FaceService;
 import com.internship.gpforum.service.RedisService;
 import com.internship.gpforum.service.UserService;
 import org.apache.commons.mail.EmailException;
@@ -86,7 +89,78 @@ public class LoginController {
             return "用户名或密码错误";
         }
     }
+    @ResponseBody
+    @RequestMapping(value = "faceLogin", method = RequestMethod.POST)
+    public String faceSignIn(HttpServletRequest request,ModelMap modelMap, HttpServletResponse response){
+        String image=request.getParameter("action");
+        String del="data:image/png;base64,";
+        image=image.replace(del,"");
+        JsonObject feedback=new JsonObject();
+        String verify= FaceService.faceVerify(image);
+        if(verify.equals("pass")) {   //活体检测
+            String detect = FaceService.detect(image);   //多张人脸
+            if (detect.equals("1")) {
+                String information = FaceService.search(image);   //进行搜搜
+                if(!information.equals("Login Failure")) {        //正确登录 information里面是正确的用户名
+                    User user=userService.signIn(information, "");
+                    if (user != null) {         //用户名有此用户
+                        HttpSession newSession = request.getSession();
+                        if (OnlineUserList.containsKey(information)) {  //判断该账户是否已登录
+                            HttpSession session = OnlineUserList.get(information);
+                            if (session.getId().equals(newSession.getId())) { //判断是否为同一台机器登录
+                                feedback.addProperty("result", "error");
+                                feedback.addProperty("info", "您已在该设备登录,请勿重复操作");
+                                return feedback.toString();
+                            } else {  //两台机器登录同一账号，后一个把前一个挤掉
+                                session.invalidate();
+                                OnlineUserList.remove(information);
+                                if (user.getThisLogTime() != null) {
+                                    user.setLastLogTime(user.getThisLogTime());
+                                }
+                                user.setThisLogTime(new Date());
+                                newSession.setAttribute("User", user);
+                                OnlineUserList.put(information, newSession);
+                                addCookie(response, user);
+                                feedback.addProperty("result", "success");
+                                feedback.addProperty("info", information);
+                                return feedback.toString();
+                            }
+                        } else {  //该账号未登陆，正常进行登录
+                            if (user.getThisLogTime() != null) {
+                                user.setLastLogTime(user.getThisLogTime());
+                            }
+                            user.setThisLogTime(new Date());
+                            newSession.setAttribute("User", user);
+                            OnlineUserList.put(information, newSession);
+                            modelMap.put("user", user);
+                            addCookie(response, user);
+                            feedback.addProperty("result", "success");
+                            feedback.addProperty("info", information);
+                            return feedback.toString();
+                        }
+                    } else {  //用户名或密码错误
+                        feedback.addProperty("result", "error");
+                        feedback.addProperty("info", information);
+                        return feedback.toString();
+                    }
 
+                }else{
+                    feedback.addProperty("result", "error");
+                    feedback.addProperty("info", information);
+                    return feedback.toString();
+                }
+            } else {
+                feedback.addProperty("result", "error");
+                feedback.addProperty("info", detect);
+                return feedback.toString();
+            }
+        }
+        else {
+            feedback.addProperty("result", "error");
+            feedback.addProperty("info", verify);
+            return feedback.toString();
+        }
+    }
     @ResponseBody
     @RequestMapping(value = "/signupAction", method = RequestMethod.POST)
     public String SignUp(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response) {
@@ -131,7 +205,30 @@ public class LoginController {
 //        }else
 //            return "redirect:login";
     }
+    @RequestMapping("faceRegister")
+    @ResponseBody
+    public String faceRegister(HttpServletRequest request) {
+        String data=request.getParameter("action");
+        String del="data:image/png;base64,";
+        String image=data.replace(del,"");
+        User user = (User) request.getSession().getAttribute("User");
+        String author_email = user.getUserEmail();//取邮箱
+        String email=PasswordEncryption.encryption_MD5(author_email);
 
+        if(FaceService.faceVerify(image).equals("pass")) {   //活体检测
+            String detect=FaceService.detect(image);
+            if(detect.equals("1")){
+                String information =  FaceService.add(image,email,author_email);
+                return information;
+            } else {
+                return "录入信息失败！";
+            }
+        }
+        else {
+            return "录入信息失败！";
+        }
+
+    }
     @ResponseBody
     @RequestMapping(value = "sendCode", method = RequestMethod.POST)
     public String Send(HttpServletRequest request) {

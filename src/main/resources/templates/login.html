@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="/css/slider.css">
 
     <!-- Custom styles for this template -->
+    <style>
+        .div-a{ position:absolute; left:60px; top:40px;  width:360px; height:240px}
+        .div-b{ position:relative; left:10px; top:10px;  width:480px; height:320px}
+    </style>
 </head>
 
 <body class="d-flex flex-column h-100" style="background: url(../img/loginbg.jpg) center top;">
@@ -38,7 +42,7 @@
                                         <input type="password" maxlength="16" name="password"
                                                autocomplete="current-password" class="lowin-input" id="Password">
                                     </div>
-                                    <a href="" data-toggle="modal" data-target="#faceLoginModal">使用刷脸登录</a>
+                                    <a href="" data-toggle="modal" data-target="#faceLoginModal" onclick="photo(),time_out()">使用刷脸登录</a>
                                     <br>
                                     <br>
 <!--                                    <button class="lowin-btn login-btn" style="margin-top: 15px" onclick="signin()" type="button">-->
@@ -121,14 +125,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">人脸识别</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_button()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body ">
-                <video id="video" autoplay style="width: 120px;height: 150px"></video>
+            <div class="div-b">
+                <canvas id="canvas" width="360" height="240" class="div-a"></canvas>
+                <video id="video" autoplay style="width: 360px;height: 240px" class="div-a"></video>
             </div>
-<!--            <div class="modal-footer"></div>-->
+<!--  <div class="modal-footer"></div>-->
         </div>
     </div>
 </div>
@@ -138,6 +143,21 @@
 <!--描绘video截图-->
 <!--<canvas id="canvas" width="480" height="320"></canvas>-->
 <script type="text/javascript">
+    var dataURL;
+    var state="失败";
+    var photo_state="打开";
+    function time_out() {
+        var dsq=setInterval(function () {
+            if (state == "成功") {
+                alert("人脸识别有误！请重试！")
+        } else{
+                clearInterval(dsq);
+            }},15000);
+    }
+    function close_button(){
+        photo_state="关闭";
+        state="失败";
+    }
     //访问用户媒体设备的兼容方法
     function getUserMedia(constrains,success,error){
         if(navigator.mediaDevices.getUserMedia){
@@ -154,10 +174,20 @@
             navigator.getUserMedia(constrains).then(success).catch(error);
         }
     }
-
-    var video = document.getElementById("video");
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d");
+    function photo() {
+        photo_state="打开";
+        state="成功";
+        var video = document.getElementById("video");
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        window.setTimeout(function login() {
+            context.drawImage(video,0,0,360,240);
+            dataURL=canvas.toDataURL();
+            console.log(dataURL);
+            context.clearRect(0,0,360,240);
+            face_login();
+        },1000);
+    }
 
     //成功的回调函数
     function success(stream) {
@@ -188,32 +218,32 @@
         alert("你的浏览器不支持访问用户媒体设备");
     }
 
-    //注册拍照按钮的单击事件
-    window.setTimeout("time()",1500);
-
-    function time() {
-        context.drawImage(video,0,0,480,320);
-        face_login();
-    }
-
     function face_login() {
-        var dataURL=canvas.toDataURL();
-        console.log(dataURL);
         $.ajax({
             type: "POST",
-            url: "",    //刷脸登录的后端方法
+            url: "faceLogin",
             dataType: "JSON",
             data: {
                 action:dataURL
             },
             success: function (data) {
-
+                if(data["result"]=="success"){
+                   alert("欢迎登陆");
+                    state="成功";
+                    window.location.href = 'index';
+                }else{
+                    console.log(data["info"]);
+                    console.log(data["result"])
+                    if(photo_state=="打开")
+                        photo();
+                }
             },
             error:function () {
-
+                alert("Error");
             }
         });
     }
+
 
 </script>
 <script src="/js/auth.js"></script>
