@@ -10,6 +10,7 @@ import com.internship.gpforum.service.UserService;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,8 @@ public class LoginController {
     @Autowired
     private RedisService redisService;
 
+    private RedisTemplate<String,User> redisTemplate=new RedisTemplate<String,User>();
+
     private JSONObject json = new JSONObject();
 
     @RequestMapping("/login")
@@ -49,8 +52,8 @@ public class LoginController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 //        System.out.println(email+"\t"+password);
-        User user = userService.signIn(email, PasswordEncryption.encryption_SHA_256(password));
-        if (user != null) { //用户名密码正确
+         User user=userService.signIn(email, PasswordEncryption.encryption_SHA_256(password));
+        if (user != null&&user.getUserPassword().equals(PasswordEncryption.encryption_SHA_256(password))) { //用户名密码正确
             HttpSession newSession = request.getSession();
             if (OnlineUserList.containsKey(email)) {  //判断该账户是否已登录
                 HttpSession session = OnlineUserList.get(email);
@@ -94,36 +97,37 @@ public class LoginController {
         String code;
         String msg;
         code = redisService.get(email);
-        if (!userService.checkRepeat(email)) {
+        if (userService.checkRepeat(email)) {
             msg = "该邮箱已被注册";
             return msg;
         }
-        if (code == null || code.equals("")) {
+        else if (code == null || code.equals("")) {
             msg = "验证码失效";
             return msg;
         }
-        if (!password.equals(confirmPassword)) {
+        else if (!password.equals(confirmPassword)) {
             msg = "两次密码不一致";
             return msg;
         } else if (!code.equals(veriCode)) {
             msg = "验证码错误";
             return msg;
-        }
+        }else {
 //        if(password.equals(confirmPassword)){
-        User user = new User();
-        user.setUserEmail(email);
-        user.setUserPassword(PasswordEncryption.encryption_SHA_256(password));
-        user.setNickName(email);
-        user.setAvatar("/img/no_avatar.png");
-        user.setRegTime(new Date());
-        user.setThisLogTime(new Date());
-        userService.signUp(user);
-        request.getSession().setAttribute("User", user);
-        modelMap.put("user", user);
-        redisService.remove(email);
-        msg = "注册成功";
-        addCookie(response, user);
-        return msg;
+            User user = new User();
+            user.setUserEmail(email);
+            user.setUserPassword(PasswordEncryption.encryption_SHA_256(password));
+            user.setNickName(email);
+            user.setAvatar("/img/no_avatar.png");
+            user.setRegTime(new Date());
+            user.setThisLogTime(new Date());
+            userService.signUp(user);
+            request.getSession().setAttribute("User", user);
+            modelMap.put("user", user);
+            redisService.remove(email);
+            msg = "注册成功";
+            addCookie(response, user);
+            return msg;
+        }
 //        }else
 //            return "redirect:login";
     }
@@ -132,7 +136,7 @@ public class LoginController {
     @RequestMapping(value = "sendCode", method = RequestMethod.POST)
     public String Send(HttpServletRequest request) {
         String userEmail = request.getParameter("email");
-        if (!userService.checkRepeat(userEmail)) {
+        if (userService.checkRepeat(userEmail)) {
             return "该邮箱已被注册";
         } else {
             try {
