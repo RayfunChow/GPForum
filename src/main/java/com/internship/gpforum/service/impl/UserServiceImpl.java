@@ -32,10 +32,12 @@ public class UserServiceImpl implements UserService {
         try {
             String result=String.valueOf(redisTemplate.opsForHash().get("userList",email));
             user= json.parseObject(result,User.class);
+            return user;
         }
        catch (Exception e) {
-            user = userRepository.findByUserEmailAndUserPassword(email, password);
+           e.printStackTrace();
         }
+        user = userRepository.findByUserEmailAndUserPassword(email, password);
         return user;
     }
 
@@ -53,23 +55,28 @@ public class UserServiceImpl implements UserService {
             boolean result=redisTemplate.opsForHash().hasKey("userList",email);
             return result;
         }catch (Exception e) {
-            user = userRepository.findByUserEmail(email);
-            if(user==null){                         //可以注册返回true
-                return false;
-            }else                                   //否则返回false
-                return true;
+            e.printStackTrace();
         }
+        user = userRepository.findByUserEmail(email);
+        if(user==null){                         //可以注册返回true
+            return false;
+        }else                                   //否则返回false
+            return true;
     }
 
     @Override
     public User userCoookie(String email) {
-        User user;
+        User user=new User();
         try {
             String result=String.valueOf(redisTemplate.opsForHash().get("userList",email));
             user= json.parseObject(result,User.class);
+            if(user!=null) {
+                return user;
+            }
         }catch (Exception e){
-            user=userRepository.findByUserEmail(email);
+           e.printStackTrace();
         }
+        user = userRepository.findByUserEmail(email);
         return user;
     }
 
