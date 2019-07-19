@@ -13,12 +13,16 @@ public interface PostService {
 
     Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest);
 
-    Page<Post> getByStarNumber(String sectionName,PageRequest pageRequest);
+    Page<Post> getByStarNumber(String sectionName, PageRequest pageRequest);
 
     Post getDetail(Integer postId);
 
-    Page<Post> getHisPost(String userEmail,PageRequest pageRequest);
+    Page<Post> getHisPost(String userEmail, PageRequest pageRequest);
 
+    String getHotWords();
+
+    List<Post> findInTitleAndContent(String keyword);
+  
     void Star(User user, Integer id,String title, Integer starType);
 
     void update(Integer id,Integer number,Integer type);

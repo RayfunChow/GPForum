@@ -23,4 +23,14 @@ public class SectionServiceImpl implements SectionService {
     public Section sectionDetail(String sectionName) {
         return sectionRepository.findBySectionName(sectionName);
     }
+
+    @Override
+    public Section findBySectionName(String sectionName) {
+        return sectionRepository.findBySectionName(sectionName);
+    }
+
+    @Override
+    public List<Section> findSections(String keyword) {
+        return sectionRepository.findSections(keyword);
+    }
 }
