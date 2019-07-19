@@ -29,7 +29,7 @@ import java.util.UUID;
 public class ProfileController {
 
     //    @Value("${static.upload.path}")
-    private String uploadPath = "F:/image/";
+    private String uploadPath = "E:/image/";
 
     //    @Value("${static.server.address}")
     private String staticServerAddr = "http://127.0.0.1:7999/";

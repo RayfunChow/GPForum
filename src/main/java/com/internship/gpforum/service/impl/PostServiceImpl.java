@@ -3,6 +3,7 @@ package com.internship.gpforum.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.internship.gpforum.dal.PostRepository;
+import com.internship.gpforum.dal.StarRepository;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.Star;
 import com.internship.gpforum.dal.entity.User;
@@ -31,6 +32,9 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Autowired
+    private StarRepository starRepository;
+
+    @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
 
     private JSONObject json = new JSONObject();
@@ -55,6 +59,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public Page<Post> getHisPost(String userEmail, PageRequest pageRequest) {
         return postRepository.findByAuthorEmailOrderByLastEditTimeDesc(userEmail, pageRequest);
+    }
+
+    @Override
+    public List<Post> getPosts(String email) {
+        List<Post> postList=postRepository.findByAuthorEmail(email);
+        return postList;
     }
 
 
@@ -89,6 +99,17 @@ public class PostServiceImpl implements PostService {
         postRepository.saveAndFlush(post);
     }
 
+    @Override
+    public void saveAll(List<Star> stars) {
+        starRepository.saveAll(stars);
+    }
+
+    @Override
+    public void confirmStar(String email, String id) {
+        Star star=json.parseObject((String) redisTemplate.opsForHash().get(id+"_starRecords",email),Star.class);
+        redisTemplate.opsForHash().delete(id+"_starRecords",email);
+        starRepository.save(star);
+    }
 
 
     public void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
