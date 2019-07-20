@@ -202,8 +202,6 @@ public class LoginController {
             addCookie(response, user);
             return msg;
         }
-//        }else
-//            return "redirect:login";
     }
     @RequestMapping("faceRegister")
     @ResponseBody
