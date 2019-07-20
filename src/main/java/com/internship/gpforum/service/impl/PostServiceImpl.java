@@ -1,28 +1,47 @@
 package com.internship.gpforum.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.internship.gpforum.dal.PostRepository;
+import com.internship.gpforum.dal.StarRepository;
 import com.internship.gpforum.dal.entity.Post;
+import com.internship.gpforum.dal.entity.Star;
+import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.PostService;
 import org.ansj.splitWord.analysis.ToAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
+@Transactional
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private StarRepository starRepository;
+
+    @Autowired
+    private RedisTemplate<Object,Object> redisTemplate;
+
+    private JSONObject json = new JSONObject();
+
     public Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest) {
         Page<Post> postList = postRepository.findBySectionNameAndInvisibleOrderByLastEditTimeDesc(sectionName, pageRequest, false);
+
         return postList;
     }
 
@@ -42,6 +61,12 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByAuthorEmailOrderByLastEditTimeDesc(userEmail, pageRequest);
     }
 
+    @Override
+    public List<Post> getPosts(String email) {
+        List<Post> postList=postRepository.findByAuthorEmail(email);
+        return postList;
+    }
+
 
     @Override
     public List<Post> findInTitleAndContent(String keyword) {
@@ -49,8 +74,22 @@ public class PostServiceImpl implements PostService {
     }
 
 
-    public void writeContent(String author_email, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
-        Post post = new Post();
+
+    @Override
+    public void update(Integer id, Integer number,Integer type) {
+        Post post=postRepository.findByPostId(id);
+        if(type==0) {
+            post.setStarNumber(number);
+        }else if(type==1)
+            post.setBrowseNumber(number);
+        postRepository.saveAndFlush(post);
+    }
+
+
+
+
+    public void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
+        Post post=new Post();
         post.setAuthorEmail(author_email);
         post.setSectionName(section_name);
         post.setTitle(title);
@@ -60,7 +99,13 @@ public class PostServiceImpl implements PostService {
         post.setInvisible(invisible);
         post.setPostStatus(post_status);
         post.setLastEditTime(lastEditTime);
+        post.setAuthorNickName(author_nickname);
+        post.setBrowseNumber(0);
+        post.setStarNumber(0);
         postRepository.save(post);
+        Integer id=post.getPostId();
+        redisTemplate.opsForHash().put("stars",id+"",0);
+        redisTemplate.opsForHash().put("browseNumber",id+"",0);
     }
 
     @Override
@@ -68,7 +113,7 @@ public class PostServiceImpl implements PostService {
 
         List<Post> posts = postRepository.findAll();
 
-        String FILEPATH = "C:\\Users\\Administrator\\Desktop\\123.txt";
+        String FILEPATH = "C:\\Users\\Administrator\\Desktop\\post_content.txt";
 
         Path target = Paths.get(FILEPATH);
 
@@ -120,11 +165,9 @@ public class PostServiceImpl implements PostService {
 
 
             try {
-
                 if (fileWriter != null) {
                     fileWriter.write(repContent);
                 }
-
             } catch (IOException e) {
                 try {
                     fileWriter.flush();
@@ -134,7 +177,6 @@ public class PostServiceImpl implements PostService {
                 }
                 e.printStackTrace();
             }
-
         }
         try {
             fileWriter.flush();
@@ -175,17 +217,11 @@ public class PostServiceImpl implements PostService {
     private static Map.Entry<String, Integer> getMax(Map<String, Integer> map) {
 
         if (map.size() == 0) {
-
             return null;
-
         }
-
         Map.Entry<String, Integer> maxEntry = null;
-
         boolean flag = false;
-
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-
             if (!flag) {
                 maxEntry = entry;
                 flag = true;
@@ -195,19 +231,14 @@ public class PostServiceImpl implements PostService {
             }
         }
         map.remove(maxEntry.getKey());
-
         return maxEntry;
-
     }
 
     private static String wordFrequency(String FILEPATH) throws IOException {
-
         Map<String, Integer> map = new HashMap<>();
-
         String article = getString(FILEPATH);
         String result = ToAnalysis.parse(article).toStringWithOutNature();
         String[] words = result.split(",");
-
         for (String word : words) {
             String str = word.trim();
             // 过滤空白字符
@@ -228,25 +259,17 @@ public class PostServiceImpl implements PostService {
 
         }
 
-
         List<Map.Entry<String, Integer>> list = new ArrayList<>();
-
         Map.Entry<String, Integer> entry;
-
         int i=0;
         while ((entry = getMax(map)) != null) {
-
             list.add(entry);
             i++;
-
             if(i==10){
                 break;
             }
-
         }
-
         return JSON.toJSONString(list.toArray());
-
     }
 
     @Override

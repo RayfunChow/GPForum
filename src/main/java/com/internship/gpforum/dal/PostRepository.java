@@ -22,6 +22,10 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query(value = "select * from post where title like %?1% or content like %?1%", nativeQuery = true)
     List<Post> findInTitleAndContent(String keyword);
 
+
     @Transactional
     void deleteByPostId(Integer postId);
+
+    List<Post> findByAuthorEmail(String email);
+
 }

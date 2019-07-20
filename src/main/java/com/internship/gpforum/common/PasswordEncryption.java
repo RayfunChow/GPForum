@@ -11,6 +11,11 @@ public class PasswordEncryption {
         return Encryption(strText, strType);
     }
 
+    public static String encryption_MD5(final String text){
+        final String strType="MD5";
+        return Encryption(text,strType);
+    }
+
     private static String Encryption(final String strText, final String strType) {
         // 返回值
         String strResult = null;
