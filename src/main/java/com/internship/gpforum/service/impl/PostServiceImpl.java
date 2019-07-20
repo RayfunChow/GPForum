@@ -1,18 +1,17 @@
 package com.internship.gpforum.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.internship.gpforum.dal.PostRepository;
 import com.internship.gpforum.dal.StarRepository;
 import com.internship.gpforum.dal.entity.Post;
-import com.internship.gpforum.dal.entity.Star;
-import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.PostService;
 import org.ansj.splitWord.analysis.ToAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional
@@ -35,9 +31,13 @@ public class PostServiceImpl implements PostService {
     private StarRepository starRepository;
 
     @Autowired
-    private RedisTemplate<Object,Object> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
 
     private JSONObject json = new JSONObject();
+
+    private static String HOTWORDS = "";
+
+    static String FILEPATH = "C:\\Users\\Administrator\\Desktop\\post_content.txt";
 
     public Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest) {
         Page<Post> postList = postRepository.findBySectionNameAndInvisibleOrderByLastEditTimeDesc(sectionName, pageRequest, false);
@@ -63,7 +63,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getPosts(String email) {
-        List<Post> postList=postRepository.findByAuthorEmail(email);
+        List<Post> postList = postRepository.findByAuthorEmail(email);
         return postList;
     }
 
@@ -74,29 +74,26 @@ public class PostServiceImpl implements PostService {
     }
 
 
-
     @Override
-    public void update(Integer id, Integer number,Integer type) {
-        Post post=postRepository.findByPostId(id);
-        if(type==0) {
+    public void update(Integer id, Integer number, Integer type) {
+        Post post = postRepository.findByPostId(id);
+        if (type == 0) {
             post.setStarNumber(number);
-        }else if(type==1)
+        } else if (type == 1)
             post.setBrowseNumber(number);
         postRepository.saveAndFlush(post);
     }
 
 
-
-
-    public void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
-        Post post=new Post();
+    public void writeContent(String author_email, String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
+        Post post = new Post();
         post.setAuthorEmail(author_email);
         post.setSectionName(section_name);
         post.setTitle(title);
         post.setSummary(summary);
         post.setContent(content);
         post.setFirstImg(content);
-        if(post.getFirstImg().equals("")){
+        if (post.getFirstImg().equals("")) {
             post.setFirstImg("0");
         }
         post.setInvisible(invisible);
@@ -106,18 +103,18 @@ public class PostServiceImpl implements PostService {
         post.setBrowseNumber(0);
         post.setStarNumber(0);
         postRepository.save(post);
-        Integer id=post.getPostId();
-        redisTemplate.opsForHash().put("stars",id+"",0);
-        redisTemplate.opsForHash().put("browseNumber",id+"",0);
-        redisTemplate.opsForZSet().add("scores",post.getPostId()+"",0);
+        Integer id = post.getPostId();
+        redisTemplate.opsForHash().put("stars", id + "", 0);
+        redisTemplate.opsForHash().put("browseNumber", id + "", 0);
+        redisTemplate.opsForZSet().add("scores", post.getPostId() + "", 0);
     }
 
-    @Override
-    public String getHotWords() {
+
+
+    @Scheduled(cron = "0/30 * * * * ? ")
+    public void getVeryHotWords() {
 
         List<Post> posts = postRepository.findAll();
-
-        String FILEPATH = "C:\\Users\\Administrator\\Desktop\\post_content.txt";
 
         Path target = Paths.get(FILEPATH);
 
@@ -191,12 +188,20 @@ public class PostServiceImpl implements PostService {
 
         String result = null;
         try {
-            result=wordFrequency(FILEPATH);
+            result = wordFrequency(FILEPATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return result;
+        HOTWORDS = result;
+
+        System.out.println(HOTWORDS);
+
+    }
+
+    @Override
+    public String getHotWords() {
+        return HOTWORDS;
     }
 
     private static String getString(String FILEPATH) throws IOException {
@@ -265,11 +270,11 @@ public class PostServiceImpl implements PostService {
 
         List<Map.Entry<String, Integer>> list = new ArrayList<>();
         Map.Entry<String, Integer> entry;
-        int i=0;
+        int i = 0;
         while ((entry = getMax(map)) != null) {
             list.add(entry);
             i++;
-            if(i==10){
+            if (i == 10) {
                 break;
             }
         }

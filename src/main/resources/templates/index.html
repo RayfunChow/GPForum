@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <title>欢迎来到聚集地论坛！</title>
     {{>layout/head}}
+
+    <style>
+
+        .img-size{
+
+            width: 2000px;
+            height: 400px;
+            object-fit: cover;
+
+        }
+        .img-background{
+            background: center center no-repeat;
+            background-size: 100%;
+        }
+    </style>
 </head>
 <body style="background: #eff0ea" class="d-flex flex-column h-100">
 {{>layout/navbar}}
 <main role="main" class="flex-shrink-0">
-    <div id="demo" class="carousel slide" data-ride="carousel">
+    <div id="demo" class="carousel slide " data-ride="carousel">
         <!-- 指示符 -->
         <ul class="carousel-indicators">
             <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -16,15 +31,15 @@
             <li data-target="#demo" data-slide-to="2"></li>
         </ul>
         <!-- 轮播图片 -->
-        <div class="carousel-inner" style="width: 4000px;height:450px">
-            <div class="carousel-item active">
-                <img src="../img/long.jpg">
+        <div class="carousel-inner " style="width: 4000px;height:400px">
+            <div class="carousel-item active img-background" >
+                <img class="img-size" src="/img/bg1.jpg">
             </div>
-            <div class="carousel-item">
-                <img src="../img/longc.jpg">
+            <div class="carousel-item img-background">
+                <img class="img-size" src="/img/bg2.jpg">
             </div>
-            <div class="carousel-item">
-                <img src="../img/longb.jpg">
+            <div  class="carousel-item img-background">
+                <img class="img-size" src="/img/bg3.jpg">
             </div>
         </div>
         <!-- 左右切换按钮 -->
@@ -47,18 +62,18 @@
             <div class="card" style="padding: 10px 20px 10px 20px">
                 <div class="row">
                     <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
+                        <img class="first-img" src="{{firstImg}}" style="height: 100px;width: 140px">
                     </div>
                     <div class="col-sm-10">
                         <a href="/postDetail?postId={{postId}}" style="color: #0b2e13"><h4>{{title}}</h4></a>
                         <p>{{summary}}</p>
                         <div class="row">
-                            <div class="col-8"></div>
+                            <div class="col-6"></div>
                             <div class="col-2">
-                                <small>作者：{{authorNickName}}</small>
+                                <small>作者：<a href="profile?userEmail={{authorEmail}}">{{authorNickName}}</a></small>
                             </div>
-                            <div class="col-2">
-                                <small>{{lastEditTime}}</small>
+                            <div class="col-4">
+                                <small>更新时间：</small><small class="post-time">{{lastEditTime}}</small>
                             </div>
                         </div>
                     </div>
@@ -68,79 +83,21 @@
             {{/topPosts}}
             {{^topPosts}}
             {{/topPosts}}
-            <!--<div class="card" style="padding: 10px 20px 10px 20px">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-sm-2">-->
-                        <!--<img src="" style="height: 100%;width: 100%">-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-10">-->
-                        <!--<a href="#" style="color: #0b2e13"><h4>习近平讲述的故事｜这个小县城不简单</h4></a>-->
-                        <!--<p>山西省朔州市右玉县-->
-                            <!--位于山西和内蒙古交界-->
-                            <!--这个小县城-->
-                            <!--曾被习近平总书记多次提及</p>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-8"></div>-->
-                            <!--<div class="col-2">-->
-                                <!--<small>作者</small>-->
-                            <!--</div>-->
-                            <!--<div class="col-2">-->
-                                <!--<small>今天9:23</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<br>-->
-            <!--<div class="card" style="padding: 10px 20px 10px 20px">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-sm-2">-->
-                        <!--<img src="" style="height: 100%;width: 100%">-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-10">-->
-                        <!--<a href="#" style="color: #0b2e13"><h4>中国联通辟谣"不支持华为</h4></a>-->
-                        <!--<p>目前，中国联通官方微博发布微博，请进行置顶，对实施造谣的自媒体予以曝光和强烈的谴责</p>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-8"></div>-->
-                            <!--<div class="col-2">-->
-                                <!--<small>作者</small>-->
-                            <!--</div>-->
-                            <!--<div class="col-2">-->
-                                <!--<small>今天9:23</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
         </div>
     </div>
     <div class="col-3" style="padding: 20px">
-        <h4>热门版块</h4>
+        <h4>大家都在看</h4>
         <hr>
-        <div class="card" style="padding: 10px">
+        <div class="card" style="padding: 5px" id="hotbox">
             <h4>今日热词</h4>
-            <a href="#" style="color: #0b2e13">仙桃没有桃99+</a>
+            <!--            <div class="row" style="padding: 20px">-->
+            <!--                <div class="col-sm-8">-->
+            <!--                    <a href="#" style="color: #0b2e13">Object.keys(data[i])[0]</a>-->
+            <!--                </div>-->
+            <!--                <div class="float-right col-sm-4">热度：data[i][Object.keys(data[i])[0]]</div>-->
+            <!--            </div>-->
             <a href="#" style="color: #0b2e13">外交部发言66+</a>
             <a href="#" style="color: #0b2e13">华为新声明33+</a>
-        </div>
-        <br>
-        <div class="card" style="padding: 10px">
-            <a href="#" style="color: #0b2e13"><h4>音乐区</h4></a>
-            <p>音乐是反映人类现实生活情感的一种艺术（英名称：music；法文名称： musique；意大利文：musica）。
-            </p>
-        </div>
-        <br>
-        <div class="card" style="padding: 10px">
-            <a href="#" style="color: #0b2e13"><h4>动漫区</h4></a>
-            <p>动漫，即动画、漫画的合称，指动画与漫画的集合，取这两个词的第一个字合二为一称之为“动漫”。
-            </p>
-        </div>
-        <br>
-        <div class="card" style="padding: 10px">
-            <a href="#" style="color: #0b2e13"><h4>游戏区</h4></a>
-            <p>游戏，随人类而造。在人类社会中，游戏不仅仅保留着动物本能活动的特质，为了自身发展的需要创造出多种多样的游戏活动。
-            </p>
         </div>
     </div>
 
@@ -150,4 +107,48 @@
 
 {{>layout/footer}}
 </body>
+
+<script>
+
+    $().ready(function () {
+        initSearchBox1();
+
+        $(".first-img").each(function () {
+            var imgUrl=$(this)[0].src;
+            if (imgUrl==="http://"+document.domain+":8080/0"){
+                $(this).attr('src', "/img/gpf_nopic.png");
+            }
+        });
+
+        $(".post-time").each(function () {
+            var postTime=$(this).text();
+            $(this).text(postTime.substring(0, 16));
+        })
+    });
+
+    function initSearchBox1() {
+        $.ajax({
+            type: "post",
+            url: "/getVeryHotWord",
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                $("#hotbox").val(Object.keys(data[0])[0]);
+                var str = "";
+                for (var i = 1; i < data.length; i++) {
+                    str += "<div class=\"row\" style=\"padding: 20px\">\n" +
+                        "<div class=\"col-sm-8\">\n" +
+                        "<a href=\"#\" style=\"color: #0b2e13\" onclick=\"searchHotWord(this)\" >" + Object.keys(data[i])[0] + "</a>\n" +
+                        "</div>\n" +
+                        "<div class=\"float-right col-sm-4\">热度：" + data[i][Object.keys(data[i])[0]] + " 🔥</div>\n" +
+                        "</div>";
+                    $("#hotbox").html(str);
+                }
+            }
+        })
+    }
+
+</script>
+
 </html>

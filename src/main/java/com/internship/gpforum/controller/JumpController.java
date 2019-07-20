@@ -46,6 +46,14 @@ public class JumpController {
         return "write";
     }
 
+    @RequestMapping("notfound")
+    public String toNotfound(HttpServletRequest request,ModelMap modelMap,String sectionName){
+        User user = (User)request.getSession().getAttribute("User");
+        modelMap.put("User",user);
+        modelMap.put("sectionName",sectionName);
+        return "notfound";
+    }
+
 
 
 }

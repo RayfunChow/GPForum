@@ -19,6 +19,8 @@ public interface UserService {
 
     List<User> findByNickName(String keyword);
 
+    User findByUserEmail(String userEmail);
+
     void addBrowseRecord(String email,Integer id,String title);
 
 }

@@ -159,6 +159,9 @@
                         </div>
                     </div>
                     {{/posts}}
+                    {{^posts}}
+                    <h4 style="margin: 20px">未搜索到相关帖子 :(</h4>
+                    {{/posts}}
                 </div>
 
                 <div class="tabBodyItem">
@@ -175,12 +178,16 @@
                         </div>
                     </div>
                     {{/sections}}
+                    {{^sections}}
+                    <h4 style="margin: 20px">未搜索到相关板块 :(</h4>
+                    {{/sections}}
                 </div>
                 <div class="tabBodyItem">
                 <div class="Mycard" style="width: 100%;">
-                    <div class="myGutter">
+                    {{#users}}<div class="myGutter">
+
                         <div class="row">
-                            {{#users}}
+
                             <div class="col-md-10">
                                 <img src="../static/img/no_avatar.png"
                                      style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
@@ -189,9 +196,14 @@
                             <div class="col-md-2 container">
                                 <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：{{regTime}}</p>
                             </div>
-                            {{/users}}
+
                         </div>
-                    </div>
+
+
+                    </div>{{/users}}
+                    {{^users}}
+                    <h4 style="margin: 20px">未搜索到相关用户 :(</h4>
+                    {{/users}}
                 </div>
             </div>
 

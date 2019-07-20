@@ -94,7 +94,12 @@ public class UserServiceImpl implements UserService {
     public List<User> findByNickName(String keyword) {
         return userRepository.findByNickName(keyword);
     }
-  
+
+    @Override
+    public User findByUserEmail(String userEmail) {
+        return userRepository.findByUserEmail(userEmail);
+    }
+
     public void addBrowseRecord(String email, Integer id, String title) {
         BrowseRecord browseRecord=new BrowseRecord();
         String browseUrl="/postDetail?postId="+id;

@@ -280,4 +280,12 @@ public class LoginController {
         request.getSession().removeAttribute("User");
         return "login";
     }
+
+    @RequestMapping(value = "getUserAvatar")
+    @ResponseBody
+    public String getUserAvatar(HttpServletRequest request){
+        String userEmail = request.getParameter("userEmail");
+        User user = userService.findByUserEmail(userEmail);
+        return user.getAvatar();
+    }
 }

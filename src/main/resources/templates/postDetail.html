@@ -153,8 +153,8 @@
 
                     <!--点赞-->
                     <div class="row">
-                        <div class="heart" id="like2" rel="like"></div>
-                        <div class="likeCount" id="likeCount2">10</div>
+                        <div class="heart" id="like" rel="like"></div>
+                        <div class="likeCount" id="likeCount">{{postDetail.starNumber}}</div>
                     </div>
                 </div>
 
@@ -169,21 +169,19 @@
                     <div class="row" style="margin-bottom: 20px">
                         <!--评论人头像-->
                         <div class="col-1">
-                            <img class="nav-item rounded-circle"
-                                 src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563112838538&di=698d772f752992a2f4ff0a73988e0f26&imgtype=0&src=http%3A%2F%2Fwww.xinhuanet.com%2Fpolitics%2F2018-03%2F14%2F1122538039_15210257516771n.jpg"
-                                 style="width:60px ;height:60px;margin-left: 20px">
+                            <img class="nav-item rounded-circle comment-avatar" src="" style="width:60px ;height:60px;margin-left: 20px">
                         </div>
                         <!--评论人及内容-->
 
                         <div style="margin-left: 20px;" class="col-10">
                             <div>
-                                <small><a href="profile?userEmail={{userEmail}}"></a>{{userNickName}}</small>
+                                <small><a href="profile?userEmail="></a>{{userNickName}}</small>
                                 <small style="margin-left: 7px;margin-right: 7px;">|</small>
                                 <small>{{commentTime}}</small>
                                 <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
                                         data-target="#replyModal"
                                         style="float: right;"
-                                        onclick="toReplyModal({{commentId}}, '{{userNickName}}', '{{userEmail}}', {{commentId}})">
+                                        onclick="toReplyModal({{commentId}}, '{{userEmail}}', '{{userNickName}}', {{commentId}})">
                                     <small>回复</small>
                                 </button>
                             </div>
@@ -193,17 +191,6 @@
                                     {{content}}
                                 </p>
                                 <div class="container" id="childComments{{commentId}}">
-                                    <!--<small><a href="profile?userEmail=">江泽民 </a> 对 <a href="profile?userEmail="> 董建华</a>-->
-                                    <!--说：连任也要按照基本法和选举法去产生<a href="#replyCollapse{{commentId}}"> 回复</a></small>-->
-                                    <!--<div class="collapse" id="replyCollapse{{commentId}}" data-parent="#accordion">-->
-                                    <!--<div class="card card-body">-->
-                                    <!--<label>输入回复：</label>-->
-                                    <!--<textarea id="childCommentContent{{commentId}}" placeholder="输入回复内容"></textarea>-->
-                                    <!--<button type="button" style="float: right;width: 120px" value="{{commentId}}" onclick="writeChildComment(this)"-->
-                                    <!--class="btn btn-outline-secondary">发表回复-->
-                                    <!--</button>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                     <small>
                                         <button class="btn btn-sm btn-outline-secondary"
                                                 onclick="getChildComments({{commentId}})" value="显示回复">
@@ -216,6 +203,29 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+                        $(".comment-avatar").each(function () {
+                            getUserAvatar("{{userEmail}}", $(this));
+                        });
+
+                        function getUserAvatar(userEmail, that) {
+
+                            $.ajax({
+                                type: "post",
+                                url: "getUserAvatar",
+                                dataType: "text",
+                                data: {
+                                    "userEmail": userEmail
+                                },
+                                success: function (data) {
+                                    if (data!=""){
+                                        that.attr('src', data);
+                                    } else
+                                        that.attr('src', "/img/no_avatar.png");
+                                }
+                            })
+                        }
+                    </script>
                     {{/parentComments}}
                     {{^parentComments}}
                     {{/parentComments}}
@@ -275,7 +285,6 @@
 
         getPostContent();
 
-
         $('body').on("click", '.heart', function () {
 
             var A = $(this).attr("id");
@@ -320,6 +329,24 @@
 
     });
 
+    function getUserAvatar(userEmail) {
+
+        $.ajax({
+            type: "post",
+            url: "getUserAvatar",
+            dataType: "text",
+            data: {
+                "userEmail": userEmail
+            },
+            success: function (data) {
+                if (data!=""){
+                    $(this)[0].src =data;
+                } else
+                    $(this)[0].src ="/img/no_avatar.png";
+            }
+        })
+    };
+
     function getPostContent() {
         var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
 
@@ -334,14 +361,12 @@
                 console.log(data)
                 $("#postContent").html(data);
             }
-            // , error: function (data) {
-            //     console.log(data)
-            // }
+
         })
 
     }
 
-    function toReplyModal(commentId, respondentNickname, respondentEmail, targetCommentId) {
+    function toReplyModal(commentId, respondentEmail, respondentNickname, targetCommentId) {
         $("#replyModalTitle").text("回复：" + respondentNickname);
         $("#parentCommentId").val(commentId);
         $("#targetCommentId").val(targetCommentId);

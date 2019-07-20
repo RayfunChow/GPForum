@@ -46,20 +46,24 @@
                 <div class="col-7">
                     {{#postPage}}
                     <div class="card" style="padding: 10px 20px 10px 20px;margin-bottom: 20px;">
-
-                        <div class="col-1">
-                            <img src="{{#firstImg}}{{.}}{{/firstImg}}{{^firstImg}}0100010101010{{/firstImg}}"
-                                 style="width: 100px;height: 100px">
+                        <div class="row">
+                            <div style="margin: 10px">
+                                <img src="{{firstImg}}"
+                                     class="first-img" style="width: 140px;height: 100px">
+                            </div>
+                            <div style="margin: 10px">
+                                <h4><a href="/postDetail?postId={{postId}}" style="color: #0b2e13">{{title}}</a></h4>
+                                <p>{{summary}}</p>
+                            </div>
                         </div>
-                        <div class="col-auto float-right">
-                            <h4><a href="/postDetail?postId={{postId}}" style="color: #0b2e13">{{title}}</a></h4>
-                            <p>{{summary}}
-                                <!--                        <a href="#" style="color:#7a5e3f">查看原文</a></p>-->
+
+                        <div class="col-auto ">
+
                             <div class="row">
                                 <div class="col-6"></div>
                                 <div class="col-4" name="lastEditTimes">{{lastEditTime}}</div>
                                 <div class="col-1"><input type="image" src="/svg/heart.svg"
-                                                          style="height: 20px;width: 20px"></div>
+                                                          style="height: 20px;width: 20px"> {{starNumber}}</div>
                                 <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg"
                                                           name="btnDeletePost" btnPostId="{{postId}}" btnAuthorEmail="{{authorEmail}}" style="height: 20px;width: 20px"></div>
                             </div>
@@ -101,22 +105,7 @@
                             </button>
                         </div>
                         {{/moderators}}
-                        <!--<div class="row ml-1" style="padding: 0 10px 0 10px; margin: auto auto 20px;">-->
-                        <!--<div class="" style="margin:0 15px 0 0;">-->
-                        <!--<img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=80f0e4b4a61ea8d39e2f7c56f6635b2b/267f9e2f07082838ac3a8f1bb899a9014c08f18e.jpg"-->
-                        <!--style="width: 50px;height: 50px;"-->
-                        <!--class="rounded-circle">-->
-                        <!--</div>-->
-                        <!--<div style="margin-top: 13px;">-->
-                        <!--<a href="#"><span style="color: #0C0C0C"> 江泽民</span></a>-->
-                        <!--</div>-->
-                        <!--<button type="button" class="btn btn-outline-primary ml-auto mr-3 float-right"-->
-                        <!--data-toggle="button"-->
-                        <!--aria-pressed="false"-->
-                        <!--style="height: 40px;width: 60px; margin-top:5px;">-->
-                        <!--关注-->
-                        <!--</button>-->
-                        <!--</div>-->
+
                         <div style="position: absolute;bottom: 0;left: 22%;margin-bottom: 20px;">
                             {{#sectionDetail}}
                             <a type="button" class="btn btn-outline-primary" href="/write?sectionName={{sectionName}}">
@@ -138,6 +127,19 @@
 {{>layout/footer}}
 
 <script src="/layui/layui.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(".first-img").each(function () {
+            var imgUrl=$(this)[0].src;
+            if (imgUrl==="http://"+document.domain+":8080/0"){
+                $(this).attr('src', "/img/gpf_nopic.png");
+            }
+        });
+
+    });
+
+</script>
 <script>
 
     $(".delete-post").click(function () {

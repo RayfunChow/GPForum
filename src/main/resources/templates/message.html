@@ -141,193 +141,90 @@
                 <li><a>收到的赞</a></li>
                 <li><a>收藏列表</a></li>
                 <li><a>浏览记录</a></li>
-                <li><a>审核通知</a></li>
+<!--                <li><a>审核通知</a></li>-->
 
             </div>
             <div class="tabBodyContainer">
                 <div class="tabBodyItem tabBodyCurrent">
                     <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter">
-                            <div class="card-body ">
-                                <a href="#">用户名：Special</a>
-                                回复了你的
-                                <a href="#">帖子：Special</a>
-                                <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                            </div>
-                            <div class="card-text row">
-                                <div class="col-md-11">
-                                    <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a
-                                        natural
-                                        lead-in
-                                        to additional
-                                        content.With supporting text below as a natural lead-in to additional
-                                        content.With
-                                        supporting text below as a natural lead-in to additional content.</p>
-                                </div>
-                                <div class="col-md-1 ">
-                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                                </div>
-                            </div>
-                        </div>
-                        {{#commentRecords}}
+<!--                        <div class="myGutter">-->
+<!--                            <div class="card-body ">-->
+<!--                                <a href="#">用户名：Special</a>-->
+<!--                                回复了你的-->
+<!--                                <a href="#">帖子：Special</a>-->
+<!--                                <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>-->
+<!--                            </div>-->
+<!--                            <div class="card-text row">-->
+<!--                                <div class="col-md-11">-->
+<!--                                    <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a-->
+<!--                                        natural-->
+<!--                                        lead-in-->
+<!--                                        to additional-->
+<!--                                        content.With supporting text below as a natural lead-in to additional-->
+<!--                                        content.With-->
+<!--                                        supporting text below as a natural lead-in to additional content.</p>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1 ">-->
+<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        {{#commentPage}}
                         <div class="Mycard" style="width: 100%;">
                             <div class="myGutter">
                                 <div class="card-body">
-                                    <a href="/profile?userEmail={{userEmail}}">用户名：{{userNickName}}</a>
-                                    回复了你:
-                                    <a href="/postDetail?postId={{postId}}">{{content}}</a>
-                                    <!--<a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>-->
+                                    用户：<a href="/profile?userEmail={{userEmail}}">Special</a>
+                                    回复了你的帖子：
+                                    <a href="#">Special</a>
+                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
                                 </div>
                                 <div class="card-text row">
-                                    <!--<div class="col-md-11">-->
-                                        <!--<p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a-->
-                                            <!--natural-->
-                                            <!--lead-in to additional-->
-                                            <!--content.With supporting text below as a natural lead-in to additional-->
-                                            <!--content.With-->
-                                            <!--supporting text below as a natural lead-in to additional content.</p>-->
-                                    <!--</div>-->
+                                    <div class="col-md-11">
+                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a
+                                            natural
+                                            lead-in to additional
+                                            content.With supporting text below as a natural lead-in to additional
+                                            content.With
+                                            supporting text below as a natural lead-in to additional content.</p>
+                                    </div>
                                     <div class="col-md-1 ">
-                                        <button class=" btn btn-outline-primary btn-sm float-right" onclick="confirmReply('{{userEmail}}','{{commentId}}')">确认</button>
                                         <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                        {{/commentRecords}}
-                        {{^commentRecords}}
-                        {{/commentRecords}}
-                        <!--<div class="Mycard" style="width: 100%;">-->
-                            <!--<div class="myGutter">-->
-                                <!--<div class="card-body">-->
-                                    <!--<a href="#">用户名：Special</a>-->
-                                    <!--回复了你的-->
-                                    <!--<a href="#">帖子：Special</a>-->
-                                    <!--<a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>-->
-                                <!--</div>-->
-                                <!--<div class="card-text row">-->
-                                    <!--<div class="col-md-11">-->
-                                        <!--<p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a-->
-                                            <!--natural-->
-                                            <!--lead-in to additional-->
-                                            <!--content.With supporting text below as a natural lead-in to additional-->
-                                            <!--content.With-->
-                                            <!--supporting text below as a natural lead-in to additional content.</p>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-1 ">-->
-                                        <!--<h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
-                                    <!--</div>-->
+                        {{/commentPage}}
+                        {{^commentPage}}
+                        <h4 style="margin: 20px">未收到新的评论 :(</h4>
+                        {{/commentPage}}
 
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="Mycard" style="width: 100%;">-->
-                            <!--<div class="myGutter">-->
-                                <!--<div class="card-body">-->
-                                    <!--<a href="#">用户名：Special</a>-->
-                                    <!--回复了你的-->
-                                    <!--<a href="#">帖子：Special</a>-->
-                                    <!--<a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>-->
-                                <!--</div>-->
-                                <!--<div class="card-text row">-->
-                                    <!--<div class="col-md-11">-->
-                                        <!--<p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a-->
-                                            <!--natural-->
-                                            <!--lead-in to additional-->
-                                            <!--content.With supporting text below as a natural lead-in to additional-->
-                                            <!--content.With-->
-                                            <!--supporting text below as a natural lead-in to additional content.</p>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-1 ">-->
-                                        <!--<h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
-                                    <!--</div>-->
-
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="Mycard" style="width: 100%;">-->
-                            <!--<div class="myGutter">-->
-                                <!--<div class="card-body">-->
-                                    <!--<a href="#">用户名：Special</a>-->
-                                    <!--回复了你的-->
-                                    <!--<a href="#">帖子：Special</a>-->
-                                    <!--<a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>-->
-                                <!--</div>-->
-                                <!--<div class="card-text row">-->
-                                    <!--<div class="col-md-11">-->
-                                        <!--<p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a-->
-                                            <!--natural-->
-                                            <!--lead-in to additional-->
-                                            <!--content.With supporting text below as a natural lead-in to additional-->
-                                            <!--content.With-->
-                                            <!--supporting text below as a natural lead-in to additional content.</p>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-1 ">-->
-                                        <!--<h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
-                                    <!--</div>-->
-
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
                     </div>
                 </div>
                 <div class="tabBodyItem">
+                    <button style="margin: 5px;float: right;" class="btn btn-outline-success"
+                            onclick="confirmAllStars()">一键确认
+                    </button>
                     {{#recentStars}}
                     <div class="Mycard" style="width: 100%;">
                         <div class="myGutter">
                             <div class="card-body">
-                                <a href="/profile?userEmail={{userEmail}}">用户名：{{userNickName}}</a>
-                                赞了你的
-                                <a href="/postDetail?postId={{postId}}">帖子：{{postTitle}}</a>
-                                <button class=" btn btn-outline-primary btn-sm float-right" onclick="confirmStar('{{userEmail}}','{{postId}}')">确认</button>
-                                <h6 class="card-subtitle mb-2 text-muted float-right">{{starTime}}</h6>
+                                用户：<a href="/profile?userEmail={{userEmail}}">{{userNickName}}</a>
+                                赞了你的帖子：
+                                <a href="/postDetail?postId={{postId}}">{{postTitle}}</a>
+                                <button class=" btn btn-outline-primary btn-sm float-right btn-confirm-star"
+                                        onclick="confirmStar('{{userEmail}}','{{postId}}')" id="{{postId}}">确认
+                                </button>
+                                <!--                                <button class=" btn btn-success btn-sm float-right" disabled><span class="oi oi-check"> </span> 已确认！</button>-->
+                                <h6 class="card-subtitle mb-2 text-muted float-right message-date" style="margin: 5px;">
+                                    {{starTime}}</h6>
                             </div>
                         </div>
                     </div>
                     {{/recentStars}}
                     {{^recentStars}}
+                    <h4 style="margin: 20px">未收到新的点赞 :(</h4>
                     {{/recentStars}}
-                    <!--<div class="Mycard" style="width: 100%;">-->
-                        <!--<div class="myGutter">-->
-                            <!--<div class="card-body">-->
-                                <!--<a href="#">用户名：Special</a>-->
-                                <!--赞了你的-->
-                                <!--<a href="#">帖子：Special</a>-->
-                                <!--<h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="Mycard" style="width: 100%;">-->
-                        <!--<div class="myGutter">-->
-                            <!--<div class="card-body">-->
-                                <!--<a href="#">用户名：Special</a>-->
-                                <!--赞了你的-->
-                                <!--<a href="#">帖子：Special</a>-->
-                                <!--<h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="Mycard" style="width: 100%;">-->
-                        <!--<div class="myGutter">-->
-                            <!--<div class="card-body">-->
-                                <!--<a href="#">用户名：Special</a>-->
-                                <!--赞了你的-->
-                                <!--<a href="#">帖子：Special</a>-->
-                                <!--<h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="Mycard" style="width: 100%;">-->
-                        <!--<div class="myGutter">-->
-                            <!--<div class="card-body">-->
-                                <!--<a href="#">用户名：Special</a>-->
-                                <!--赞了你的-->
-                                <!--<a href="#">帖子：Special</a>-->
-                                <!--<h6 class="card-subtitle mb-2 text-muted float-right">04-13</h6>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
 
                 </div>
                 <div class="tabBodyItem">
@@ -390,18 +287,21 @@
                     {{#browseRecords}}
                     <div class="Mycard" style="padding: 10px 20px 10px 20px">
                         <!--                <div class="myGutter">-->
-                        <div class="myGutter row ">
+                        <div class="myGutter row" style="padding: 10px">
                             <!--<div class="col-sm-2">-->
-                                <!--<img src="" style="height: 100%;width: 100%">-->
+                            <!--<img src="" style="height: 100%;width: 100%">-->
                             <!--</div>-->
-                            <div class="col-sm-9">
-                                <a href="{{browseUrl}}" style="color: #0b2e13"><h5>{{postTitle}}</h5></a>
+                            <div class="col-sm-12">
+                                <a href="{{browseUrl}}" style="color: #0b2e13"><h5><u>{{postTitle}}</u></h5></a>
                                 <!--<p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，-->
-                                    <!--由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
+                                <!--由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
                                 <!--<div class="row">-->
-                                    <!--<div class="col-8"></div>-->
-                                    <!--<a href="#" class="col-2">作者</a>-->
-                                    <div class="col-3">{{browseTime}}</div>
+                                <!--<div class="col-8"></div>-->
+                                <!--<a href="#" class="col-2">作者</a>-->
+                                <div class="float-right row">
+                                    浏览时间：
+                                    <div class="message-date">{{browseTime}}</div>
+                                </div>
                                 <!--</div>-->
                             </div>
                         </div>
@@ -410,107 +310,108 @@
 
                     {{/browseRecords}}
                     {{^browseRecords}}
+                    <h4 style="margin: 20px">你还没有浏览过帖子 :(</h4>
                     {{/browseRecords}}
                 </div>
-                    <!--<div class="Mycard" style="padding: 10px 20px 10px 20px">-->
-                        <!--<div class="row myGutter">-->
-                            <!--<div class="col-sm-2">-->
-                                <!--<img src="" style="height: 100%;width: 100%">-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-10">-->
-                                <!--<a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>-->
-                                <!--<p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，-->
-                                    <!--由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
-                                <!--<div class="row">-->
-                                    <!--<div class="col-8"></div>-->
-                                    <!--<a href="#" class="col-2">作者</a>-->
-                                    <!--<div class="col-2">今天9:23</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--<div class="Mycard" style="padding: 10px 20px 10px 20px">-->
+                <!--<div class="row myGutter">-->
+                <!--<div class="col-sm-2">-->
+                <!--<img src="" style="height: 100%;width: 100%">-->
+                <!--</div>-->
+                <!--<div class="col-sm-10">-->
+                <!--<a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>-->
+                <!--<p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，-->
+                <!--由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
+                <!--<div class="row">-->
+                <!--<div class="col-8"></div>-->
+                <!--<a href="#" class="col-2">作者</a>-->
+                <!--<div class="col-2">今天9:23</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
 
-                <div class="tabBodyItem">
-                    <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter ">
-                            <div class="card-body row">
-                                <div class="col-md-11">
-                                    <a href="#">用户名：Special</a>
-                                    申请成为
-                                    <a href="#">板块：Special</a>
-                                    的版主
-                                </div>
-                                <div class="col-md-1 ">
-                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
-                                </div>
-                                <div class="col-md-1" style="margin-bottom: 5px">
-                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
-                                </div>
-                                <div class="col-md-1" style="margin-bottom: 5px">
-                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
-                                </div>
-                            </div>
-                        </div>
+<!--                <div class="tabBodyItem">-->
+<!--                    <div class="Mycard" style="width: 100%;">-->
+<!--                        <div class="myGutter ">-->
+<!--                            <div class="card-body row">-->
+<!--                                <div class="col-md-11">-->
+<!--                                    <a href="#">用户名：Special</a>-->
+<!--                                    申请成为-->
+<!--                                    <a href="#">板块：Special</a>-->
+<!--                                    的版主-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1 ">-->
+<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-10">-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
+<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
+<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                    </div>
-                    <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter ">
-                            <div class="card-body row">
-                                <div class="col-md-11">
-                                    <a href="#">用户名：Special</a>
-                                    申请成为
-                                    <a href="#">板块：Special</a>
-                                    的版主
-                                </div>
-                                <div class="col-md-1 ">
-                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
-                                </div>
-                                <div class="col-md-1" style="margin-bottom: 5px">
-                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
-                                </div>
-                                <div class="col-md-1" style="margin-bottom: 5px">
-                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
-                                </div>
-                            </div>
-                        </div>
+<!--                    </div>-->
+<!--                    <div class="Mycard" style="width: 100%;">-->
+<!--                        <div class="myGutter ">-->
+<!--                            <div class="card-body row">-->
+<!--                                <div class="col-md-11">-->
+<!--                                    <a href="#">用户名：Special</a>-->
+<!--                                    申请成为-->
+<!--                                    <a href="#">板块：Special</a>-->
+<!--                                    的版主-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1 ">-->
+<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-10">-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
+<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
+<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                    </div>
-                    <div class="Mycard" style="width: 100%;">
-                        <div class="myGutter ">
-                            <div class="card-body row">
-                                <div class="col-md-11">
-                                    <a href="#">用户名：Special</a>
-                                    申请成为
-                                    <a href="#">板块：Special</a>
-                                    的版主
-                                </div>
-                                <div class="col-md-1 ">
-                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
-                                </div>
-                                <div class="col-md-1" style="margin-bottom: 5px">
-                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>
-                                </div>
-                                <div class="col-md-1" style="margin-bottom: 5px">
-                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>
-                                </div>
-                            </div>
-                        </div>
+<!--                    </div>-->
+<!--                    <div class="Mycard" style="width: 100%;">-->
+<!--                        <div class="myGutter ">-->
+<!--                            <div class="card-body row">-->
+<!--                                <div class="col-md-11">-->
+<!--                                    <a href="#">用户名：Special</a>-->
+<!--                                    申请成为-->
+<!--                                    <a href="#">板块：Special</a>-->
+<!--                                    的版主-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1 ">-->
+<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-10">-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
+<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
+<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                    </div>
+<!--                    </div>-->
 
-                </div>
+<!--                </div>-->
             </div>
         </div>
     </div>
@@ -524,6 +425,13 @@
 <script type="text/javascript">
     $(document).ready(function (e) {
         SidebarTabHandler.Init();
+
+        $(".message-date").each(function () { // 里面放class名字 把你想遍历的标签 class名改成一样的
+            var date = $(this).text();
+            $(this).text(processDate(date)); //值
+        });
+
+        // processDate();
     });
     var SidebarTabHandler = {
         Init: function () {
@@ -534,23 +442,61 @@
                 $($(".tabBodyItem")[$(this).index()]).addClass("tabBodyCurrent");
             });
         }
-    }
+    };
 
-    function confirmStar(email,id) {
+    function confirmStar(email, id) {
         $.ajax({
-            type:"post",
-            url:"confirmStar",
-            data:{
-                "email":email,
-                "id":id
+            type: "post",
+            url: "confirmStar",
+            data: {
+                "email": email,
+                "id": id
             },
-            success:function (data) {
-                if(data){
-
-                }
+            success: function () {
+                $("#" + id).removeClass("btn-outline-primary");
+                $("#" + id).addClass("btn-success");
+                $("#" + id).addClass("disabled");
+                $("#" + id).html("<span class=\"oi oi-check\"> </span> 已确认！")
             }
         })
     }
+
+    function processDate(dateString) {
+
+        // var dateStr = dateString.split(" ");
+        // var strGMT = dateStr[0] + " " + dateStr[1] + " " + dateStr[2] + " " + dateStr[5] + " " + dateStr[3] + " GMT+0800";
+        // var date = new Date(Date.parse(strGMT));
+        var date = new Date(dateString);
+        date=new Date(date.valueOf()-60* 60 * 14000);
+
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        var minute = date.getMinutes();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        var second = date.getSeconds();
+        second = second < 10 ? ('0' + second) : second;
+        // console.log(date);
+        return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+    }
+
+    function confirmAllStars() {
+        $.ajax({
+            type: "post",
+            url: "confirmAllStars",
+            dataType: "text",
+            success: function () {
+                $(".btn-confirm-star").removeClass("btn-outline-primary");
+                $(".btn-confirm-star").addClass("btn-success");
+                $(".btn-confirm-star").addClass("disabled");
+                $(".btn-confirm-star").html("<span class=\"oi oi-check\"> </span> 已确认！")
+            }
+        })
+    }
+
 </script>
 
 
