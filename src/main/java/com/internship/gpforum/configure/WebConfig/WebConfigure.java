@@ -11,7 +11,9 @@ public class WebConfigure implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //SecurityInterceptor securityInterceptor=new SecurityInterceptor();
         registry.addInterceptor(new SecurityInterceptor())
-                .addPathPatterns("/index");
+                .addPathPatterns("/message","/write","/updateProfile","/writeComment","/postDetail","/writeAction","/confirmStar",
+                        "/confirmAllStars","/confirmReply","/confirmAllReply","/commentDetail","/deletePost","/getPostContent","/star",
+                        "/changePassword","/updateProfileAction","/upload");
 
     }
 }

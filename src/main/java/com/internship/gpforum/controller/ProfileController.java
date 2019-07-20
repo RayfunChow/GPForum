@@ -47,6 +47,9 @@ public class ProfileController {
     @RequestMapping("profile")
     public String toProfile(ModelMap modelMap, HttpServletRequest request, @RequestParam(required = false) String userEmail, @RequestParam(required = false, defaultValue = "1") Integer pageIndex, @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
         User user = (User) request.getSession().getAttribute("User");
+        if(user==null&&userEmail==null){
+            return "login";
+        }
         PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize);
         if (userEmail == null || userEmail == user.getUserEmail()) {
             Page<Post> postPage = postService.getHisPost(user.getUserEmail(), pageRequest);

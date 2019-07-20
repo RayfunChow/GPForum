@@ -38,15 +38,15 @@ public class PostController {
     private JSONObject json = new JSONObject();
 
     @Autowired
-    private RedisTemplate<Object,Object> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
 
     @RequestMapping("postDetail")
     public String toPostDetail(ModelMap modelMap, Integer postId, HttpServletRequest request) {
         User userInfo = (User) request.getSession().getAttribute("User");
         modelMap.put("User", userInfo);
         Post postDetail = postService.getDetail(postId);
-        if(postDetail==null){
-            redisTemplate.opsForHash().delete(userInfo.getUserEmail()+"_records","/postDetail?postDetail="+postId);
+        if (postDetail == null) {
+            redisTemplate.opsForHash().delete(userInfo.getUserEmail() + "_records", "/postDetail?postDetail=" + postId);
             return "notfound";
         }
         User author = userService.userCoookie(postDetail.getAuthorEmail());
@@ -63,6 +63,14 @@ public class PostController {
         if (parentComments.size() != 0) {
             modelMap.put("parentComments", parentComments);
         }
+
+        if (redisTemplate.opsForHash().hasKey(postId + "_starRecords", userInfo.getUserEmail())) {
+            modelMap.put("isStared", 1);
+        } else if (postService.isStared(postId, userInfo.getUserEmail())) {
+            modelMap.put("isStared", 1);
+        } else
+            modelMap.put("isStared", 0);
+
         return "postDetail";
     }
 
@@ -80,11 +88,11 @@ public class PostController {
         Comment comment = new Comment();
         Integer postId = Integer.parseInt(request.getParameter("postId"));
         comment.setPostId(postId);
-        String parentId=request.getParameter("parentCommentId");
-        String respondentEmail=request.getParameter("respondentEmail");
-        String respondentNickname=request.getParameter("respondentNickname");
-        if ( parentId!= null) {
-            Integer parentCommentId=Integer.parseInt(parentId);
+        String parentId = request.getParameter("parentCommentId");
+        String respondentEmail = request.getParameter("respondentEmail");
+        String respondentNickname = request.getParameter("respondentNickname");
+        if (parentId != null) {
+            Integer parentCommentId = Integer.parseInt(parentId);
             comment.setParentCommentId(parentCommentId);
         }
         comment.setRespondentUserNickName(respondentNickname);
@@ -94,7 +102,7 @@ public class PostController {
         comment.setContent(content);
         comment.setUserNickName(nickName);
         commentService.insert(comment);
-        redisTemplate.opsForHash().put(respondentEmail+"_replied",user.getUserEmail()+comment.getCommentId(),json.toJSONString(comment));
+        redisTemplate.opsForHash().put(respondentEmail + "_replied", user.getUserEmail() + comment.getCommentId(), json.toJSONString(comment));
         return "发表成功";
     }
 
@@ -154,13 +162,13 @@ public class PostController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "deletePost",method = RequestMethod.POST)
-    public String deletePost(HttpServletRequest request){
+    @RequestMapping(value = "deletePost", method = RequestMethod.POST)
+    public String deletePost(HttpServletRequest request) {
         Integer postId = Integer.parseInt(request.getParameter("postId"));
-        try{
+        try {
             commentService.deleteAllByPostId(postId);
             postService.deleteByPostId(postId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "删除失败";
         }
@@ -177,13 +185,13 @@ public class PostController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "star",method = RequestMethod.POST)
-    public boolean Star(HttpServletRequest request){
-        User user=(User)request.getSession().getAttribute("User");
-        String postTitle=request.getParameter("postTitle");
-        Integer postId=Integer.valueOf(request.getParameter("postId"));
-        Integer starType=Integer.valueOf(request.getParameter("starType"));
-        messageService.Star(user,postId,postTitle,starType);
+    @RequestMapping(value = "star", method = RequestMethod.POST)
+    public boolean Star(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("User");
+        String postTitle = request.getParameter("postTitle");
+        Integer postId = Integer.valueOf(request.getParameter("postId"));
+        Integer starType = Integer.valueOf(request.getParameter("starType"));
+        messageService.Star(user, postId, postTitle, starType);
         return true;
     }
 }
