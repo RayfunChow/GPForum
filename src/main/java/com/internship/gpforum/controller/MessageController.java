@@ -3,6 +3,7 @@ package com.internship.gpforum.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.internship.gpforum.dal.entity.*;
 import com.internship.gpforum.service.CommentService;
+import com.internship.gpforum.service.MessageService;
 import com.internship.gpforum.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,9 @@ public class MessageController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private MessageService messageService;
 
     private JSONObject json = new JSONObject();
 
@@ -63,9 +67,16 @@ public class MessageController {
         modelMap.put("browseRecords",browseRecords);
 
         PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize);
-//        List<Comment> commentPage=commentService.findMyComments(user.getUserEmail());
-//        Page<Comment> commentPage1=commentPage.subList()
-//        modelMap.put("commentPage",commentPage);
+
+
+        Map<Object,Object> map =redisTemplate.opsForHash().entries(user.getUserEmail()+"_replied");
+        List<Comment> commentRecords=new ArrayList<>();
+        Comment comment;
+        for(Map.Entry<Object,Object> oe:map.entrySet()){
+            comment=json.parseObject((String) oe.getValue(),Comment.class);
+            commentRecords.add(comment);
+        }
+        modelMap.put("commentRecords",commentRecords);
 
         return "message";
     }
@@ -75,7 +86,7 @@ public class MessageController {
     public boolean confirmStar(HttpServletRequest request){
         String email=request.getParameter("email");
         String id=request.getParameter("id");
-        postService.confirmStar(email,id);
+        messageService.confirmStar(email,id);
         return true;
     }
 
@@ -95,7 +106,25 @@ public class MessageController {
                 redisTemplate.delete(post.getPostId() + "_starRecords");
             }
         }
-        postService.saveAll(recentStars);
+        messageService.saveAll(recentStars);
+        return true;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "confirmReply",method = RequestMethod.POST)
+    public boolean confirmReply(HttpServletRequest request){
+        User user=(User)request.getSession().getAttribute("User");
+        String replyEmail=request.getParameter("replyEmail");
+        String id=request.getParameter("commentId");
+        messageService.confirmReply(user.getUserEmail(),replyEmail,id);
+        return true;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "confirmAllReply",method = RequestMethod.POST)
+    public boolean confirmAllReply(HttpServletRequest request){
+        User user=(User)request.getSession().getAttribute("User");
+        messageService.confirmAllReply(user.getUserEmail());
         return true;
     }
 }

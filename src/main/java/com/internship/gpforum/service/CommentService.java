@@ -12,7 +12,9 @@ public interface CommentService {
 
     List<Comment> findAllChildComment(Integer parentCommentId,Integer postId);
 
-    List<Comment> findMyComments(String email);
+    Page<Comment> findMyComments(String email,PageRequest pageRequest);
 
     void insert(Comment comment);
+
+    void deleteAllByPostId(Integer postId);
 }

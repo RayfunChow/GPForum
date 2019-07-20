@@ -27,13 +27,8 @@ public interface PostService {
 
     List<Post> findInTitleAndContent(String keyword);
 
-    void Star(User user, Integer id,String title, Integer starType);
+    void deleteByPostId(Integer postId);
 
     void update(Integer id,Integer number,Integer type);
-
-    void saveAll(List<Star> stars);
-
-    void confirmStar(String email,String id);
-
 
 }

@@ -54,11 +54,13 @@ public class ProfileController {
             modelMap.put("postPage", postPage);
 //            modelMap.put("postPageSize",postPage.getTotalPages());
             modelMap.put("User", user);
-        } else {
-            User other = userService.userCoookie(userEmail);
-            Page<Post> postPage = postService.getHisPost(userEmail, pageRequest);
-            modelMap.put("postPage", postPage);
-            modelMap.put("User", other);
+            modelMap.put("targetUser", user);
+        }else{
+            User other=userService.userCoookie(userEmail);
+            Page<Post> postPage=postService.getHisPost(userEmail,pageRequest);
+            modelMap.put("postPage",postPage);
+            modelMap.put("User", user);
+            modelMap.put("targetUser", other);
         }
         return "profile";
     }

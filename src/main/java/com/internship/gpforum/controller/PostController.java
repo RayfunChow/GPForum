@@ -1,14 +1,13 @@
 package com.internship.gpforum.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.internship.gpforum.dal.entity.Comment;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
-import com.internship.gpforum.service.CommentService;
-import com.internship.gpforum.service.BaiduAPI;
-import com.internship.gpforum.service.PostService;
-import com.internship.gpforum.service.UserService;
+import com.internship.gpforum.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +32,25 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private MessageService messageService;
+
+    private JSONObject json = new JSONObject();
+
+    @Autowired
+    private RedisTemplate<Object,Object> redisTemplate;
+
     @RequestMapping("postDetail")
     public String toPostDetail(ModelMap modelMap, Integer postId, HttpServletRequest request) {
         User userInfo = (User) request.getSession().getAttribute("User");
         modelMap.put("User", userInfo);
         Post postDetail = postService.getDetail(postId);
+        if(postDetail==null){
+            redisTemplate.opsForHash().delete(userInfo.getUserEmail()+"_records","/postDetail?postDetail="+postId);
+            return "notfound";
+        }
+        User author = userService.userCoookie(postDetail.getAuthorEmail());
+        modelMap.put("author", author);
         modelMap.put("postDetail", postDetail);
         userService.addBrowseRecord(userInfo.getUserEmail(), postId, postDetail.getTitle());
         List<Comment> parentComments = commentService.findAllParentComment(postId);
@@ -66,19 +80,21 @@ public class PostController {
         Comment comment = new Comment();
         Integer postId = Integer.parseInt(request.getParameter("postId"));
         comment.setPostId(postId);
-        Integer parentCommentId = Integer.parseInt(request.getParameter("parentCommentId"));
-        String respondentEmail = request.getParameter("respondentEmail");
-        String respondentNickname = request.getParameter("respondentNickname");
-        if (parentCommentId != null && respondentEmail != null && respondentNickname != null) {
+        String parentId=request.getParameter("parentCommentId");
+        String respondentEmail=request.getParameter("respondentEmail");
+        String respondentNickname=request.getParameter("respondentNickname");
+        if ( parentId!= null) {
+            Integer parentCommentId=Integer.parseInt(parentId);
             comment.setParentCommentId(parentCommentId);
-            comment.setRespondentUserNickName(respondentNickname);
-            comment.setRespondentUserEmail(respondentEmail);
         }
+        comment.setRespondentUserNickName(respondentNickname);
+        comment.setRespondentUserEmail(respondentEmail);
         comment.setUserEmail(userEmail);
         comment.setCommentTime(new Date());
         comment.setContent(content);
         comment.setUserNickName(nickName);
         commentService.insert(comment);
+        redisTemplate.opsForHash().put(respondentEmail+"_replied",user.getUserEmail()+comment.getCommentId(),json.toJSONString(comment));
         return "发表成功";
     }
 
@@ -138,6 +154,19 @@ public class PostController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "deletePost",method = RequestMethod.POST)
+    public String deletePost(HttpServletRequest request){
+        Integer postId = Integer.parseInt(request.getParameter("postId"));
+        try{
+            commentService.deleteAllByPostId(postId);
+            postService.deleteByPostId(postId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "删除失败";
+        }
+        return "删除成功";
+    }
+  
     @RequestMapping(value = "getPostContent", method = RequestMethod.POST)
     public String getPostContent(HttpServletRequest request) {
 
@@ -153,7 +182,7 @@ public class PostController {
         String postTitle=request.getParameter("postTitle");
         Integer postId=Integer.valueOf(request.getParameter("postId"));
         Integer starType=Integer.valueOf(request.getParameter("starType"));
-        postService.Star(user,postId,postTitle,starType);
+        messageService.Star(user,postId,postTitle,starType);
         return true;
     }
 }

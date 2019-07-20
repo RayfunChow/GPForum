@@ -73,21 +73,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.findInTitleAndContent(keyword);
     }
 
-    @Override
-    public void Star(User user, Integer id,String title, Integer starType) {
-            if (!redisTemplate.opsForHash().hasKey(id+"_starRecords",user.getUserEmail())) {
-            Star star = new Star();
-            star.setPostId(id);
-            star.setPostTitle(title);
-            star.setUserEmail(user.getUserEmail());
-            star.setUserNickName(user.getNickName());
-            star.setStarTime(new Date());
-            redisTemplate.opsForHash().put(id+"_starRecords",user.getUserEmail(),json.toJSONString(star));
-            }else {
-                redisTemplate.opsForHash().delete("starRecords", id + "", user.getUserEmail());
-            }
-            redisTemplate.opsForHash().increment("stars",id+"",starType);
-    }
+
 
     @Override
     public void update(Integer id, Integer number,Integer type) {
@@ -99,17 +85,7 @@ public class PostServiceImpl implements PostService {
         postRepository.saveAndFlush(post);
     }
 
-    @Override
-    public void saveAll(List<Star> stars) {
-        starRepository.saveAll(stars);
-    }
 
-    @Override
-    public void confirmStar(String email, String id) {
-        Star star=json.parseObject((String) redisTemplate.opsForHash().get(id+"_starRecords",email),Star.class);
-        redisTemplate.opsForHash().delete(id+"_starRecords",email);
-        starRepository.save(star);
-    }
 
 
     public void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
@@ -128,8 +104,8 @@ public class PostServiceImpl implements PostService {
         post.setStarNumber(0);
         postRepository.save(post);
         Integer id=post.getPostId();
-        redisTemplate.opsForHash().put("stars",id,0);
-        redisTemplate.opsForHash().put("browseNumber",id,0);
+        redisTemplate.opsForHash().put("stars",id+"",0);
+        redisTemplate.opsForHash().put("browseNumber",id+"",0);
     }
 
     @Override
@@ -294,5 +270,10 @@ public class PostServiceImpl implements PostService {
             }
         }
         return JSON.toJSONString(list.toArray());
+    }
+
+    @Override
+    public void deleteByPostId(Integer postId) {
+        postRepository.deleteByPostId(postId);
     }
 }

@@ -29,13 +29,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findMyComments(String email) {
-        List<Comment> commentList=commentRepository.findMyComments(email);
+    public Page<Comment> findMyComments(String email,PageRequest pageRequest) {
+        Page<Comment> commentList=commentRepository.findByRespondentUserEmailOrderByCommentTimeDesc(email,pageRequest);
         return commentList;
     }
 
     @Override
     public void insert(Comment comment) {
         commentRepository.save(comment);
+    }
+
+    @Override
+    public void deleteAllByPostId(Integer postId){
+        commentRepository.deleteAllByPostId(postId);
     }
 }

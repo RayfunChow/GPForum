@@ -169,34 +169,35 @@
                                 </div>
                             </div>
                         </div>
-                        {{#commentPage}}
+                        {{#commentRecords}}
                         <div class="Mycard" style="width: 100%;">
                             <div class="myGutter">
                                 <div class="card-body">
-                                    <a href="/profile?userEmail={{userEmail}}">用户名：Special</a>
-                                    回复了你的
-                                    <a href="#">帖子：Special</a>
-                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
+                                    <a href="/profile?userEmail={{userEmail}}">用户名：{{userNickName}}</a>
+                                    回复了你:
+                                    <a href="/postDetail?postId={{postId}}">{{content}}</a>
+                                    <!--<a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>-->
                                 </div>
                                 <div class="card-text row">
-                                    <div class="col-md-11">
-                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a
-                                            natural
-                                            lead-in to additional
-                                            content.With supporting text below as a natural lead-in to additional
-                                            content.With
-                                            supporting text below as a natural lead-in to additional content.</p>
-                                    </div>
+                                    <!--<div class="col-md-11">-->
+                                        <!--<p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a-->
+                                            <!--natural-->
+                                            <!--lead-in to additional-->
+                                            <!--content.With supporting text below as a natural lead-in to additional-->
+                                            <!--content.With-->
+                                            <!--supporting text below as a natural lead-in to additional content.</p>-->
+                                    <!--</div>-->
                                     <div class="col-md-1 ">
+                                        <button class=" btn btn-outline-primary btn-sm float-right" onclick="confirmReply('{{userEmail}}','{{commentId}}')">确认</button>
                                         <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                        {{/commentPage}}
-                        {{^commentPage}}
-                        {{/commentPage}}
+                        {{/commentRecords}}
+                        {{^commentRecords}}
+                        {{/commentRecords}}
                         <!--<div class="Mycard" style="width: 100%;">-->
                             <!--<div class="myGutter">-->
                                 <!--<div class="card-body">-->
