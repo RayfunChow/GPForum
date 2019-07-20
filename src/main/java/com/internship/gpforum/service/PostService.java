@@ -27,9 +27,8 @@ public interface PostService {
 
     List<Post> findInTitleAndContent(String keyword);
 
+    void deleteByPostId(Integer postId);
+
     void update(Integer id,Integer number,Integer type);
-
-
-
 
 }

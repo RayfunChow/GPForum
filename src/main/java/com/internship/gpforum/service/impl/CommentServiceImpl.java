@@ -38,4 +38,9 @@ public class CommentServiceImpl implements CommentService {
     public void insert(Comment comment) {
         commentRepository.save(comment);
     }
+
+    @Override
+    public void deleteAllByPostId(Integer postId){
+        commentRepository.deleteAllByPostId(postId);
+    }
 }

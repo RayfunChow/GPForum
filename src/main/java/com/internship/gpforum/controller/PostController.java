@@ -49,6 +49,8 @@ public class PostController {
             redisTemplate.opsForHash().delete(userInfo.getUserEmail()+"_records","/postDetail?postDetail="+postId);
             return "notfound";
         }
+        User author = userService.userCoookie(postDetail.getAuthorEmail());
+        modelMap.put("author", author);
         modelMap.put("postDetail", postDetail);
         userService.addBrowseRecord(userInfo.getUserEmail(), postId, postDetail.getTitle());
         List<Comment> parentComments = commentService.findAllParentComment(postId);
@@ -152,6 +154,19 @@ public class PostController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "deletePost",method = RequestMethod.POST)
+    public String deletePost(HttpServletRequest request){
+        Integer postId = Integer.parseInt(request.getParameter("postId"));
+        try{
+            commentService.deleteAllByPostId(postId);
+            postService.deleteByPostId(postId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "删除失败";
+        }
+        return "删除成功";
+    }
+  
     @RequestMapping(value = "getPostContent", method = RequestMethod.POST)
     public String getPostContent(HttpServletRequest request) {
 

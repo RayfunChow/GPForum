@@ -15,4 +15,6 @@ public interface CommentService {
     Page<Comment> findMyComments(String email,PageRequest pageRequest);
 
     void insert(Comment comment);
+
+    void deleteAllByPostId(Integer postId);
 }

@@ -23,14 +23,17 @@
                 <div class="cols">
 
                     <div style="background: #f5f5f5;" class="row card">
+                        {{#author}}
                         <div class="row ml-1" style="padding: 10px">
                             <!--此处是头像和作者信息-->
                             <div class="" style="margin:0 10px 0 0;">
-                                <img src="../static/img/loginbg.jpg" style="width: 50px;height: 50px;"
+                                <img src="{{#avatar}}{{.}}{{/avatar}}{{^avatar}}img/no_avatar.png{{/avatar}}" style="width: 50px;height: 50px;"
                                      class="rounded-circle">
                             </div>
                             <div style="margin-top: 13px;">
-                                <a href="/profile?userEmail={{postDetail.authorEmail}}"><span style="color: #0C0C0C"> {{postDetail.authorNickName}}</span></a>
+                                <a href="/profile?userEmail={{userEmail}}"><span style="color: #0C0C0C">
+                                    {{#nickName}}{{.}}{{/nickName}}
+                                {{^nickName}}佚名{{/nickName}}</span></a>
                             </div>
                             <div class="ml-auto mr-3 float-right">
                                 <button type="button" class="btn btn-outline-primary"
@@ -45,13 +48,14 @@
                         <div class="row ml-1" style="margin-bottom: 10px">
                             <!--作者发过文章的数目-->
                             <p style="padding-left: 30px">
-                                文章数:100
+                                文章数:{{#userPostNumber}}{{.}}{{/userPostNumber}} {{^userPostNumber}}0{{/userPostNumber}}
                             </p>
                             <!--作者真正粉丝的数量-->
                             <p class="ml-auto mr-5 float-right">
-                                粉丝数：10000
+                                粉丝数：0
                             </p>
                         </div>
+                        {{/author}}
                     </div>
 
                     <hr class="row">
@@ -130,10 +134,12 @@
                     </div>
                     <p>
                         <!--此处是作者信息-->
-                        <label>作者：<a
-                                href="/profile?userEmail={{postDetail.authorEmail}}">{{postDetail.authorNickName}}</a>
-                        </label>
-                        <label style="margin: 10px">最后修改时间：{{postDetail.lastEditTime}}</label>
+
+                        <small>作者：<a
+                                href="/profile?userEmail={{postDetail.authorEmail}}">{{#postDetail.authorNickName}}{{.}}{{/postDetail.authorNickName}}
+                            {{^postDetail.authorNickName}}佚名{{/postDetail.authorNickName}}</a>
+                        </small>
+                        <small style="margin: 10px">最后修改时间：{{postDetail.lastEditTime}}</small>
 
                         <!--此处是浏览信息-->
                         <label style="float: right;margin-top: 7px">浏览数： {{postDetail.browseNumber}}</label>

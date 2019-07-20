@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface CommentRepository  extends JpaRepository<Comment,Integer> {
     List<Comment> findAllParentComment(Integer postId);
 
     List<Comment> findByParentCommentIdAndPostIdOrderByCommentTime(Integer parentCommentId,Integer postId);
+
+    @Transactional
+    void deleteAllByPostId(Integer postId);
 
     Page<Comment> findByRespondentUserEmailOrderByCommentTimeDesc(String email,Pageable pageable);
 }

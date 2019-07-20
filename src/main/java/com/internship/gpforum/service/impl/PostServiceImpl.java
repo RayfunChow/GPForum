@@ -271,4 +271,9 @@ public class PostServiceImpl implements PostService {
         }
         return JSON.toJSONString(list.toArray());
     }
+
+    @Override
+    public void deleteByPostId(Integer postId) {
+        postRepository.deleteByPostId(postId);
+    }
 }

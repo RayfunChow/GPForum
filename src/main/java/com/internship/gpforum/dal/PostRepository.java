@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,5 +22,10 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query(value = "select * from post where title like %?1% or content like %?1%", nativeQuery = true)
     List<Post> findInTitleAndContent(String keyword);
 
+
+    @Transactional
+    void deleteByPostId(Integer postId);
+
     List<Post> findByAuthorEmail(String email);
+
 }
