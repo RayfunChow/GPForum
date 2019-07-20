@@ -120,7 +120,7 @@
             </div>
             <div class="card-body row ">
                 <!--                <div class="col-1"></div>-->
-                <form action="" id="updateProfileForm" class="col-7" style="padding-left: 50px;margin-left: 50px;">
+                <form  id="updateProfileForm" class="col-7" style="padding-left: 50px;margin-left: 50px;" method="post">
                     <div class="form-group row">
                         <label for="userNickname" class="col-sm-2 col-form-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称 <span
                                 style="color: red">*</span></label>
@@ -223,7 +223,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-outline-info" id="btnUpdateProfile">
+                        <button type="button" class="btn btn-outline-info" id="btnUpdateProfile">
                             修改个人信息
                         </button>
                     </div>
@@ -345,7 +345,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="startUpload">提交</button>
+                <button type="button" class="btn btn-primary" id="startUpload" disabled="true">提交</button>
             </div>
         </div>
     </div>
@@ -480,7 +480,6 @@
     layui.use('upload', function () {
         var $ = layui.jquery
             , upload = layui.upload;
-
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#btnUploadAvatar'
@@ -491,12 +490,14 @@
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result); //图片链接（base64）
+                    check1();
                 });
             }
             , done: function (res) {
                 //如果上传失败
                 if (!res.success) {
                     return layer.msg('上传失败');
+                    $("#startUpload").attr("disabled",true);
                 }
                 //上传成功
                 else{
@@ -504,6 +505,7 @@
                     $('#navbarAvator').attr('src', res.data);
                     layer.msg("上传成功");
                     $("#changeAvatarModal").modal('hide');
+                    $("#startUpload").attr("disabled",true);
                     // this.trigger('click');
                 }
             }
@@ -517,6 +519,28 @@
             }
         });
     });
+
+    function check1() {
+        var dataURL=$('#demo1').attr('src');
+        var flag;
+        $.ajax({
+            type:"POST",
+            url:"checkupload",
+            data:{
+                dataURL:dataURL
+            },
+            success:function (data) {
+                if(data=="图片合规"){
+                    flag = true;
+                    $("#startUpload").attr("disabled",false);
+                }
+                else {
+                    flag=false;
+                    alert(data);
+                }
+            }
+        })
+    };
 
     $(document).ready(function () {
         getProvince();
@@ -655,6 +679,11 @@
             success: function (data) {
                 if(data==="修改信息成功") {
                     alert(data);
+                    window.location.href="updateProfile";
+                }
+                else{
+                    alert("内含敏感信息，修改失败");
+                    window.location.href="updateProfile";
                 }
             }
         })
