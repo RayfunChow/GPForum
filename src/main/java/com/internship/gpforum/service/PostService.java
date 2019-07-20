@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface PostService {
-    void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime);
+    void writeContent(String author_email, String author_nickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime);
 
     Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest);
 

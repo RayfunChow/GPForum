@@ -41,16 +41,16 @@ public class PostController {
     private RedisTemplate<Object,Object> redisTemplate;
 
     @RequestMapping("postDetail")
-    public String toPostDetail(ModelMap modelMap, Integer postId,HttpServletRequest request) {
-        User userInfo=(User)request.getSession().getAttribute("User");
-        modelMap.put("User",userInfo);
+    public String toPostDetail(ModelMap modelMap, Integer postId, HttpServletRequest request) {
+        User userInfo = (User) request.getSession().getAttribute("User");
+        modelMap.put("User", userInfo);
         Post postDetail = postService.getDetail(postId);
         if(postDetail==null){
             redisTemplate.opsForHash().delete(userInfo.getUserEmail()+"_records","/postDetail?postDetail="+postId);
             return "notfound";
         }
         modelMap.put("postDetail", postDetail);
-        userService.addBrowseRecord(userInfo.getUserEmail(),postId,postDetail.getTitle());
+        userService.addBrowseRecord(userInfo.getUserEmail(), postId, postDetail.getTitle());
         List<Comment> parentComments = commentService.findAllParentComment(postId);
         User user;
         for (int i = 0; i < parentComments.size(); i++) {
@@ -135,12 +135,12 @@ public class PostController {
                     summary = summary.substring(0, 20);
                 User user = (User) request.getSession().getAttribute("User");
                 String author_email = user.getUserEmail();
-                String authorNickname=user.getNickName();
+                String author_nickname = user.getNickName();
                 //敏感词
                 if (!BaiduAPI.content_adult(title).equals("0") || !BaiduAPI.content_adult(content.replaceAll("<([^>]*)>", "")).equals("0")) {
                     return JSON.toJSONString("内容涉及敏感词，请重试！");
                 } else {
-                    postService.writeContent(author_email,authorNickname, section_name, title, summary, content, invisible, "正常", new Date());
+                    postService.writeContent(author_email, author_nickname, section_name, title, summary, content, invisible, "正常", new Date());
                     return JSON.toJSONString("发表成功！");
                 }
             }
@@ -148,6 +148,16 @@ public class PostController {
             e.printStackTrace();
             return JSON.toJSONString("发表失败！");
         }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getPostContent", method = RequestMethod.POST)
+    public String getPostContent(HttpServletRequest request) {
+
+        String postId = request.getParameter("postId");
+
+        return postService.getDetail(Integer.parseInt(postId)).getContent();
     }
 
     @ResponseBody

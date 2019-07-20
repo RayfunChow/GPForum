@@ -25,13 +25,38 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="form-inline my-2 my-lg-0" style="margin: 10px" action="/searchAction" method="post">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchKeyword" name="keyword"
-                               aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                            <!--                                onclick="search()">-->
+                    <!--                    <form class="form-inline my-2 my-lg-0" style="margin: 10px">-->
+                    <!--                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+                    <!--                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">-->
+                    <!--                            <span class="oi oi-magnifying-glass"></span>-->
+                    <!--                        </button>-->
+                    <!--                        <ul class="dropdown-menu" role="menu" aria-labelledby="searchBox">-->
+                    <!--                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>-->
+                    <!--                            <div class="dropdown-divider"></div>-->
+                    <!--                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>-->
+                    <!--                            <div class="dropdown-divider"></div>-->
+                    <!--                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </form>-->
+                    <form class="form-inline d-flex dropdown" action="/searchAction" method="post">
+                        <input class="form-control " type="search" placeholder="Search" id="searchBox" name="keyword"
+                               data-toggle="dropdown">
+                        <button class="btn btn-outline-success" type="submit">
                             <span class="oi oi-magnifying-glass"></span>
                         </button>
+                        <ul class="dropdown-menu" role="menu" id="hotWordsList" aria-labelledby="searchBox">
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#">HTML</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#">CSS</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#">JavaScript</a>
+                            </li>
+                        </ul>
                     </form>
                     {{#User}}
                     <li class="nav-item">
@@ -62,17 +87,58 @@
     </nav>
 
     <script>
-        function search() {
-            var keyword = $("#searchKeyword").val();
+        $(document).ready(function () {
+            initSearchBox();
+        });
+
+        function initSearchBox() {
             $.ajax({
                 type: "post",
-                url: "/searchAction",
-                data: {"keyword": keyword},
-                // dataType: "json",
+                url: "/getVeryHotWord",
+                datatype: "json",
                 success: function (data) {
-                    alert(data);
+                    console.log(data);
+                    data = JSON.parse(data);
+                    $("#searchBox").val(Object.keys(data[0])[0]);
+                    str = "";
+                    for (var i = 1; i < data.length; i++) {
+                        if (i < data.length - 1) {
+                            str += "<li role=\"presentation\"><a role=\"menuitem\" style=\"margin: 10px\" tabindex=\"-1\" href=\"#\" onclick=\"searchHotWord(this)\">" + Object.keys(data[i])[0] + "</a></li>\n" +
+                                "                            <div class=\"dropdown-divider\"></div>";
+                        } else {
+                            str += "<li role=\"presentation\"><a role=\"menuitem\" style=\"margin: 10px\" tabindex=\"-1\" href=\"#\" onclick=\"searchHotWord(this)\">" + Object.keys(data[i])[0] + "</a></li>\n";
+                        }
+                    }
+                    $("#hotWordsList").html(str);
                 }
             })
+        }
+
+
+        // function search() {
+        //     var keyword = $("#searchKeyword").val();
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/searchAction",
+        //         data: {"keyword": keyword},
+        //         success: function (data) {
+        //
+        //         }
+        //     })
+        // }
+
+        function searchHotWord(hotWord) {
+            // console.log(hotWord);
+            // $.ajax({
+            //     type: "post",
+            //     url: "/searchAction?keyword="+hotWord.innerText,
+            //     // data: {"keyword": hotWord.innerText},
+            //     async: false,
+            //     success: function (data) {
+            //         window.location.href = "searchAction?keyword=" + hotWord.innerText;
+            //     }
+            // });
+            window.location.href = "searchAction?keyword=" + hotWord.innerText;
         }
     </script>
 
