@@ -16,7 +16,5 @@ public interface CommentRepository  extends JpaRepository<Comment,Integer> {
 
     List<Comment> findByParentCommentIdAndPostIdOrderByCommentTime(Integer parentCommentId,Integer postId);
 
-    @Query(value = "select top 20 comment.user_email as user_email,comment.user_nick_name as user_nick_name,comment.content as content,post.post_id as post_id,post.title as post_title" +
-            " from gpf_dev.comment,gpf_dev.post where post.author_email=?2 and comment.post_id=post.post_id and comment.parent_comment_id is null order by comment_time",nativeQuery = true)
-    List<Comment> findMyComments(String email);
+    Page<Comment> findByRespondentUserEmailOrderByCommentTimeDesc(String email,Pageable pageable);
 }

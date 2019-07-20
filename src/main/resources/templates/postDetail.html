@@ -402,12 +402,16 @@
     function writeComment() {
         var commentContent = $("#commentContent").val();
         var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
+        var respondentEmail='{{#postDetail.authorEmail}}{{.}}{{/postDetail.authorEmail}}'
+        var respondentNickname='{{#postDetail.authorNickName}}{{.}}{{/postDetail.authorNickName}}'
         $.ajax({
             type: "post",
             url: "writeComment",
             data: {
                 "postId": postId,
-                "commentContent": commentContent
+                "commentContent": commentContent,
+                "respondentEmail":respondentEmail,
+                "respondentNickname":respondentNickname
             },
             success: function (data) {
                 if (data === "发表成功") {
