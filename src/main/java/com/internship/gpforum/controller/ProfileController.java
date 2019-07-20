@@ -1,5 +1,6 @@
 package com.internship.gpforum.controller;
 
+import com.internship.gpforum.common.PasswordEncryption;
 import com.internship.gpforum.configure.OnlineUserList;
 import com.internship.gpforum.configure.UploadPhotoResult;
 import com.internship.gpforum.dal.entity.Post;
@@ -73,9 +74,9 @@ public class ProfileController {
     public String changePassword(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute("User");
         String email = user.getUserEmail();
-        String password = request.getParameter("password");
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
+        String password = PasswordEncryption.encryption_SHA_256( request.getParameter("password"));
+        String newPassword = PasswordEncryption.encryption_SHA_256(request.getParameter("newPassword"));
+        String confirmPassword = PasswordEncryption.encryption_SHA_256(request.getParameter("confirmPassword"));
         if (user.getUserPassword().equals(password)) {
             if (newPassword.equals(confirmPassword)) {
                 Cookie cookie = new Cookie(LoginController.COOKIE_NAME, "");
