@@ -123,12 +123,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">人脸识别</h5>
+                <h5 class="modal-title" id="faceLoginModalTitle">人脸识别</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_button()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="div-b">
+            <div class="div-b modal-body" id="faceLoginModalBody">
                 <canvas id="canvas" width="360" height="240" class="div-a"></canvas>
                 <video id="video" autoplay style="width: 360px;height: 240px" class="div-a"></video>
             </div>
@@ -206,7 +206,8 @@
 
     //异常的回调函数
     function error(error){
-        console.log("访问用户媒体设备失败：",error.name,error.message);
+        $("#faceLoginModalBody").html("<h4>\"访问用户媒体设备失败：\",error.name,error.message</h4>");
+        // console.log("访问用户媒体设备失败：",error.name,error.message);
     }
     if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
         //调用用户媒体设备，访问摄像头
@@ -301,7 +302,7 @@
 
     $("#btnSendVeriCode").click(function () {
         send();
-    })
+    });
 
     function send() {
 
