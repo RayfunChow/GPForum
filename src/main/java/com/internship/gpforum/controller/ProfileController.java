@@ -4,6 +4,7 @@ import com.internship.gpforum.configure.OnlineUserList;
 import com.internship.gpforum.configure.UploadPhotoResult;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
+import com.internship.gpforum.service.BaiduAPI;
 import com.internship.gpforum.service.PostService;
 import com.internship.gpforum.service.RedisService;
 import com.internship.gpforum.service.UserService;
@@ -29,10 +30,9 @@ import java.util.UUID;
 public class ProfileController {
 
     //    @Value("${static.upload.path}")
-    private String uploadPath = "E:/image/";
-
+    private String uploadPath = "D:/img/";
     //    @Value("${static.server.address}")
-    private String staticServerAddr = "http://127.0.0.1:7999/";
+    private String staticServerAddr = "http://127.0.0.1:8777/";
 
 
     @Autowired
@@ -104,14 +104,22 @@ public class ProfileController {
         String hobby = request.getParameter("hobby");
         String sex = request.getParameter("sex");
         String birthday = request.getParameter("birthday");
-        user.setNickName(nickName);
-        user.setBirthday(birthday);
-        user.setHobby(hobby);
-        user.setLocation(location);
-        user.setSignature(signature);
-        user.setSex(sex);
-        userService.update(user);
-        return "修改信息成功";
+        if(BaiduAPI.content_adult(nickName).equals("0")) {
+            user.setNickName(nickName);
+            user.setBirthday(birthday);
+            user.setHobby(hobby);
+            user.setLocation(location);
+            if (BaiduAPI.content_adult(signature).equals("0")) {
+                user.setSignature(signature);
+            }else{
+                return "内含敏感信息，修改失败";
+            }
+            user.setSex(sex);
+            userService.update(user);
+            return "修改信息成功";
+        }else{
+            return "内含敏感信息，修改失败";
+        }
     }
 
     @RequestMapping(value = "upload", method = RequestMethod.POST)
@@ -128,5 +136,16 @@ public class ProfileController {
         user.setAvatar(staticServerAddr + fileName);
         userService.update(user);
         return new UploadPhotoResult(true, staticServerAddr + fileName, null);
+    }
+    @RequestMapping(value = "checkupload", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkupload(HttpServletRequest request) {
+        String imgurl = request.getParameter("dataURL");
+
+        if (BaiduAPI.image(imgurl).equals("合规")) {
+            return "图片合规";
+        } else {
+            return "图片不合规";
+        }
     }
 }
