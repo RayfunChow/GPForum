@@ -2,7 +2,7 @@
 <html lang="zh-hans" class="h-100">
 <head>
     <meta charset="UTF-8">
-    <title>文章详情</title>
+    <title>{{postDetail.title}}</title>
     <!--CSS-->
     {{>layout/head}}
     <link rel="stylesheet" type="text/css" href="/css/likestyle.css"/>
@@ -27,7 +27,8 @@
                         <div class="row ml-1" style="padding: 10px">
                             <!--此处是头像和作者信息-->
                             <div class="" style="margin:0 10px 0 0;">
-                                <img src="{{#avatar}}{{.}}{{/avatar}}{{^avatar}}img/no_avatar.png{{/avatar}}" style="width: 50px;height: 50px;"
+                                <img src="{{#avatar}}{{.}}{{/avatar}}{{^avatar}}img/no_avatar.png{{/avatar}}"
+                                     style="width: 50px;height: 50px;"
                                      class="rounded-circle">
                             </div>
                             <div style="margin-top: 13px;">
@@ -63,62 +64,10 @@
                     <h2>大家都在看</h2>
                     <div class="row card" style="background: #f5f5f5; margin-top: 10px;">
                         <!--下面是热门版块信息-->
-                        <div class="card-body">
-                            <h4>
-                                <a href="#">
-                                    <span style="color: #0C0C0C">音乐区</span>
-                                </a>
-                            </h4>
-                            <p>
-                                音乐是反映人类现实生活情感的一种艺术。
-                            </p>
-                            <small>帖子数：100</small>
-                            <small class="float-right">浏览数：10000</small>
-                        </div>
-                    </div>
-                    <div class="row card" style="background: #f5f5f5; margin-top: 10px;">
-                        <!--下面是热门版块信息-->
-                        <div class="card-body">
-                            <h4>
-                                <a href="#">
-                                    <span style="color: #0C0C0C">音乐区</span>
-                                </a>
-                            </h4>
-                            <p>
-                                音乐是反映人类现实生活情感的一种艺术。
-                            </p>
-                            <small>帖子数：100</small>
-                            <small class="float-right">浏览数：10000</small>
-                        </div>
-                    </div>
-                    <div class="row card" style="background: #f5f5f5; margin-top: 10px;">
-                        <!--下面是热门版块信息-->
-                        <div class="card-body">
-                            <h4>
-                                <a href="#">
-                                    <span style="color: #0C0C0C">音乐区</span>
-                                </a>
-                            </h4>
-                            <p>
-                                音乐是反映人类现实生活情感的一种艺术。
-                            </p>
-                            <small>帖子数：100</small>
-                            <small class="float-right">浏览数：10000</small>
-                        </div>
-                    </div>
-                    <div class="row card" style="background: #f5f5f5; margin-top: 10px;">
-                        <!--下面是热门版块信息-->
-                        <div class="card-body">
-                            <h4>
-                                <a href="#">
-                                    <span style="color: #0C0C0C">音乐区</span>
-                                </a>
-                            </h4>
-                            <p>
-                                音乐是反映人类现实生活情感的一种艺术。
-                            </p>
-                            <small>帖子数：100</small>
-                            <small class="float-right">浏览数：10000</small>
+                        <div class="card-body" id="hotbox" style="padding: 10px">
+                            <h4>今日热词</h4>
+                            <a href="#" style="color: #0b2e13">外交部发言66+</a>
+                            <a href="#" style="color: #0b2e13">华为新声明33+</a>
                         </div>
                     </div>
 
@@ -169,7 +118,8 @@
                     <div class="row" style="margin-bottom: 20px">
                         <!--评论人头像-->
                         <div class="col-1">
-                            <img class="nav-item rounded-circle comment-avatar" src="" style="width:60px ;height:60px;margin-left: 20px">
+                            <img class="nav-item rounded-circle comment-avatar" src=""
+                                 style="width:60px ;height:60px;margin-left: 20px">
                         </div>
                         <!--评论人及内容-->
 
@@ -218,7 +168,7 @@
                                     "userEmail": userEmail
                                 },
                                 success: function (data) {
-                                    if (data!=""){
+                                    if (data != "") {
                                         that.attr('src', data);
                                     } else
                                         that.attr('src', "/img/no_avatar.png");
@@ -285,6 +235,10 @@
 
         getPostContent();
 
+        if ("{{isStared}}" == "1") {
+            $("body .heart").addClass("heartAnimation").attr("rel", "unlike");
+        }
+
         $('body').on("click", '.heart', function () {
 
             var A = $(this).attr("id");
@@ -293,32 +247,32 @@
             var C = parseInt($("#likeCount" + messageID).html());
             $(this).css("background-position", "");
             var D = $(this).attr("rel");
-            var postId='{{postDetail.postId}}';
-            var postTitle='{{postDetail.title}}';
+            var postId = '{{postDetail.postId}}';
+            var postTitle = '{{postDetail.title}}';
             if (D === 'like') {
                 $.ajax({
-                    type:"post",
-                    url:"star",
-                    data:{
-                        "postId":postId,
-                        "postTitle":postTitle,
-                        "starType":1
+                    type: "post",
+                    url: "star",
+                    data: {
+                        "postId": postId,
+                        "postTitle": postTitle,
+                        "starType": 1
                     },
-                    success:function () {
+                    success: function () {
                         $("#likeCount" + messageID).html(C + 1);
                     }
                 });
                 $(this).addClass("heartAnimation").attr("rel", "unlike");
             } else {
                 $.ajax({
-                    type:"post",
-                    url:"star",
-                    data:{
-                        "postId":postId,
-                        "postTitle":postTitle,
-                        "starType":-1
+                    type: "post",
+                    url: "star",
+                    data: {
+                        "postId": postId,
+                        "postTitle": postTitle,
+                        "starType": -1
                     },
-                    success:function () {
+                    success: function () {
                         $("#likeCount" + messageID).html(C - 1);
                     }
                 });
@@ -339,10 +293,10 @@
                 "userEmail": userEmail
             },
             success: function (data) {
-                if (data!=""){
-                    $(this)[0].src =data;
+                if (data != "") {
+                    $(this)[0].src = data;
                 } else
-                    $(this)[0].src ="/img/no_avatar.png";
+                    $(this)[0].src = "/img/no_avatar.png";
             }
         })
     };
@@ -358,7 +312,7 @@
                 "postId": postId
             },
             success: function (data) {
-                console.log(data)
+                console.log(data);
                 $("#postContent").html(data);
             }
 
@@ -394,7 +348,7 @@
                             " 说：" + obj.content + "<a  data-toggle=\"modal\" data-target=\"#replyModal\" href=\"#\" onclick=\"toReplyModal(" + obj.parentCommentId + ",'" + obj.userEmail + "','" + obj.userNickName + "','" + obj.commentId + "')\"> 回复</a></small></p>\n";
                     });
                     $("#childComments" + parentCommentId).html(str);
-                }else {
+                } else {
                     $("#childComments" + parentCommentId).html("<small style='color: rgba(100,99,102,0.93)'>没有更多回复了 :(</small>");
                 }
                 console.log(data);
@@ -433,16 +387,16 @@
     function writeComment() {
         var commentContent = $("#commentContent").val();
         var postId = '{{#postDetail.postId}}{{.}}{{/postDetail.postId}}';
-        var respondentEmail='{{#postDetail.authorEmail}}{{.}}{{/postDetail.authorEmail}}'
-        var respondentNickname='{{#postDetail.authorNickName}}{{.}}{{/postDetail.authorNickName}}'
+        var respondentEmail = '{{#postDetail.authorEmail}}{{.}}{{/postDetail.authorEmail}}'
+        var respondentNickname = '{{#postDetail.authorNickName}}{{.}}{{/postDetail.authorNickName}}'
         $.ajax({
             type: "post",
             url: "writeComment",
             data: {
                 "postId": postId,
                 "commentContent": commentContent,
-                "respondentEmail":respondentEmail,
-                "respondentNickname":respondentNickname
+                "respondentEmail": respondentEmail,
+                "respondentNickname": respondentNickname
             },
             success: function (data) {
                 if (data === "发表成功") {
@@ -453,5 +407,46 @@
             }
         })
     }
+
+
+    $().ready(function () {
+        initSearchBox1();
+
+        $(".first-img").each(function () {
+            var imgUrl=$(this)[0].src;
+            if (imgUrl==="http://"+document.domain+":8080/0"){
+                $(this).attr('src', "/img/gpf_nopic.png");
+            }
+        });
+
+        $(".post-time").each(function () {
+            var postTime=$(this).text();
+            $(this).text(postTime.substring(0, 16));
+        })
+    });
+
+    function initSearchBox1() {
+        $.ajax({
+            type: "post",
+            url: "/getVeryHotWord",
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                $("#hotbox").val(Object.keys(data[0])[0]);
+                var str = "";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<div class=\"row\" style=\"padding: 20px\">\n" +
+                        "<div class=\"col-sm-7\">\n" +
+                        "<a href=\"#\" style=\"color: #0b2e13\" onclick=\"searchHotWord(this)\" >" + Object.keys(data[i])[0] + "</a>\n" +
+                        "</div>\n" +
+                        "<div class=\"float-right col-sm-5\">热度：" + data[i][Object.keys(data[i])[0]] + " <span style=\"color: red\">🔥</span></div>\n" +
+                        "</div>";
+                    $("#hotbox").html(str);
+                }
+            }
+        })
+    }
+
 </script>
 </html>

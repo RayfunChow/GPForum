@@ -139,44 +139,41 @@
             <div class="tabItemContainer">
                 <li><a class="tabItemCurrent">回复我的</a></li>
                 <li><a>收到的赞</a></li>
-<!--                <li><a>收藏列表</a></li>-->
+                <!--                <li><a>收藏列表</a></li>-->
                 <li><a>浏览记录</a></li>
-<!--                <li><a>审核通知</a></li>-->
+                <!--                <li><a>审核通知</a></li>-->
 
             </div>
             <div class="tabBodyContainer">
                 <div class="tabBodyItem tabBodyCurrent">
+                    <button style="margin: 5px;float: right;" class="btn btn-outline-success"
+                            onclick="confirmAllReply()">一键确认
+                    </button>
                     <div class="Mycard" style="width: 100%;">
-
-                        {{#commentPage}}
+                        {{#commentRecords}}
                         <div class="Mycard" style="width: 100%;">
                             <div class="myGutter">
                                 <div class="card-body">
-                                    用户：<a href="/profile?userEmail={{userEmail}}">Special</a>
-                                    回复了你的帖子：
-                                    <a href="#">Special</a>
-                                    <a href="#" class=" btn btn-outline-primary btn-sm float-right">回复</a>
-                                </div>
-                                <div class="card-text row">
-                                    <div class="col-md-11">
-                                        <p class="text-overflow">&nbsp;&nbsp;&nbsp;&nbsp;With supporting text below as a
-                                            natural
-                                            lead-in to additional
-                                            content.With supporting text below as a natural lead-in to additional
-                                            content.With
-                                            supporting text below as a natural lead-in to additional content.</p>
-                                    </div>
-                                    <div class="col-md-1 ">
-                                        <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>
-                                    </div>
+                                    <button class=" btn btn-outline-primary btn-sm float-right btn-confirm-comment"
+                                            onclick="confirmReply('{{respondentUserEmail}}','{{commentId}}')"
+                                            id="comment{{commentId}}">确认
+                                    </button>
+                                    用户： <a
+                                        href="/profile?userEmail={{userEmail}}">{{respondentUserNickName}}</a>
+                                     回复了你： <a href="/postDetail?postId={{postId}}">{{content}}</a>
 
                                 </div>
+                                <div style="float: right;padding: 10px;">
+                                    <h6 class="card-subtitle mb-2 text-muted message-date">{{commentTime}}</h6>
+                                </div>
+
+
                             </div>
                         </div>
-                        {{/commentPage}}
-                        {{^commentPage}}
+                        {{/commentRecords}}
+                        {{^commentRecords}}
                         <h4 style="margin: 20px">未收到新的评论 :(</h4>
-                        {{/commentPage}}
+                        {{/commentRecords}}
 
                     </div>
                 </div>
@@ -237,105 +234,6 @@
                     <h4 style="margin: 20px">你还没有浏览过帖子 :(</h4>
                     {{/browseRecords}}
                 </div>
-                <!--<div class="Mycard" style="padding: 10px 20px 10px 20px">-->
-                <!--<div class="row myGutter">-->
-                <!--<div class="col-sm-2">-->
-                <!--<img src="" style="height: 100%;width: 100%">-->
-                <!--</div>-->
-                <!--<div class="col-sm-10">-->
-                <!--<a href="#" style="color: #0b2e13"><h5>《狮子王》的三个泪点，我都看哭了！</h5></a>-->
-                <!--<p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，-->
-                <!--由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>-->
-                <!--<div class="row">-->
-                <!--<div class="col-8"></div>-->
-                <!--<a href="#" class="col-2">作者</a>-->
-                <!--<div class="col-2">今天9:23</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-<!--                <div class="tabBodyItem">-->
-<!--                    <div class="Mycard" style="width: 100%;">-->
-<!--                        <div class="myGutter ">-->
-<!--                            <div class="card-body row">-->
-<!--                                <div class="col-md-11">-->
-<!--                                    <a href="#">用户名：Special</a>-->
-<!--                                    申请成为-->
-<!--                                    <a href="#">板块：Special</a>-->
-<!--                                    的版主-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1 ">-->
-<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-10">-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
-<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
-<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                    <div class="Mycard" style="width: 100%;">-->
-<!--                        <div class="myGutter ">-->
-<!--                            <div class="card-body row">-->
-<!--                                <div class="col-md-11">-->
-<!--                                    <a href="#">用户名：Special</a>-->
-<!--                                    申请成为-->
-<!--                                    <a href="#">板块：Special</a>-->
-<!--                                    的版主-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1 ">-->
-<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-10">-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
-<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
-<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                    <div class="Mycard" style="width: 100%;">-->
-<!--                        <div class="myGutter ">-->
-<!--                            <div class="card-body row">-->
-<!--                                <div class="col-md-11">-->
-<!--                                    <a href="#">用户名：Special</a>-->
-<!--                                    申请成为-->
-<!--                                    <a href="#">板块：Special</a>-->
-<!--                                    的版主-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1 ">-->
-<!--                                    <h6 class="card-subtitle mb-2 text-muted ">04-13</h6>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-10">-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
-<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">同意</a>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-1" style="margin-bottom: 5px">-->
-<!--                                    <a href="#" class=" btn btn-outline-primary btn-sm">拒接</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-
-<!--                </div>-->
             </div>
         </div>
     </div>
@@ -377,10 +275,27 @@
                 "id": id
             },
             success: function () {
-                $("#" + id).removeClass("btn-outline-primary");
-                $("#" + id).addClass("btn-success");
-                $("#" + id).addClass("disabled");
-                $("#" + id).html("<span class=\"oi oi-check\"> </span> 已确认！")
+                $("#star" + id).removeClass("btn-outline-primary");
+                $("#star" + id).addClass("btn-success");
+                $("#star" + id).addClass("disabled");
+                $("#star" + id).html("<span class=\"oi oi-check\"> </span> 已确认！")
+            }
+        })
+    }
+
+    function confirmReply(replyEmail, commentId) {
+        $.ajax({
+            type: "post",
+            url: "confirmReply",
+            data: {
+                "replyEmail": replyEmail,
+                "commentId": commentId
+            },
+            success: function () {
+                $("#comment" + commentId).removeClass("btn-outline-primary");
+                $("#comment" + commentId).addClass("btn-success");
+                $("#comment" + commentId).addClass("disabled");
+                $("#comment" + commentId).html("<span class=\"oi oi-check\"> </span> 已确认！")
             }
         })
     }
@@ -391,7 +306,7 @@
         // var strGMT = dateStr[0] + " " + dateStr[1] + " " + dateStr[2] + " " + dateStr[5] + " " + dateStr[3] + " GMT+0800";
         // var date = new Date(Date.parse(strGMT));
         var date = new Date(dateString);
-        date=new Date(date.valueOf()-60* 60 * 14000);
+        date = new Date(date.valueOf() - 60 * 60 * 14000);
 
         var y = date.getFullYear();
         var m = date.getMonth() + 1;
@@ -417,6 +332,20 @@
                 $(".btn-confirm-star").addClass("btn-success");
                 $(".btn-confirm-star").addClass("disabled");
                 $(".btn-confirm-star").html("<span class=\"oi oi-check\"> </span> 已确认！")
+            }
+        })
+    }
+
+    function confirmAllReply() {
+        $.ajax({
+            type: "post",
+            url: "confirmAllReply",
+            dataType: "text",
+            success: function () {
+                $(".btn-confirm-comment").removeClass("btn-outline-primary");
+                $(".btn-confirm-comment").addClass("btn-success");
+                $(".btn-confirm-comment").addClass("disabled");
+                $(".btn-confirm-comment").html("<span class=\"oi oi-check\"> </span> 已确认！")
             }
         })
     }

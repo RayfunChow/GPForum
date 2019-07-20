@@ -136,12 +136,12 @@
                 data = JSON.parse(data);
                 $("#hotbox").val(Object.keys(data[0])[0]);
                 var str = "";
-                for (var i = 1; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     str += "<div class=\"row\" style=\"padding: 20px\">\n" +
                         "<div class=\"col-sm-8\">\n" +
                         "<a href=\"#\" style=\"color: #0b2e13\" onclick=\"searchHotWord(this)\" >" + Object.keys(data[i])[0] + "</a>\n" +
                         "</div>\n" +
-                        "<div class=\"float-right col-sm-4\">热度：" + data[i][Object.keys(data[i])[0]] + " 🔥</div>\n" +
+                        "<div class=\"float-right col-sm-4\">热度：" + data[i][Object.keys(data[i])[0]] + " <span style=\"color: red\">🔥</span></div>\n" +
                         "</div>";
                     $("#hotbox").html(str);
                 }

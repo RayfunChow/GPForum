@@ -41,7 +41,7 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String Start(HttpServletRequest request, ModelMap modelMap) {
-        Set<Object> tops = redisTemplate.opsForZSet().reverseRange("scores", 0, 6);
+        Set<Object> tops = redisTemplate.opsForZSet().reverseRange("scores", 0, 4);
         Iterator<Object> topArray = tops.iterator();
         List<Post> topPosts = new ArrayList<>();
         while (topArray.hasNext()) {

@@ -166,7 +166,11 @@ public class PostController {
     public String deletePost(HttpServletRequest request) {
         Integer postId = Integer.parseInt(request.getParameter("postId"));
         try {
-            commentService.deleteAllByPostId(postId);
+//            commentService.deleteAllByPostId(postId);
+            redisTemplate.opsForZSet().remove("scores",postId+"");
+            redisTemplate.opsForHash().delete("stars",postId+"");
+            redisTemplate.opsForHash().delete("browseNumber",postId+"");
+            redisTemplate.delete(postId+"_starRecords");
             postService.deleteByPostId(postId);
         } catch (Exception e) {
             e.printStackTrace();

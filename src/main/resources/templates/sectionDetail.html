@@ -5,19 +5,30 @@
     <!---->
     <link rel="stylesheet" href="/layui/css/layui.css">
     {{>layout/head}}
-    <title>{{#sectionDetail}}{{sectionDetail.sectionName}}{{/sectionDetail}}</title>
+    <title>"{{#sectionDetail}}{{sectionDetail.sectionName}}{{/sectionDetail}}" 版</title>
+
+    <style>
+        .section-summary{
+            width: 100%;/* 要显示文字的宽度 */
+            float: left;/* 左对齐，不设置的话只在IE下好用 */
+            overflow: hidden; /* 超出的部分隐藏起来 */
+            white-space: nowrap;/* 不显示的地方用省略号...代替 */
+            text-overflow: ellipsis;/* 支持 IE */
+            -o-text-overflow: ellipsis;/* 支持 Opera */
+        }
+    </style>
 </head>
 <body class="d-flex flex-column h-100" style="background: #eff0ea">
 {{>layout/navbar}}
 
 <main role="main" class="flex-shrink-0">
-    <div class="row" style="margin-top: 80px">
+    <div class="row" style="margin-top: 40px">
         <div class="col-2"></div>
         <div class="col-10">
 
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-7 row ml-1">
-                    <h3>"{{#sectionDetail}}{{sectionDetail.sectionName}}{{/sectionDetail}}"版</h3>
+                    <h3>"{{#sectionDetail}}{{sectionDetail.sectionName}}{{/sectionDetail}}" 版</h3>
 
                     <div class="btn-group ml-auto mr-1 float-right" id="buttonGroup">
                         <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button"
@@ -53,7 +64,7 @@
                             </div>
                             <div style="margin: 10px">
                                 <h4><a href="/postDetail?postId={{postId}}" style="color: #0b2e13">{{title}}</a></h4>
-                                <p>{{summary}}</p>
+                                <p >{{summary}}</p>
                             </div>
                         </div>
 
@@ -78,18 +89,19 @@
                     <div class="card-body" style="padding: 10px;text-align: center">
                         {{#sectionDetail}}
                         <h3 style="text-align: center;max-height: 200px">{{sectionName}}</h3>
-                        <h4 class="container" style="margin-bottom: 50px">
+                        <h6 class="container section-summary" style="margin-bottom: 20px">
                             {{description}}
-                        </h4>
+                        </h6>
                         {{/sectionDetail}}
                         <hr>
                         <p>
                             版主
                         </p>
+                        <br>
                         {{#moderators}}
                         <div class="row ml-1" style="padding: 0 10px 0 10px; margin: auto auto 20px;">
                             <div class="" style="margin:0 15px 0 0;">
-                                <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=80f0e4b4a61ea8d39e2f7c56f6635b2b/267f9e2f07082838ac3a8f1bb899a9014c08f18e.jpg"
+                                <img src="{{moderatorAvatar}}"
                                      style="width: 50px;height: 50px;"
                                      class="rounded-circle">
                             </div>

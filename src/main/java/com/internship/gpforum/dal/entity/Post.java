@@ -81,7 +81,7 @@ public class Post {
         if(element!=null){
             this.firstImg=element.attr("src");
         }else{
-            this.firstImg="";
+            this.firstImg="0";
         }
     }
 

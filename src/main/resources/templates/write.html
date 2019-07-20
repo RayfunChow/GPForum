@@ -74,7 +74,8 @@
                 </div>
 
                 <div class="col-sm-2">
-                    <P style="float: left;">本帖将发表到：<a href="#">{{sectionName}}</a></P>
+                    <P style="float: left;">本帖将发表到：<a
+                            href="/sectionDetail?sectionName={{sectionName}}">{{sectionName}}</a></P>
                 </div>
 
                 <div class="col-sm-5"></div>
@@ -156,7 +157,10 @@
             dataType: "json",
             success: function (data) {
                 alert(data);
-                window.location.href="profile";
+                if (data !== "内容涉及敏感词，请重试！") {
+                    window.location.href = "profile";
+                }
+
             }
         });
     }

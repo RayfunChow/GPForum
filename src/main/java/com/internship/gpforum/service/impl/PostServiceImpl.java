@@ -103,9 +103,6 @@ public class PostServiceImpl implements PostService {
         post.setSummary(summary);
         post.setContent(content);
         post.setFirstImg(content);
-        if (post.getFirstImg().equals("")) {
-            post.setFirstImg("0");
-        }
         post.setInvisible(invisible);
         post.setPostStatus(post_status);
         post.setLastEditTime(lastEditTime);
