@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.internship.gpforum.dal.PostRepository;
 import com.internship.gpforum.dal.StarRepository;
 import com.internship.gpforum.dal.entity.Post;
+import com.internship.gpforum.dal.entity.Star;
 import com.internship.gpforum.service.PostService;
 import org.ansj.splitWord.analysis.ToAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,7 @@ public class PostServiceImpl implements PostService {
     }
 
 
+
     @Override
     public void update(Integer id, Integer number, Integer type) {
         Post post = postRepository.findByPostId(id);
@@ -84,6 +86,14 @@ public class PostServiceImpl implements PostService {
         postRepository.saveAndFlush(post);
     }
 
+    @Override
+    public boolean isStared(Integer id, String email) {
+        Star star=starRepository.findByPostIdAndUserEmail(id,email);
+        if(star==null) {
+            return false;
+        }else
+            return true;
+    }
 
     public void writeContent(String author_email, String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {
         Post post = new Post();

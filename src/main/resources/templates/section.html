@@ -9,6 +9,22 @@
     <link href="/css/card.css" rel="stylesheet"/>
 
 </head>
+
+<style>
+
+    .img-size{
+
+        width: 2000px;
+        height: 400px;
+        object-fit: cover;
+
+    }
+    .img-background{
+        background: center center no-repeat;
+        background-size: 100%;
+    }
+</style>
+
 <body style="background: #eff0ea" class="d-flex flex-column h-100">
 {{>layout/navbar}}
 
@@ -21,15 +37,15 @@
             <li data-target="#demo" data-slide-to="2"></li>
         </ul>
         <!-- 轮播图片 -->
-        <div class="carousel-inner " style="width: 4000px;height:450px">
-            <div class="carousel-item active">
-                <img src="../img/long.jpg">
+        <div class="carousel-inner " style="width: 4000px;height:400px">
+            <div class="carousel-item active img-background" >
+                <img class="img-size" src="/img/bg1.jpg">
             </div>
-            <div class="carousel-item">
-                <img src="../img/long.jpg">
+            <div class="carousel-item img-background">
+                <img class="img-size" src="/img/bg2.jpg">
             </div>
-            <div class="carousel-item">
-                <img src="../img/long.jpg">
+            <div  class="carousel-item img-background">
+                <img class="img-size" src="/img/bg3.jpg">
             </div>
         </div>
         <!-- 左右切换按钮 -->

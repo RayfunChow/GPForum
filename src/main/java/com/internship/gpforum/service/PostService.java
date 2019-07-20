@@ -31,4 +31,6 @@ public interface PostService {
 
     void update(Integer id,Integer number,Integer type);
 
+    boolean isStared(Integer id,String email);
+
 }
