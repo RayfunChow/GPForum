@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-hans" class="h-100">
 <head>
-    <title>xxx的个人主页</title>
+    <title>{{#User.nickName}}{{.}}{{/User.nickName}}{{^User.nickName}}{{/User.nickName}}的个人主页</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
     {{>layout/head}}
 
@@ -23,7 +23,7 @@
 
                     {{#postPage}}
                     <div class="card" style="padding: 10px 20px 10px 20px">
-                        <a href="#" style="color: #0b2e13"><h4>{{title}}</h4></a>
+                        <a href="/postDetail?postId={{postId}}" style="color: #0b2e13"><h4>{{title}}</h4></a>
                         <p>{{summary}}
                             <a href="/postDetail?postId={{postId}}" style="color:#7a5e3f">查看原文</a></p>
                         <div class="row">
