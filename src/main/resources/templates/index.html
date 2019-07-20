@@ -43,72 +43,75 @@
         <h4>热门文章</h4>
         <hr>
         <div>
+            {{#topPosts}}
             <div class="card" style="padding: 10px 20px 10px 20px">
                 <div class="row">
                     <div class="col-sm-2">
                         <img src="" style="height: 100%;width: 100%">
                     </div>
                     <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"><h4>《狮子王》的三个泪点，我都看哭了！</h4></a>
-                        <p>《狮子王》是由华特·迪士尼影片公司出品的动画电影，
-                            由罗杰·艾勒斯、罗伯·明可夫联合执导。</p>
+                        <a href="/postDetail?postId={{postId}}" style="color: #0b2e13"><h4>{{title}}</h4></a>
+                        <p>{{summary}}</p>
                         <div class="row">
                             <div class="col-8"></div>
                             <div class="col-2">
-                                <small>作者</small>
+                                <small>作者：{{authorNickName}}</small>
                             </div>
                             <div class="col-2">
-                                <small>今天9:23</small>
+                                <small>{{lastEditTime}}</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <br>
-            <div class="card" style="padding: 10px 20px 10px 20px">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
-                    </div>
-                    <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"><h4>习近平讲述的故事｜这个小县城不简单</h4></a>
-                        <p>山西省朔州市右玉县
-                            位于山西和内蒙古交界
-                            这个小县城
-                            曾被习近平总书记多次提及</p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <div class="col-2">
-                                <small>作者</small>
-                            </div>
-                            <div class="col-2">
-                                <small>今天9:23</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="card" style="padding: 10px 20px 10px 20px">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img src="" style="height: 100%;width: 100%">
-                    </div>
-                    <div class="col-sm-10">
-                        <a href="#" style="color: #0b2e13"><h4>中国联通辟谣"不支持华为</h4></a>
-                        <p>目前，中国联通官方微博发布微博，请进行置顶，对实施造谣的自媒体予以曝光和强烈的谴责</p>
-                        <div class="row">
-                            <div class="col-8"></div>
-                            <div class="col-2">
-                                <small>作者</small>
-                            </div>
-                            <div class="col-2">
-                                <small>今天9:23</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{/topPosts}}
+            {{^topPosts}}
+            {{/topPosts}}
+            <!--<div class="card" style="padding: 10px 20px 10px 20px">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-2">-->
+                        <!--<img src="" style="height: 100%;width: 100%">-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-10">-->
+                        <!--<a href="#" style="color: #0b2e13"><h4>习近平讲述的故事｜这个小县城不简单</h4></a>-->
+                        <!--<p>山西省朔州市右玉县-->
+                            <!--位于山西和内蒙古交界-->
+                            <!--这个小县城-->
+                            <!--曾被习近平总书记多次提及</p>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-8"></div>-->
+                            <!--<div class="col-2">-->
+                                <!--<small>作者</small>-->
+                            <!--</div>-->
+                            <!--<div class="col-2">-->
+                                <!--<small>今天9:23</small>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<br>-->
+            <!--<div class="card" style="padding: 10px 20px 10px 20px">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-2">-->
+                        <!--<img src="" style="height: 100%;width: 100%">-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-10">-->
+                        <!--<a href="#" style="color: #0b2e13"><h4>中国联通辟谣"不支持华为</h4></a>-->
+                        <!--<p>目前，中国联通官方微博发布微博，请进行置顶，对实施造谣的自媒体予以曝光和强烈的谴责</p>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-8"></div>-->
+                            <!--<div class="col-2">-->
+                                <!--<small>作者</small>-->
+                            <!--</div>-->
+                            <!--<div class="col-2">-->
+                                <!--<small>今天9:23</small>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
         </div>
     </div>

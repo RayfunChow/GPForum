@@ -59,5 +59,7 @@ public class MessageServiceImpl implements MessageService {
             redisTemplate.opsForHash().delete("starRecords", id + "", user.getUserEmail());
         }
         redisTemplate.opsForHash().increment("stars", id + "", starType);
+        Double score=starType*0.8;
+        redisTemplate.opsForZSet().incrementScore("scores",id+"",score);
     }
 }

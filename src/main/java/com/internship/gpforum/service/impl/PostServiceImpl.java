@@ -96,16 +96,20 @@ public class PostServiceImpl implements PostService {
         post.setSummary(summary);
         post.setContent(content);
         post.setFirstImg(content);
+        if(post.getFirstImg().equals("")){
+            post.setFirstImg("0");
+        }
         post.setInvisible(invisible);
         post.setPostStatus(post_status);
         post.setLastEditTime(lastEditTime);
-        post.setAuthorNickName(author_nickname);
+        post.setAuthorNickName(authorNickname);
         post.setBrowseNumber(0);
         post.setStarNumber(0);
         postRepository.save(post);
         Integer id=post.getPostId();
         redisTemplate.opsForHash().put("stars",id+"",0);
         redisTemplate.opsForHash().put("browseNumber",id+"",0);
+        redisTemplate.opsForZSet().add("scores",post.getPostId()+"",0);
     }
 
     @Override

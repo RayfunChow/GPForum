@@ -166,7 +166,8 @@ public class PostController {
         }
         return "删除成功";
     }
-  
+
+    @ResponseBody
     @RequestMapping(value = "getPostContent", method = RequestMethod.POST)
     public String getPostContent(HttpServletRequest request) {
 

@@ -104,9 +104,11 @@ public class UserServiceImpl implements UserService {
         if(redisTemplate.opsForHash().hasKey(email+"_records",browseUrl)) {
            redisTemplate.opsForHash().delete(email+"_records",browseUrl);
         }
-        redisTemplate.opsForHash().put(email+"_records",browseUrl,json.toJSONString(browseRecord));
         if(!redisTemplate.opsForHash().hasKey(email+"_records",browseUrl)) {
             redisTemplate.opsForHash().increment("browseNumber", id + "", 1);
+            Double score=0.2;
+            redisTemplate.opsForZSet().incrementScore("scores",id+"",score);
         }
+        redisTemplate.opsForHash().put(email+"_records",browseUrl,json.toJSONString(browseRecord));
     }
 }
