@@ -85,7 +85,14 @@ public class PostServiceImpl implements PostService {
         postRepository.saveAndFlush(post);
     }
 
-
+    @Override
+    public boolean isStared(Integer id, String email) {
+        Star star=starRepository.findByPostIdAndUserEmail(id,email);
+        if(star==null) {
+            return false;
+        }else
+            return true;
+    }
 
 
     public void writeContent(String author_email,String authorNickname, String section_name, String title, String summary, String content, boolean invisible, String post_status, Date lastEditTime) {

@@ -41,6 +41,15 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String Start(HttpServletRequest request, ModelMap modelMap) {
+        Set<Object> tops = redisTemplate.opsForZSet().reverseRange("scores", 0, 6);
+        Iterator<Object> topArray = tops.iterator();
+        List<Post> topPosts = new ArrayList<>();
+        while (topArray.hasNext()) {
+            Integer id = Integer.valueOf(topArray.next().toString());
+            Post post = postService.getDetail(id);
+            topPosts.add(post);
+        }
+        modelMap.put("topPosts",topPosts);
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -61,23 +70,12 @@ public class IndexController {
                             modelMap.put("User", user);
                             OnlineUserList.put(email, request.getSession());
                         }
-                        Set<Object> tops = redisTemplate.opsForZSet().reverseRange("scores", 0, 6);
-                        Iterator<Object> topArray = tops.iterator();
-                        List<Post> topPosts = new ArrayList<>();
-                        while (topArray.hasNext()) {
-                            Integer id = Integer.valueOf(topArray.next().toString());
-                            Post post = postService.getDetail(id);
-                            topPosts.add(post);
-                        }
-                        modelMap.put("topPosts",topPosts);
                         return "index";
-                    } else {
-                        return "login";
                     }
                 }
             }
         }
-        return "login";
+        return "index";
 
     }
 
