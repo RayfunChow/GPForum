@@ -150,7 +150,7 @@
                                 <p>{{summary}}</p>
                                 <div class="row">
                                     <div class="col-5"></div>
-                                    作者：<a href="profile?userEmail={{authorNickName}}" class="col-3">{{authorNickName}}</a>
+                                    作者：<a href="profile?userEmail={{authorEmail}}" class="col-3">{{authorNickName}}</a>
                                     <a class="col-3 search-time">{{lastEditTime}}</a>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@
                                 <div class="col-md-10">
                                     <img src="{{#avatar}}{{.}}{{/avatar}}{{^avatar}}/img/no_avatar.png{{/avatar}}" class="rounded-circle"
                                          style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
-                                    用户名：<a href="profile?userEmail={{userEmail}}" style="margin-left: 15px">{{nickName}}</a>
+                                    &nbsp;&nbsp;用户名：<a href="profile?userEmail={{userEmail}}"> {{nickName}}</a>
                                 </div>
                                 <div class="col-md-2 container">
                                     <p class="card-subtitle mb-2 text-muted search-time" style="padding-top: 40px">

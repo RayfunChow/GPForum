@@ -142,8 +142,8 @@
                                 </p>
                                 <div class="container" id="childComments{{commentId}}">
                                     <small>
-                                        <button class="btn btn-sm btn-outline-secondary"
-                                                onclick="getChildComments({{commentId}})" value="显示回复">
+                                        <button class="btn btn-sm btn-outline-secondary show-reply" onclick="getChildComments({{commentId}})"
+                                                value="{{commentId}}" hidden>
                                             <span class="oi oi-caret-bottom"></span> 显示回复
                                         </button>
                                     </small>
@@ -234,6 +234,10 @@
     $(document).ready(function () {
 
         getPostContent();
+
+        $(".show-reply").each(function () { // 里面放class名字 把你想遍历的标签 class名改成一样的
+            getChildComments($(this).val()) //值
+        });
 
         $(".post-time").each(function () { // 里面放class名字 把你想遍历的标签 class名改成一样的
             var date = $(this).text();
