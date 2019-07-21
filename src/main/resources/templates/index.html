@@ -68,13 +68,13 @@
                         <a href="/postDetail?postId={{postId}}" style="color: #0b2e13"><h4>{{title}}</h4></a>
                         <p>{{summary}}</p>
                         <div class="row">
-                            <div class="col-3"></div>
-                            <div class="col-1">❤ {{starNumber}}</div>
-                            <div class="col-2">浏览数：{{browseNumber}}</div>
-                            <div class="col-2">
+                            <div class="col-4"></div>
+                            <div style="width: 50px">❤ {{starNumber}}</div>
+                            <div style="width: 100px">浏览数：{{browseNumber}}</div>
+                            <div style="width: 150px">
                                 作者：<a href="profile?userEmail={{authorEmail}}">{{authorNickName}}</a>
                             </div>
-                            <div class="col-3">
+                            <div style="width: 150px" class="index-time">
                                 {{lastEditTime}}
                             </div>
                         </div>
@@ -122,9 +122,9 @@
             }
         });
 
-        $(".post-time").each(function () {
-            var postTime=$(this).text();
-            $(this).text(postTime.substring(0, 16));
+        $(".index-time").each(function () {
+            var time=$(this).text();
+            $(this).text(time.trim().substring(0, 16));
         })
     });
 
