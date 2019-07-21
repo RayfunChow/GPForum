@@ -30,17 +30,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User signIn(String email, String password) {
         User user;
-        try {
-            String result=String.valueOf(redisTemplate.opsForHash().get("userList",email));
-            user= json.parseObject(result,User.class);
-            if(user!=null) {
+        if(redisTemplate.opsForHash().hasKey("userList",email)) {
+            String result = String.valueOf(redisTemplate.opsForHash().get("userList", email));
+            user = json.parseObject(result, User.class);
+            if (user.getUserPassword().equals(password)) {
                 return user;
+            }else {
+                return null;
             }
-        }catch (Exception e) {
-           e.printStackTrace();
+        }else {
+            user = userRepository.findByUserEmailAndUserPassword(email, password);
+            return user;
         }
-        user = userRepository.findByUserEmailAndUserPassword(email, password);
-        return user;
     }
 
     @Override

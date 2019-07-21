@@ -149,31 +149,33 @@
             }
         });
 
+        $(".delete-post").click(function () {
+            if(confirm("确认删除该帖吗？")){
+                var postId = this.getAttribute("btnPostId");
+                $.ajax({
+                    type: "post",
+                    url: "deletePost",
+                    data: {
+                        "postId": postId
+                    },
+                    success: function (data) {
+                        if(data=="删除成功") {
+                            // alert("删除成功");
+                            window.location.reload();
+                        }else{
+                            alert("删除失败");
+                        }
+                    }
+                })
+            }
+        });
+
     });
 
 </script>
 <script>
 
-    $(".delete-post").click(function () {
-        if(confirm("确认删除该帖吗？")){
-            var postId = this.getAttribute("btnPostId");
-            $.ajax({
-                type: "post",
-                url: "deletePost",
-                data: {
-                    "postId": postId
-                },
-                success: function (data) {
-                    if(data=="删除成功") {
-                        // alert("删除成功");
-                        window.location.reload();
-                    }else{
-                        alert("删除失败");
-                    }
-                }
-            })
-        }
-    });
+
 
     layui.use('laypage', function () {
         var laypage = layui.laypage;
@@ -249,6 +251,7 @@
 
             }else if(userEmail != deletePostDivs[i].getAttribute("btnAuthorEmail")){
                 deletePostDivs[i].disabled=true;
+                // deletePostDivs[i].attr("disabled",true);
             }
         }
 

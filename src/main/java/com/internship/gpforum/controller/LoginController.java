@@ -56,7 +56,7 @@ public class LoginController {
         String password = request.getParameter("password");
 //        System.out.println(email+"\t"+password);
          User user=userService.signIn(email, PasswordEncryption.encryption_SHA_256(password));
-        if (user != null&&user.getUserPassword().equals(PasswordEncryption.encryption_SHA_256(password))) { //用户名密码正确
+        if (user != null) { //用户名密码正确
             HttpSession newSession = request.getSession();
             if (OnlineUserList.containsKey(email)) {  //判断该账户是否已登录
                 HttpSession session = OnlineUserList.get(email);
