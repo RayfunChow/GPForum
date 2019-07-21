@@ -7,7 +7,6 @@ import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.ModeratorService;
 import com.internship.gpforum.service.PostService;
 import com.internship.gpforum.service.SectionService;
-import com.internship.gpforum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,8 +31,6 @@ public class SectionController {
     @Autowired
     private ModeratorService moderatorService;
 
-
-
     @RequestMapping("section")
     public String toSection(HttpServletRequest request,ModelMap modelMap){
         User user = (User)request.getSession().getAttribute("User");
@@ -44,11 +41,11 @@ public class SectionController {
     }
 
     @RequestMapping("sectionDetail")
-    public String toSectionDetail(HttpServletRequest request, ModelMap modelMap, String sectionName, @RequestParam(required = false, defaultValue = "1") Integer pageIndex, @RequestParam(required = false, defaultValue = "10") Integer pageSize){
+    public String toSectionDetail(HttpServletRequest request, ModelMap modelMap, String sectionName,@RequestParam(required = false, defaultValue = "lastEditTime")String sortType, @RequestParam(required = false, defaultValue = "1") Integer pageIndex, @RequestParam(required = false, defaultValue = "5") Integer pageSize){
         User user = (User)request.getSession().getAttribute("User");
         modelMap.put("User",user);
-        PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize);
-        Page<Post> postPage=postService.getByEdiTime(sectionName,pageRequest);
+        PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize,new Sort(Sort.Direction.DESC,sortType));
+        Page<Post> postPage=postService.getSectionDetail(sectionName,pageRequest);
         modelMap.put("postPage",postPage);
         Section sectionDetail=sectionService.sectionDetail(sectionName);
         modelMap.put("sectionDetail",sectionDetail);

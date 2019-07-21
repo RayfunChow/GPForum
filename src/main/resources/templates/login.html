@@ -92,11 +92,37 @@
                                         <label>验证码</label>
 
                                         <input type="text" name="veriCode" class="lowin-input col-5" id="veriCode">
-                                        <a class="lowin-btn col-5" id="btnSendVeriCode"
+                                        <button class="lowin-btn col-5 clock" id="sendVeriCode" onclick="count()"
                                            style="margin-top: 15px;margin-left: 46px">
                                             发送验证码
-                                        </a>
+                                        </button>
                                     </div>
+                                    <script>
+
+                                            function count() {
+                                                var t = 30;
+                                                var time = document.getElementsByClassName("clock")[0];
+                                                time.disabled=true;
+
+                                                // function fun() {
+                                                //     t--;
+                                                //     time.innerHTML = t + "秒后重试";
+                                                //     if(t <= 0) {
+                                                //         clearInterval(inter);
+                                                //         time.disabled=false;
+                                                //     }
+                                                // }
+
+                                                var inter = setInterval(function () { t--;
+                                                    time.innerHTML = t + "秒后重试";
+                                                    if(t <= 0) {
+                                                        clearInterval(inter);
+                                                        time.disabled=false;
+                                                        time.innerHTML = "发送验证码";
+                                                    } }, 1000);
+                                            }
+
+                                    </script>
                                     <button class="lowin-btn" style="margin-top: 15px;" type="button"
                                             onclick="signup()">
                                         注册
@@ -300,7 +326,7 @@
         })
     });
 
-    $("#btnSendVeriCode").click(function () {
+    $("#sendVeriCode").click(function () {
         send();
     });
 

@@ -38,9 +38,9 @@
                             <span class="oi oi-sort-descending" id="showSortBy">&nbsp;按时间倒序</span>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">&nbsp;按时间倒序</a>
-                            <a class="dropdown-item" href="#">&nbsp;按点赞数倒序</a>
-                            <a class="dropdown-item" href="#">&nbsp;按浏览数倒序</a>
+                            <a class="dropdown-item" href="/sectionDetail?sortType=lastEditTime&sectionName={{sectionDetail.sectionName}}">&nbsp;按时间倒序</a>
+                            <a class="dropdown-item" href="/sectionDetail?sortType=starNumber&sectionName={{sectionDetail.sectionName}}">&nbsp;按点赞数倒序</a>
+                            <a class="dropdown-item" href="/sectionDetail?sortType=browseNumber&sectionName={{sectionDetail.sectionName}}">&nbsp;按浏览数倒序</a>
                         </div>
                         <script>
                             $(".dropdown-menu a").click(function () {
@@ -71,10 +71,11 @@
                         <div class="col-auto ">
 
                             <div class="row">
-                                <div class="col-6"></div>
-                                <div class="col-4" name="lastEditTimes">{{lastEditTime}}</div>
-                                <div class="col-1"><input type="image" src="/svg/heart.svg"
-                                                          style="height: 20px;width: 20px"> {{starNumber}}</div>
+                                <div class="col-1"></div>
+                                <div class="col-3 post-time" name="lastEditTimes">{{lastEditTime}}</div>
+                                <div class="col-3">作者：<a href="/profile?userEmail={{authorEmail}}"> {{authorNickName}}</a></div>
+                                <div class="col-2">浏览数：{{browseNumber}}</a></div>
+                                <div class="col-1">❤ {{starNumber}}</div>
                                 <div class="col-1"><input type="image" class="delete-post" id="" src="/svg/trash.svg"
                                                           name="btnDeletePost" btnPostId="{{postId}}" btnAuthorEmail="{{authorEmail}}" style="height: 20px;width: 20px"></div>
                             </div>
@@ -149,6 +150,11 @@
             }
         });
 
+        $(".post-time").each(function () {
+            var postTime=$(this).text();
+            $(this).text(postTime.substring(0, 16));
+        });
+
         $(".delete-post").click(function () {
             if(confirm("确认删除该帖吗？")){
                 var postId = this.getAttribute("btnPostId");
@@ -183,34 +189,15 @@
         //执行一个laypage实例
         laypage.render({
             elem: 'pagination' //分页控件id
-            , limit: 10 //每页显示的条数
-            , count: {
-        {
-            postPage.totalElements
-        }
-    } //数据总数，从服务端得到
-    ,
-        groups: 5
-            , curr
-    :
-        Number({
-        {
-            postPage.number
-        }
-    }
-        +1
-    )
-    ,
-        jump:function (obj, first) {//当点击分页的页码，切换后的调用该函数
+            , limit: 5 //每页显示的条数
+            , count: {{postPage.totalElements}} //数据总数，从服务端得到
+            , groups: 5
+            , curr: Number({{postPage.number}}+1)
+            , jump:function (obj, first) {//当点击分页的页码，切换后的调用该函数
             if (!first) {
                 //改变浏览器的地址
-                location.href = "sectionDetail?pageIndex=" + obj.curr + '&sectionName=' + '{{sectionDetail.sectionName}}';
-            }
-        }
-    ,
-        layout:['count', 'prev', 'page', 'next', 'skip']
-    })
-        ;
+                location.href = "sectionDetail?pageIndex=" + obj.curr + '&sectionName=' + '{{sectionDetail.sectionName}}';}},
+            layout:['count', 'prev', 'page', 'next', 'skip']});
     });
 
     $(function () {

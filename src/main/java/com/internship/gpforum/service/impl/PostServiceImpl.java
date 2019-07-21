@@ -38,19 +38,19 @@ public class PostServiceImpl implements PostService {
 
     private static String HOTWORDS = "";
 
-    static String FILEPATH = "C:\\Users\\Rayfun\\Desktop\\post_content.txt";
+    static String FILEPATH = "\\root\\hotword\\";
 
-    public Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest) {
-        Page<Post> postList = postRepository.findBySectionNameAndInvisibleOrderByLastEditTimeDesc(sectionName, pageRequest, false);
+    public Page<Post> getSectionDetail(String sectionName, PageRequest pageRequest) {
+        Page<Post> postList = postRepository.findBySectionNameAndInvisible(sectionName, pageRequest, false);
 
         return postList;
     }
 
-    @Override
-    public Page<Post> getByStarNumber(String sectionName, PageRequest pageRequest) {
-        Page<Post> postList = postRepository.findBySectionNameAndInvisibleOrderByStarNumberDesc(sectionName, pageRequest, false);
-        return postList;
-    }
+//    @Override
+//    public Page<Post> getByStarNumber(String sectionName, PageRequest pageRequest) {
+//        Page<Post> postList = postRepository.findBySectionNameAndInvisibleOrderByStarNumberDesc(sectionName, pageRequest, false);
+//        return postList;
+//    }
 
     @Override
     public Post getDetail(Integer postId) {
@@ -59,7 +59,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<Post> getHisPost(String userEmail, PageRequest pageRequest) {
-        return postRepository.findByAuthorEmailOrderByLastEditTimeDesc(userEmail, pageRequest);
+        return postRepository.findByAuthorEmailAndInvisibleOrderByLastEditTimeDesc(userEmail,false,pageRequest);
+    }
+
+    @Override
+    public Page<Post> getMyPost(String userEmail, PageRequest pageRequest) {
+        return postRepository.findByAuthorEmailOrderByLastEditTimeDesc(userEmail,pageRequest);
     }
 
     @Override
@@ -111,14 +116,16 @@ public class PostServiceImpl implements PostService {
         post.setStarNumber(0);
         postRepository.save(post);
         Integer id = post.getPostId();
-        redisTemplate.opsForHash().put("stars", id + "", 0);
-        redisTemplate.opsForHash().put("browseNumber", id + "", 0);
-        redisTemplate.opsForZSet().add("scores", post.getPostId() + "", 0);
+        if(!invisible) {
+            redisTemplate.opsForHash().put("stars", id + "", 0);
+            redisTemplate.opsForHash().put("browseNumber", id + "", 0);
+            redisTemplate.opsForZSet().add("scores", post.getPostId() + "", 0);
+        }
     }
 
 
 
-    @Scheduled(cron = "0/10 * * * * ? ")
+    @Scheduled(cron = "0/90 * * * * ? ")
     public void getVeryHotWords() {
 
         List<Post> posts = postRepository.findAll();

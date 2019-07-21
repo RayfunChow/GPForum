@@ -46,17 +46,17 @@
                             </div>
                         </div>
                         <hr>
+                        {{/author}}
                         <div class="row ml-1" style="margin-bottom: 10px">
                             <!--作者发过文章的数目-->
                             <p style="padding-left: 30px">
-                                文章数:{{#userPostNumber}}{{.}}{{/userPostNumber}} {{^userPostNumber}}0{{/userPostNumber}}
+                                文章数:{{postNum}}
                             </p>
                             <!--作者真正粉丝的数量-->
                             <p class="ml-auto mr-5 float-right">
-                                粉丝数：0
+                                粉丝数：10
                             </p>
                         </div>
-                        {{/author}}
                     </div>
 
                     <hr class="row">
@@ -84,11 +84,11 @@
                     <p>
                         <!--此处是作者信息-->
 
-                        <small>作者：<a
+                        作者：<a
                                 href="/profile?userEmail={{postDetail.authorEmail}}">{{#postDetail.authorNickName}}{{.}}{{/postDetail.authorNickName}}
-                            {{^postDetail.authorNickName}}佚名{{/postDetail.authorNickName}}</a>
-                        </small>
-                        <small style="margin: 10px">最后修改时间：{{postDetail.lastEditTime}}</small>
+                            {{^postDetail.authorNickName}}佚名{{/postDetail.authorNickName}}</a>&nbsp;&nbsp;
+
+                        最后修改时间：<label class="post-time" style="margin: 10px">{{postDetail.lastEditTime}}</label>
 
                         <!--此处是浏览信息-->
                         <label style="float: right;margin-top: 7px">浏览数： {{postDetail.browseNumber}}</label>
@@ -118,17 +118,17 @@
                     <div class="row" style="margin-bottom: 20px">
                         <!--评论人头像-->
                         <div class="col-1">
-                            <img class="nav-item rounded-circle comment-avatar" src=""
+                            <img class="nav-item rounded-circle comment-avatar" src="{{userEmail}}"
                                  style="width:60px ;height:60px;margin-left: 20px">
                         </div>
                         <!--评论人及内容-->
 
                         <div style="margin-left: 20px;" class="col-10">
                             <div>
-                                <small><a href="profile?userEmail="></a>{{userNickName}}</small>
-                                <small style="margin-left: 7px;margin-right: 7px;">|</small>
-                                <small>{{commentTime}}</small>
-                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal"
+                                <a href="profile?userEmail="></a>{{userNickName}} |
+                                <!--<small style="margin-left: 7px;margin-right: 7px;">|</small>-->
+                                <label class="post-time">{{commentTime}}</label>
+                                <button class="btn btn-outline-secondary" data-toggle="modal"
                                         data-target="#replyModal"
                                         style="float: right;"
                                         onclick="toReplyModal({{commentId}}, '{{userEmail}}', '{{userNickName}}', {{commentId}})">
@@ -155,7 +155,7 @@
                     </div>
                     <script>
                         $(".comment-avatar").each(function () {
-                            getUserAvatar("{{userEmail}}", $(this));
+                            getUserAvatar(this.getAttribute("src"), $(this));
                         });
 
                         function getUserAvatar(userEmail, that) {
@@ -235,7 +235,12 @@
 
         getPostContent();
 
-        if ("{{isStared}}" == "1") {
+        $(".post-time").each(function () { // 里面放class名字 把你想遍历的标签 class名改成一样的
+            var date = $(this).text();
+            $(this).text(date.substring(0,16)); //值
+        });
+
+        if ({{isStared}} == 1) {
             $("body .heart").addClass("heartAnimation").attr("rel", "unlike");
         }
 
@@ -344,7 +349,7 @@
                 if (data.length != 0) {
                     str = "";
                     $.each(data, function (i, obj) {
-                        str += "<p><small><a href=\"profile?userEmail=" + obj.userEmail + "\">" + obj.userNickName + " </a> 对 <a href=\"profile?userEmail=" + obj.respondentUserNickName + "\">" + obj.respondentUserNickName + "</a>\n" +
+                        str += "<p><small><a href=\"profile?userEmail=" + obj.userEmail + "\">" + obj.userNickName + " </a> 对 <a href=\"profile?userEmail=" + obj.respondentUserEmail + "\">" + obj.respondentUserNickName + "</a>\n" +
                             " 说：" + obj.content + "<a  data-toggle=\"modal\" data-target=\"#replyModal\" href=\"#\" onclick=\"toReplyModal(" + obj.parentCommentId + ",'" + obj.userEmail + "','" + obj.userNickName + "','" + obj.commentId + "')\"> 回复</a></small></p>\n";
                     });
                     $("#childComments" + parentCommentId).html(str);
@@ -419,10 +424,6 @@
             }
         });
 
-        $(".post-time").each(function () {
-            var postTime=$(this).text();
-            $(this).text(postTime.substring(0, 16));
-        })
     });
 
     function initSearchBox1() {

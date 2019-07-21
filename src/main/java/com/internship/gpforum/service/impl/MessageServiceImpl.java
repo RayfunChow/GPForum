@@ -48,15 +48,19 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void Star(User user, Integer id, String title, Integer starType) {
         if (!redisTemplate.opsForHash().hasKey(id + "_starRecords", user.getUserEmail())) {
-            Star star = new Star();
-            star.setPostId(id);
-            star.setPostTitle(title);
-            star.setUserEmail(user.getUserEmail());
-            star.setUserNickName(user.getNickName());
-            star.setStarTime(new Date());
-            redisTemplate.opsForHash().put(id + "_starRecords", user.getUserEmail(), json.toJSONString(star));
+            if(starType==1) {
+                Star star = new Star();
+                star.setPostId(id);
+                star.setPostTitle(title);
+                star.setUserEmail(user.getUserEmail());
+                star.setUserNickName(user.getNickName());
+                star.setStarTime(new Date());
+                redisTemplate.opsForHash().put(id + "_starRecords", user.getUserEmail(), json.toJSONString(star));
+            }else {
+                starRepository.deleteByPostIdAndUserEmail(id,user.getUserEmail());
+            }
         } else {
-            redisTemplate.opsForHash().delete("starRecords", id + "", user.getUserEmail());
+            redisTemplate.opsForHash().delete(id+"_starRecords", user.getUserEmail());
         }
         redisTemplate.opsForHash().increment("stars", id + "", starType);
         Double score=starType*0.8;

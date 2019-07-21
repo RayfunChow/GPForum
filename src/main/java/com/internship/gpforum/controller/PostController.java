@@ -7,16 +7,16 @@ import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +49,10 @@ public class PostController {
             redisTemplate.opsForHash().delete(userInfo.getUserEmail() + "_records", "/postDetail?postDetail=" + postId);
             return "notfound";
         }
+        String email=postDetail.getAuthorEmail();
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        Page<Post> posts=postService.getHisPost(email,pageRequest);
+        modelMap.put("postNum",posts.getTotalElements());
         User author = userService.userCoookie(postDetail.getAuthorEmail());
         modelMap.put("author", author);
         modelMap.put("postDetail", postDetail);

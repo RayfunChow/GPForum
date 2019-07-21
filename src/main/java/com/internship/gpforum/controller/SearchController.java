@@ -29,8 +29,10 @@ public class SearchController {
 
 
     @RequestMapping("searchAction")
-    public String searchAction(ModelMap modelMap, String keyword) {
+    public String searchAction(ModelMap modelMap, String keyword,HttpServletRequest request) {
 //        String keyword = request.getParameter("keyword");
+        User user=(User)request.getSession().getAttribute("User");
+        modelMap.put("User",user);
         List<User> users = userService.findByNickName(keyword);
         List<Section> section = sectionService.findSections(keyword);
         List<Post> posts = postService.findInTitleAndContent(keyword);

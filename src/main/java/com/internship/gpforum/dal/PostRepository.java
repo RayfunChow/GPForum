@@ -11,13 +11,15 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, String> {
 
-    Page<Post> findBySectionNameAndInvisibleOrderByLastEditTimeDesc(String sectionName, Pageable request, boolean invisible);
+    Page<Post> findBySectionNameAndInvisible(String sectionName, Pageable request, boolean invisible);
 
-    Page<Post> findBySectionNameAndInvisibleOrderByStarNumberDesc(String sectionName, Pageable request, boolean invisible);
+//    Page<Post> findBySectionNameAndInvisibleOrderByStarNumberDesc(String sectionName, Pageable request, boolean invisible);
 
     Post findByPostId(Integer id);
 
-    Page<Post> findByAuthorEmailOrderByLastEditTimeDesc(String authorEmail, Pageable request);
+    Page<Post> findByAuthorEmailOrderByLastEditTimeDesc(String email,Pageable pageable);
+
+    Page<Post> findByAuthorEmailAndInvisibleOrderByLastEditTimeDesc(String authorEmail, boolean invisible,Pageable request);
 
     @Query(value = "select * from post where title like %?1% or content like %?1%", nativeQuery = true)
     List<Post> findInTitleAndContent(String keyword);

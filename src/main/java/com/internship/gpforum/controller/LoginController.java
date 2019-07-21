@@ -1,6 +1,5 @@
 package com.internship.gpforum.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.internship.gpforum.common.PasswordEncryption;
@@ -10,8 +9,6 @@ import com.internship.gpforum.dal.entity.User;
 import com.internship.gpforum.service.FaceService;
 import com.internship.gpforum.service.RedisService;
 import com.internship.gpforum.service.UserService;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -20,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +58,7 @@ public class LoginController {
                 if (session.getId().equals(newSession.getId())) { //判断是否为同一台机器登录
                     return "您已在该设备登录,请勿重复操作";
                 } else {  //两台机器登录同一账号，后一个把前一个挤掉
-                    session.invalidate();
+                    session.removeAttribute("User");
                     OnlineUserList.remove(email);
                     if (user.getThisLogTime() != null) {
                         user.setLastLogTime(user.getThisLogTime());
@@ -112,7 +107,7 @@ public class LoginController {
                                 feedback.addProperty("info", "您已在该设备登录,请勿重复操作");
                                 return feedback.toString();
                             } else {  //两台机器登录同一账号，后一个把前一个挤掉
-                                session.invalidate();
+                                session.removeAttribute("User");
                                 OnlineUserList.remove(information);
                                 if (user.getThisLogTime() != null) {
                                     user.setLastLogTime(user.getThisLogTime());

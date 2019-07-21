@@ -154,11 +154,11 @@
                         <div class="myGutter">
                             <div class="card-body">
                                 <button class=" btn btn-outline-primary btn-sm float-right btn-confirm-comment"
-                                        onclick="confirmReply('{{respondentUserEmail}}','{{commentId}}')"
+                                        onclick="confirmReply('{{userEmail}}','{{commentId}}')"
                                         id="comment{{commentId}}">确认
                                 </button>
                                 用户： <a
-                                    href="/profile?userEmail={{userEmail}}">{{respondentUserNickName}}</a>
+                                    href="/profile?userEmail={{userEmail}}">{{userNickName}}</a>
                                 回复了你： <a href="/postDetail?postId={{postId}}">{{content}}</a>
 
                             </div>
@@ -271,7 +271,7 @@
                 "email": email,
                 "id": id
             },
-            success: function () {
+            success: function (data) {
                 $("#star" + id).removeClass("btn-outline-primary");
                 $("#star" + id).addClass("btn-success");
                 $("#star" + id).addClass("disabled");
@@ -288,7 +288,7 @@
                 "replyEmail": replyEmail,
                 "commentId": commentId
             },
-            success: function () {
+            success: function (data) {
                 $("#comment" + commentId).removeClass("btn-outline-primary");
                 $("#comment" + commentId).addClass("btn-success");
                 $("#comment" + commentId).addClass("disabled");

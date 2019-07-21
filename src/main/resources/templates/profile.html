@@ -103,11 +103,11 @@
         //执行一个laypage实例
         laypage.render({
             elem: 'pagination' //分页控件id
-            ,limit: 10 //每页显示的条数
+            ,limit: 5 //每页显示的条数
             ,count: {{postPage.totalElements}} //数据总数，从服务端得到
             ,groups: 5
             ,curr:Number({{postPage.number}}+1)
-        ,jump:function(obj,first){//当点击分页的页码，切换后的调用该函数
+            ,jump:function(obj,first){//当点击分页的页码，切换后的调用该函数
             if(!first){
                 //改变浏览器的地址
                 location.href="profile?pageIndex="+obj.curr;
@@ -115,7 +115,6 @@
         }
             ,layout:['count', 'prev', 'page', 'next', 'skip']
         });
-
 
     });
 

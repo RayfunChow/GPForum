@@ -48,31 +48,40 @@ public class ProfileController {
     private CommentService commentService;
 
     @RequestMapping("profile")
-    public String toProfile(ModelMap modelMap, HttpServletRequest request, @RequestParam(required = false) String userEmail, @RequestParam(required = false, defaultValue = "1") Integer pageIndex, @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+    public String toProfile(ModelMap modelMap, HttpServletRequest request, @RequestParam(required = false) String userEmail, @RequestParam(required = false, defaultValue = "1") Integer pageIndex, @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         User user = (User) request.getSession().getAttribute("User");
         if(user==null&&userEmail==null){
             return "login";
         }
         PageRequest pageRequest = PageRequest.of(pageIndex - 1, pageSize);
-        if (userEmail == null || userEmail == user.getUserEmail()) {
-            Page<Post> postPage = postService.getHisPost(user.getUserEmail(), pageRequest);
+        if (user == null) {
+            User other = userService.userCoookie(userEmail);
+            Page<Post> postPage = postService.getHisPost(userEmail, pageRequest);
+            modelMap.put("postPage", postPage);
+            modelMap.put("postNum",postPage.getTotalElements());
+            modelMap.put("User", user);
+            modelMap.put("targetUser", other);
+            List<Comment> comments=commentService.getHisComments(userEmail);
+            modelMap.put("commentNum",comments.size());
+        } else if (userEmail == null || userEmail.equals(user.getUserEmail())) {
+            Page<Post> postPage = postService.getMyPost(user.getUserEmail(), pageRequest);
 //            System.out.println(postPage.getTotalPages());
             modelMap.put("postPage", postPage);
+            modelMap.put("postNum",postPage.getTotalElements());
 //            modelMap.put("postPageSize",postPage.getTotalPages());
             modelMap.put("User", user);
             modelMap.put("targetUser", user);
-            modelMap.put("postNum", postPage.getTotalElements());
-            List<Comment> hisComments=commentService.getHisComments(user.getUserEmail());
-            modelMap.put("commentNum",hisComments.size());
-        }else{
-            User other=userService.userCoookie(userEmail);
-            Page<Post> postPage=postService.getHisPost(userEmail,pageRequest);
-            modelMap.put("postPage",postPage);
+            List<Comment> comments=commentService.getHisComments(user.getUserEmail());
+            modelMap.put("commentNum",comments.size());
+        }else if(!userEmail.equals(user.getUserEmail())){
+            User other = userService.userCoookie(userEmail);
+            Page<Post> postPage = postService.getHisPost(userEmail, pageRequest);
+            modelMap.put("postPage", postPage);
+            modelMap.put("postNum",postPage.getTotalElements());
+            List<Comment> comments=commentService.getHisComments(userEmail);
+            modelMap.put("commentNum",comments.size());
             modelMap.put("User", user);
             modelMap.put("targetUser", other);
-            modelMap.put("postNum", postPage.getTotalElements());
-            List<Comment> hisComments=commentService.getHisComments(userEmail);
-            modelMap.put("commentNum",hisComments.size());
         }
         return "profile";
     }
