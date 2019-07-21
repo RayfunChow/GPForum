@@ -31,9 +31,10 @@ import java.util.UUID;
 public class ProfileController {
 
     //    @Value("${static.upload.path}")
-    private String uploadPath = "D:/img/";
+    private String uploadPath = "E:/image/";
+
     //    @Value("${static.server.address}")
-    private String staticServerAddr = "http://127.0.0.1:8777/";
+    private String staticServerAddr = "http://127.0.0.1:7999/";
 
 
     @Autowired
@@ -104,6 +105,11 @@ public class ProfileController {
         User user = (User) request.getSession().getAttribute("User");
         String location = request.getParameter("location");
         String nickName = request.getParameter("userNickname");
+        if(nickName.equals("")){
+            return "昵称不能为空";
+        }else if(nickName.length()>10){
+            return "昵称长度不超过10个字";
+        }
         String signature = request.getParameter("userSignature");
         String hobby = request.getParameter("hobby");
         String sex = request.getParameter("sex");
