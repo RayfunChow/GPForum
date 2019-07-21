@@ -17,4 +17,6 @@ public interface CommentService {
     void insert(Comment comment);
 
     void deleteAllByPostId(Integer postId);
+
+    List<Comment> getHisComments(String email);
 }

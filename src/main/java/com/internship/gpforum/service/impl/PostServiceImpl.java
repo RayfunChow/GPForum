@@ -38,7 +38,7 @@ public class PostServiceImpl implements PostService {
 
     private static String HOTWORDS = "";
 
-    static String FILEPATH = "C:\\Users\\Administrator\\Desktop\\post_content.txt";
+    static String FILEPATH = "C:\\Users\\Rayfun\\Desktop\\post_content.txt";
 
     public Page<Post> getByEdiTime(String sectionName, PageRequest pageRequest) {
         Page<Post> postList = postRepository.findBySectionNameAndInvisibleOrderByLastEditTimeDesc(sectionName, pageRequest, false);
@@ -118,7 +118,7 @@ public class PostServiceImpl implements PostService {
 
 
 
-    @Scheduled(cron = "0/30 * * * * ? ")
+    @Scheduled(cron = "0/10 * * * * ? ")
     public void getVeryHotWords() {
 
         List<Post> posts = postRepository.findAll();

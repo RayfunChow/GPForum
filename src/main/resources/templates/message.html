@@ -145,39 +145,37 @@
 
             </div>
             <div class="tabBodyContainer">
-                <div class="tabBodyItem tabBodyCurrent">
+                <div class="tabBodyItem tabBodyCurrent" style="max-height:800px; overflow-y:auto">
                     <button style="margin: 5px;float: right;" class="btn btn-outline-success"
                             onclick="confirmAllReply()">一键确认
                     </button>
+                    {{#commentRecords}}
                     <div class="Mycard" style="width: 100%;">
-                        {{#commentRecords}}
-                        <div class="Mycard" style="width: 100%;">
-                            <div class="myGutter">
-                                <div class="card-body">
-                                    <button class=" btn btn-outline-primary btn-sm float-right btn-confirm-comment"
-                                            onclick="confirmReply('{{respondentUserEmail}}','{{commentId}}')"
-                                            id="comment{{commentId}}">确认
-                                    </button>
-                                    用户： <a
-                                        href="/profile?userEmail={{userEmail}}">{{respondentUserNickName}}</a>
-                                     回复了你： <a href="/postDetail?postId={{postId}}">{{content}}</a>
-
-                                </div>
-                                <div style="float: right;padding: 10px;">
-                                    <h6 class="card-subtitle mb-2 text-muted message-date">{{commentTime}}</h6>
-                                </div>
-
+                        <div class="myGutter">
+                            <div class="card-body">
+                                <button class=" btn btn-outline-primary btn-sm float-right btn-confirm-comment"
+                                        onclick="confirmReply('{{respondentUserEmail}}','{{commentId}}')"
+                                        id="comment{{commentId}}">确认
+                                </button>
+                                用户： <a
+                                    href="/profile?userEmail={{userEmail}}">{{respondentUserNickName}}</a>
+                                回复了你： <a href="/postDetail?postId={{postId}}">{{content}}</a>
 
                             </div>
-                        </div>
-                        {{/commentRecords}}
-                        {{^commentRecords}}
-                        <h4 style="margin: 20px">未收到新的评论 :(</h4>
-                        {{/commentRecords}}
+                            <div style="float: right;padding: 10px;">
+                                <h6 class="card-subtitle mb-2 text-muted message-date">{{commentTime}}</h6>
+                            </div>
 
+
+                        </div>
                     </div>
+                    {{/commentRecords}}
+                    {{^commentRecords}}
+                    <h4 style="margin: 20px">未收到新的评论 :(</h4>
+                    {{/commentRecords}}
+
                 </div>
-                <div class="tabBodyItem">
+                <div class="tabBodyItem" style="max-height:800px; overflow-y:auto">
                     <button style="margin: 5px;float: right;" class="btn btn-outline-success"
                             onclick="confirmAllStars()">一键确认
                     </button>
@@ -203,10 +201,9 @@
                     {{/recentStars}}
 
                 </div>
-
-                <div class="tabBodyItem">
+                <div class="tabBodyItem" style="max-height:800px; overflow-y:auto">
                     {{#browseRecords}}
-                    <div class="Mycard" style="padding: 10px 20px 10px 20px">
+                    <div class="Mycard" style="padding: 5px 10px 5px 10px">
                         <!--                <div class="myGutter">-->
                         <div class="myGutter row" style="padding: 10px">
                             <!--<div class="col-sm-2">-->

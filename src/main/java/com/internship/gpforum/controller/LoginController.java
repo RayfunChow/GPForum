@@ -102,7 +102,7 @@ public class LoginController {
             if (detect.equals("1")) {
                 String information = FaceService.search(image);   //进行搜搜
                 if(!information.equals("Login Failure")) {        //正确登录 information里面是正确的用户名
-                    User user=userService.signIn(information, "");
+                    User user=userService.faceIn(information);
                     if (user != null) {         //用户名有此用户
                         HttpSession newSession = request.getSession();
                         if (OnlineUserList.containsKey(information)) {  //判断该账户是否已登录

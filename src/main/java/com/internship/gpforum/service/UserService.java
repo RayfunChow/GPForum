@@ -23,4 +23,6 @@ public interface UserService {
 
     void addBrowseRecord(String email,Integer id,String title);
 
+    User faceIn(String email);
+
 }

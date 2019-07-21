@@ -43,4 +43,9 @@ public class CommentServiceImpl implements CommentService {
     public void deleteAllByPostId(Integer postId){
         commentRepository.deleteAllByPostId(postId);
     }
+
+    @Override
+    public List<Comment> getHisComments(String email) {
+        return commentRepository.findByUserEmail(email);
+    }
 }

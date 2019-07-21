@@ -117,4 +117,17 @@ public class UserServiceImpl implements UserService {
         }
         redisTemplate.opsForHash().put(email+"_records",browseUrl,json.toJSONString(browseRecord));
     }
+
+    @Override
+    public User faceIn(String email) {
+        User user;
+        if(redisTemplate.opsForHash().hasKey("userList",email)) {
+            String result = String.valueOf(redisTemplate.opsForHash().get("userList", email));
+            user = json.parseObject(result, User.class);
+            return user;
+        }else {
+            user = userRepository.findByUserEmail(email);
+            return user;
+        }
+    }
 }

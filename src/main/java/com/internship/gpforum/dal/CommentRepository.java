@@ -21,4 +21,6 @@ public interface CommentRepository  extends JpaRepository<Comment,Integer> {
     void deleteAllByPostId(Integer postId);
 
     Page<Comment> findByRespondentUserEmailOrderByCommentTimeDesc(String email,Pageable pageable);
+
+    List<Comment> findByUserEmail(String email);
 }

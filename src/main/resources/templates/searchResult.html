@@ -93,8 +93,6 @@
             display: block;
         }
 
-
-
         .myGutter {
             /*margin-right: -10px;*/
             /*margin-left: -15px;*/
@@ -145,7 +143,7 @@
                         <!--                <div class="myGutter">-->
                         <div class="myGutter row">
                             <div class="col-sm-2" style="padding: 10px">
-                                <img src="" style="height: 100%;width: 100%">
+                                <img src="{{firstImg}}" class="first-img" style="height: 100%;width: 100%">
                             </div>
                             <div class="col-sm-10" style="padding: 10px;">
                                 <a href="postDetail?postId={{postId}}" style="color: #0b2e13"><h5>{{title}}</h5></a>
@@ -183,29 +181,33 @@
                     {{/sections}}
                 </div>
                 <div class="tabBodyItem">
-                <div class="Mycard" style="width: 100%;">
-                    {{#users}}<div class="myGutter">
+                    <div class="Mycard" style="width: 100%;">
+                        {{#users}}
+                        <div class="myGutter">
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div class="col-md-10">
-                                <img src="../static/img/no_avatar.png"
-                                     style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
-                                <a href="profile?userEmail={{userEmail}}" style="margin-left: 15px">用户名：{{nickName}}</a>
+                                <div class="col-md-10">
+                                    <img src="../static/img/no_avatar.png"
+                                         style="margin-left: 20px;width: 50px;height: 50px;margin-top: 20px;margin-bottom: 20px">
+                                    <a href="profile?userEmail={{userEmail}}"
+                                       style="margin-left: 15px">用户名：{{nickName}}</a>
+                                </div>
+                                <div class="col-md-2 container">
+                                    <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">
+                                        注册时间：{{regTime}}</p>
+                                </div>
+
                             </div>
-                            <div class="col-md-2 container">
-                                <p class="card-subtitle mb-2 text-muted " style="padding-top: 40px">注册时间：{{regTime}}</p>
-                            </div>
+
 
                         </div>
-
-
-                    </div>{{/users}}
-                    {{^users}}
-                    <h4 style="margin: 20px">未搜索到相关用户 :(</h4>
-                    {{/users}}
+                        {{/users}}
+                        {{^users}}
+                        <h4 style="margin: 20px">未搜索到相关用户 :(</h4>
+                        {{/users}}
+                    </div>
                 </div>
-            </div>
 
             </div>
         </div>
@@ -220,6 +222,14 @@
 <script type="text/javascript">
     $(document).ready(function (e) {
         SidebarTabHandler.Init();
+
+        $(".first-img").each(function () {
+            var imgUrl = $(this)[0].src;
+            if (imgUrl === "http://" + document.domain + ":8080/0") {
+                $(this).attr('src', "/img/gpf_nopic.png");
+            }
+        });
+
     });
     var SidebarTabHandler = {
         Init: function () {

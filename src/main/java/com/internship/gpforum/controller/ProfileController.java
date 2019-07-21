@@ -3,12 +3,10 @@ package com.internship.gpforum.controller;
 import com.internship.gpforum.common.PasswordEncryption;
 import com.internship.gpforum.configure.OnlineUserList;
 import com.internship.gpforum.configure.UploadPhotoResult;
+import com.internship.gpforum.dal.entity.Comment;
 import com.internship.gpforum.dal.entity.Post;
 import com.internship.gpforum.dal.entity.User;
-import com.internship.gpforum.service.BaiduAPI;
-import com.internship.gpforum.service.PostService;
-import com.internship.gpforum.service.RedisService;
-import com.internship.gpforum.service.UserService;
+import com.internship.gpforum.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,16 +23,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 public class ProfileController {
 
     //    @Value("${static.upload.path}")
-    private String uploadPath = "E:/image/";
-
+    private String uploadPath = "/root/avatar/";
     //    @Value("${static.server.address}")
-    private String staticServerAddr = "http://127.0.0.1:7999/";
+    private String staticServerAddr = "http://49.234.61.134:7999/";
 
 
     @Autowired
@@ -45,6 +43,9 @@ public class ProfileController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping("profile")
     public String toProfile(ModelMap modelMap, HttpServletRequest request, @RequestParam(required = false) String userEmail, @RequestParam(required = false, defaultValue = "1") Integer pageIndex, @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
@@ -60,12 +61,18 @@ public class ProfileController {
 //            modelMap.put("postPageSize",postPage.getTotalPages());
             modelMap.put("User", user);
             modelMap.put("targetUser", user);
+            modelMap.put("postNum", postPage.getTotalElements());
+            List<Comment> hisComments=commentService.getHisComments(user.getUserEmail());
+            modelMap.put("commentNum",hisComments.size());
         }else{
             User other=userService.userCoookie(userEmail);
             Page<Post> postPage=postService.getHisPost(userEmail,pageRequest);
             modelMap.put("postPage",postPage);
             modelMap.put("User", user);
             modelMap.put("targetUser", other);
+            modelMap.put("postNum", postPage.getTotalElements());
+            List<Comment> hisComments=commentService.getHisComments(userEmail);
+            modelMap.put("commentNum",hisComments.size());
         }
         return "profile";
     }

@@ -41,23 +41,21 @@
                 </div>
                 <div class="card col-3" style="max-height: 500px">
                     <div class="card-body" style="padding: 10px;text-align: center">
-                        <img class="nav-item rounded-circle" src="../img/no_avatar.png"
-                             id="UserAvatar"
-                             style="width: 70px;height: 70px">
+                        <img class="nav-item rounded-circle" src="../img/no_avatar.png" id="UserAvatar"
+                             style="width: 70px;height: 70px; margin-bottom: 10px">
                         <h5 style="text-align: center" id="userNickname1">用户名</h5>
                         <div class="row" style="text-align: center">
                             <div class="col-4" id="showUserPostNumber">发帖:xxx</div>
-                            <div class="col-4">评论:xxx</div>
-                            <div class="col-4">粉丝:xxx</div>
+                            <div class="col-4">评论:{{#commentNum}}{{.}}{{/commentNum}}{{^commentNum}}0{{/commentNum}}</div>
+                            <div class="col-4">粉丝:10</div>
                         </div>
                         <br>
                         <div id="userHobby">
-
                         </div>
+                        <br>
                         <h6 id="showUserEmail">邮箱账号：xxxxxxxxxx@jjd.com</h6>
                         <a id="userBirthday">生日：1997-09-21</a><br>
                         <a id="userLocation">地区：重庆&nbsp;&nbsp;南岸</a><br>
-                        <br>
                         <a id="userSignature">个人描述：此生此夜不长好，明月明年何处看。</a>
                     </div>
                 </div>
@@ -74,27 +72,30 @@
 <script src="/layui/layui.js"></script>
 <script>
 
-
-    $(".delete-post").click(function () {
-        if(confirm("确认删除该帖吗？")){
-            var postId = this.getAttribute("btnPostId");
-            $.ajax({
-                type: "post",
-                url: "deletePost",
-                data: {
-                    "postId": postId
-                },
-                success: function (data) {
-                    if(data=="删除成功") {
-                        // alert("删除成功");
-                        window.location.reload();
-                    }else{
-                        alert("删除失败");
+    $(document).ready(function () {
+        $(".delete-post").click(function () {
+            if(confirm("确认删除该帖吗？")){
+                var postId = this.getAttribute("btnPostId");
+                $.ajax({
+                    type: "post",
+                    url: "deletePost",
+                    data: {
+                        "postId": postId
+                    },
+                    success: function (data) {
+                        if(data=="删除成功") {
+                            // alert("删除成功");
+                            window.location.reload();
+                        }else{
+                            alert("删除失败");
+                        }
                     }
-                }
-            })
-        }
+                })
+            }
+        });
     });
+
+
 
     layui.use('laypage', function(){
         var laypage = layui.laypage;
@@ -138,7 +139,7 @@
 <script>
     $(function () {
         $("#UserAvatar").attr("src",'{{#targetUser.avatar}}{{.}}{{/targetUser.avatar}}{{^targetUser.avatar}}img/no_avatar.png{{/targetUser.avatar}}');
-        $("#showUserPostNumber").html('发帖:'+'{{#targetUser.userPostNumber}}{{.}}{{/targetUser.userPostNumber}}{{^targetUser.userPostNumber}}0{{/targetUser.userPostNumber}}');
+        $("#showUserPostNumber").html('发帖:'+'{{#postNum}}{{.}}{{/postNum}}{{^postNum}}0{{/postNum}}');
         $("#userNickname1").text('{{#targetUser.nickName}}{{.}}{{/targetUser.nickName}}{{^targetUser.nickName}}{{/targetUser.nickName}}');
 
         var birthdayInfo = '{{#targetUser.birthday}}{{.}}{{/targetUser.birthday}}{{^targetUser.birthday}}未设置{{/targetUser.birthday}}';
