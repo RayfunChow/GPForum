@@ -289,7 +289,7 @@
                         <label for="userEmail" class="col-sm-4 col-form-label">当前用户</label>
                         <div class="">
                             <input type="text" readonly class="form-control-plaintext" id="userEmail"
-                                   name="userEmail" value="xxx@qq.com">
+                                   name="userEmail" value="{{User.userEmail}}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -683,7 +683,7 @@
                     window.location.href="updateProfile";
                 }
                 else{
-                    alert("内含敏感信息，修改失败");
+                    alert(data);
                     window.location.href="updateProfile";
                 }
             }
@@ -736,26 +736,13 @@
             },
             success: function (data) {
                 console.log(data);
-                if (data === "密码修改成功")
-                    bootoast.toast({
-                        message: data,
-                        type: 'success',
-                        position: 'right-bottom',
-                        icon: 'default',
-                        timeout: 2,
-                        animationDuration: 300,
-                        dismissible: true
-                    });
-                else
-                    bootoast.toast({
-                        message: data,
-                        type: 'danger',
-                        position: 'right-bottom',
-                        icon: 'default',
-                        timeout: 2,
-                        animationDuration: 300,
-                        dismissible: true
-                    });
+                if (data === "密码修改成功"){
+                    alert(data);
+                    window.location.href="/login";
+                }
+                else{
+                    alert(data);
+                }
                 $('#changePasswordForm')[0].reset();
             }
         });
